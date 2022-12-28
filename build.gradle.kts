@@ -3,6 +3,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 plugins {
     java
     id("com.github.johnrengelman.shadow") version ("7.1.0")
+    id("io.freefair.lombok") version "6.6.1"
 }
 
 group = "cc.ddev"
@@ -15,6 +16,10 @@ repositories {
 
 dependencies {
     implementation("com.github.Minestom:Minestom:-SNAPSHOT")
+    implementation("com.zaxxer:HikariCP:5.0.1")
+    implementation("com.github.simplix-softworks:simplixstorage:3.2.5")
+    compileOnly("junit:junit:4.13.1")
+    implementation("org.slf4j:slf4j-api:2.0.6")
 }
 
 tasks {
@@ -24,6 +29,9 @@ tasks {
         manifest {
             attributes(mapOf("Main-Class" to "cc.ddev.feather.Main", "Multi-Release" to "true"))
         }
+
+        fun reloc(pkg: String) = relocate(pkg, "cc.ddev.shaded.$pkg")
+        reloc("de.leonhard.storage")
     }
 }
 

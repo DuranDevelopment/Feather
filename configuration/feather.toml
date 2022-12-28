@@ -1,0 +1,16 @@
+[server]
+host = '0.0.0.0'
+port = 25565
+
+[database]
+type = 'mysql'
+username = 'root'
+password = 'root'
+database = 'feather'
+host = '127.0.0.1'
+port = 3306
+
+[spawn]
+x = 0
+y = 42
+z = 0
