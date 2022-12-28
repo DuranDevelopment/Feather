@@ -16,7 +16,11 @@ public class Config {
 
     @Getter
     @Setter
-    public static Pos SPAWN = new Pos(featherConfig.getDouble("spawn.x"), featherConfig.getDouble("spawn.y"), featherConfig.getDouble("spawn.z"));
+    public static Pos SPAWN_COORDS = new Pos(featherConfig.getDouble("spawn.x"), featherConfig.getDouble("spawn.y"), featherConfig.getDouble("spawn.z"));
+
+    @Getter
+    @Setter
+    public static String SPAWN_WORLD = getFeatherConfig().getString("spawn.world");
 
     @Getter
     public static String DATABASE_TYPE = getFeatherConfig().getString("database.type");

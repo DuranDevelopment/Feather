@@ -19,9 +19,6 @@ public class ConfigManager {
     private final Toml featherConfig = new Toml("feather", configDirectory);
 
     public void createConfigDirectory() {
-        Log.getLogger().info(featherConfig.getFilePath());
-        Log.getLogger().info("Current directory: " + currentDirectory);
-        Log.getLogger().info("Config directory: " + configDirectory);
         File f = new File(configDirectory);
         if (!f.exists()) {
             Log.getLogger().info("Creating configuration directory...");

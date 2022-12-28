@@ -7,6 +7,7 @@ import cc.ddev.feather.database.DatabaseConnection;
 import cc.ddev.feather.logger.Log;
 import cc.ddev.feather.models.MinetopiaPlayer;
 import cc.ddev.feather.sidebar.SidebarManager;
+import cc.ddev.feather.world.WorldManager;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.GlobalEventHandler;
@@ -16,6 +17,7 @@ import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.block.Block;
 
+import java.io.File;
 import java.sql.SQLException;
 import java.util.UUID;
 
@@ -39,9 +41,16 @@ public class Main {
             Log.getLogger().error("Feather couldn't connect to database:");
             e.printStackTrace();
         }
-        // Set the ChunkGenerator
-        instanceContainer.setGenerator(unit ->
+        // Create the worlds directory
+        WorldManager.createWorldsDirectory();
+        // Check if worlds are present
+        if (WorldManager.worldsDirectoryIsEmpty()) {
+            Log.getLogger().error("No worlds found! Please create a world in the worlds directory!");
+            Log.getLogger().error("Resorting to default world...");
+            // Set the ChunkGenerator
+            instanceContainer.setGenerator(unit ->
                 unit.modifier().fillHeight(0, 40, Block.GRASS_BLOCK));
+        }
         // Set the UUID provider
         MinecraftServer.getConnectionManager().setUuidProvider((playerConnection, username) -> {
             // This method will be called at players connection to set their UUID
@@ -52,9 +61,13 @@ public class Main {
         GlobalEventHandler globalEventHandler = MinecraftServer.getGlobalEventHandler();
         globalEventHandler.addListener(PlayerLoginEvent.class, event -> {
             final Player player = event.getPlayer();
-            event.setSpawningInstance(instanceContainer);
+            if (!WorldManager.worldsDirectoryIsEmpty()) {
+                event.setSpawningInstance(WorldManager.loadWorld(WorldManager.getWorldsDirectory() + File.separator + Config.SPAWN_WORLD));
+            } else {
+                event.setSpawningInstance(instanceContainer);
+            }
             // Set the spawn position
-            player.setRespawnPoint(Config.SPAWN);
+            player.setRespawnPoint(Config.SPAWN_COORDS);
             Log.getLogger().info("UUID of player " + player.getUsername() + " is " + player.getUuid());
         });
         globalEventHandler.addListener(PlayerSpawnEvent.class, event -> {

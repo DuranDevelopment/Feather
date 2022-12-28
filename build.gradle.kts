@@ -18,7 +18,8 @@ dependencies {
     implementation("com.github.Minestom:Minestom:-SNAPSHOT")
     implementation("com.zaxxer:HikariCP:5.0.1")
     implementation("com.github.simplix-softworks:simplixstorage:3.2.5")
-    compileOnly("junit:junit:4.13.1")
+    implementation("net.kyori:adventure-text-minimessage:4.12.0")
+    compileOnly("junit:junit:4.13.2")
     implementation("org.slf4j:slf4j-api:2.0.6")
 }
 

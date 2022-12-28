@@ -1,7 +1,9 @@
 package cc.ddev.feather.models;
 
+import cc.ddev.feather.world.WorldManager;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import net.minestom.server.entity.Player;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -35,5 +37,12 @@ public class MinetopiaPlayer {
             uuid = "er";
         }
         return uuid;
+    }
+
+    public static String getWorld(Player player) {
+        if (player == null) {
+            return "null";
+        }
+        return WorldManager.getWorldName(player.getInstance());
     }
 }
