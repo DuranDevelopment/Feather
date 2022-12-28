@@ -25,3 +25,9 @@ title = '<world>'
 
 [messages]
 join = 'Welcome to the server, <player>!'
+invalid_arguments = '<red>You provided invalid arguments for this command.'
+invalid_username = '<red>That username is invalid.'
+not_online = '<red>That player is not online.'
+no_permission = '<red>You do not have permission to use this command.'
+fly_on = '<green>Fly mode has been enabled!'
+fly_off = '<red>Fly mode has been disabled!'

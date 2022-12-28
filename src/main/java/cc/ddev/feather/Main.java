@@ -2,6 +2,8 @@ package cc.ddev.feather;
 
 import cc.ddev.feather.api.config.Config;
 import cc.ddev.feather.commands.TestCommand;
+import cc.ddev.feather.commands.essential.GamemodeCommand;
+import cc.ddev.feather.commands.essential.OpCommand;
 import cc.ddev.feather.configuration.ConfigManager;
 import cc.ddev.feather.database.DatabaseConnection;
 import cc.ddev.feather.logger.Log;
@@ -62,22 +64,24 @@ public class Main {
         globalEventHandler.addListener(PlayerLoginEvent.class, event -> {
             final Player player = event.getPlayer();
             if (!WorldManager.worldsDirectoryIsEmpty()) {
-                event.setSpawningInstance(WorldManager.loadWorld(WorldManager.getWorldsDirectory() + File.separator + Config.SPAWN_WORLD));
+                event.setSpawningInstance(WorldManager.loadWorld(WorldManager.getWorldsDirectory() + File.separator + Config.Spawn.WORLD));
             } else {
                 event.setSpawningInstance(instanceContainer);
             }
             // Set the spawn position
-            player.setRespawnPoint(Config.SPAWN_COORDS);
+            player.setRespawnPoint(Config.Spawn.COORDS);
             Log.getLogger().info("UUID of player " + player.getUsername() + " is " + player.getUuid());
         });
         globalEventHandler.addListener(PlayerSpawnEvent.class, event -> {
             final Player player = event.getPlayer();
             SidebarManager.buildSidebar(player);
         });
-        // Start the server on port 25565
-        minecraftServer.start(Config.SERVER_HOST, Config.SERVER_PORT);
+        // Start the server from config values
+        minecraftServer.start(Config.Server.SERVER_HOST, Config.Server.SERVER_PORT);
         // Register commands
         MinecraftServer.getCommandManager().register(new TestCommand());
+        MinecraftServer.getCommandManager().register(new OpCommand());
+        MinecraftServer.getCommandManager().register(new GamemodeCommand());
 
         Log.getLogger().info("Feather has started!");
     }

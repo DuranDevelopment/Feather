@@ -15,11 +15,11 @@ public class DatabaseConnection {
     private HikariDataSource hikari;
 
     public DatabaseConnection() {
-        HOST = Config.DATABASE_HOST;
-        PORT = Config.DATABASE_PORT;
-        DATABASE = Config.DATABASE_NAME;
-        USERNAME = Config.DATABASE_USERNAME;
-        PASSWORD = Config.DATABASE_PASSWORD;
+        HOST = Config.Database.HOST;
+        PORT = Config.Database.PORT;
+        DATABASE = Config.Database.NAME;
+        USERNAME = Config.Database.USERNAME;
+        PASSWORD = Config.Database.PASSWORD;
     }
 
     public void connect() throws SQLException {

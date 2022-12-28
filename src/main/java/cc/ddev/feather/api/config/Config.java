@@ -14,38 +14,46 @@ public class Config {
     @Getter
     public static final Toml featherConfig = configManager.getFeatherConfig();
 
-    @Getter
-    @Setter
-    public static Pos SPAWN_COORDS = new Pos(featherConfig.getDouble("spawn.x"), featherConfig.getDouble("spawn.y"), featherConfig.getDouble("spawn.z"));
+    public static class Database {
+        @Getter
+        public static String TYPE = getFeatherConfig().getString("database.type");
 
-    @Getter
-    @Setter
-    public static String SPAWN_WORLD = getFeatherConfig().getString("spawn.world");
+        @Getter
+        public static String HOST = getFeatherConfig().getString("database.host");
 
-    @Getter
-    public static String DATABASE_TYPE = getFeatherConfig().getString("database.type");
+        @Getter
+        public static String USERNAME = getFeatherConfig().getString("database.username");
 
-    @Getter
-    public static String DATABASE_HOST = getFeatherConfig().getString("database.host");
+        @Getter
+        public static String PASSWORD = getFeatherConfig().getString("database.password");
 
-    @Getter
-    public static String DATABASE_USERNAME = getFeatherConfig().getString("database.username");
+        @Getter
+        public static int PORT = getFeatherConfig().getInt("database.port");
 
-    @Getter
-    public static String DATABASE_PASSWORD = getFeatherConfig().getString("database.password");
+        @Getter
+        public static String NAME = getFeatherConfig().getString("database.name");
+    }
 
-    @Getter
-    public static int DATABASE_PORT = getFeatherConfig().getInt("database.port");
+    public static class Spawn {
+        @Getter
+        @Setter
+        public static Pos COORDS = new Pos(featherConfig.getDouble("spawn.x"), featherConfig.getDouble("spawn.y"), featherConfig.getDouble("spawn.z"));
 
-    @Getter
-    public static String DATABASE_NAME = getFeatherConfig().getString("database.name");
+        @Getter
+        @Setter
+        public static String WORLD = getFeatherConfig().getString("spawn.world");
+    }
 
-    @Getter
-    public static String SERVER_HOST = getFeatherConfig().getString("server.host");
+    public static class Sidebar {
+        @Getter
+        public static String TITLE = getFeatherConfig().getString("sidebar.title");
+    }
 
-    @Getter
-    public static int SERVER_PORT = getFeatherConfig().getInt("server.port");
+    public static class Server {
+        @Getter
+        public static String SERVER_HOST = getFeatherConfig().getString("server.host");
 
-    @Getter
-    public static String SIDEBAR_TITLE = getFeatherConfig().getString("sidebar.title");
+        @Getter
+        public static int SERVER_PORT = getFeatherConfig().getInt("server.port");
+    }
 }
