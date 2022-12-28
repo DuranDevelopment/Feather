@@ -41,4 +41,7 @@ public class Config {
 
     @Getter
     public static int SERVER_PORT = getFeatherConfig().getInt("server.port");
+
+    @Getter
+    public static String SIDEBAR_TITLE = getFeatherConfig().getString("sidebar.title");
 }

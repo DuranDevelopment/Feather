@@ -6,10 +6,12 @@ import cc.ddev.feather.configuration.ConfigManager;
 import cc.ddev.feather.database.DatabaseConnection;
 import cc.ddev.feather.logger.Log;
 import cc.ddev.feather.models.MinetopiaPlayer;
+import cc.ddev.feather.sidebar.SidebarManager;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.player.PlayerLoginEvent;
+import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.block.Block;
@@ -54,6 +56,10 @@ public class Main {
             // Set the spawn position
             player.setRespawnPoint(Config.SPAWN);
             Log.getLogger().info("UUID of player " + player.getUsername() + " is " + player.getUuid());
+        });
+        globalEventHandler.addListener(PlayerSpawnEvent.class, event -> {
+            final Player player = event.getPlayer();
+            SidebarManager.buildSidebar(player);
         });
         // Start the server on port 25565
         minecraftServer.start(Config.SERVER_HOST, Config.SERVER_PORT);
