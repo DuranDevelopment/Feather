@@ -5,7 +5,7 @@ import cc.ddev.feather.commands.TestCommand;
 import cc.ddev.feather.configuration.ConfigManager;
 import cc.ddev.feather.database.DatabaseConnection;
 import cc.ddev.feather.logger.Log;
-import de.leonhard.storage.Toml;
+import cc.ddev.feather.models.MinetopiaPlayer;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.GlobalEventHandler;
@@ -15,6 +15,7 @@ import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.block.Block;
 
 import java.sql.SQLException;
+import java.util.UUID;
 
 public class Main {
 
@@ -26,18 +27,25 @@ public class Main {
         InstanceContainer instanceContainer = instanceManager.createInstanceContainer();
         // Load the configuration file
         ConfigManager configManager = ConfigManager.init();
-        Toml featherConfig = configManager.getFeatherConfig();
+        configManager.createConfigDirectory();
         // Make the database connection
         DatabaseConnection database = new DatabaseConnection();
         try {
             database.connect();
+            Log.getLogger().info("Feather successfully connected to database!");
         } catch (SQLException e) {
+            Log.getLogger().error("Feather couldn't connect to database:");
             e.printStackTrace();
         }
-        Log.getLogger().info("Feather successfully connected to database!");
         // Set the ChunkGenerator
         instanceContainer.setGenerator(unit ->
                 unit.modifier().fillHeight(0, 40, Block.GRASS_BLOCK));
+        // Set the UUID provider
+        MinecraftServer.getConnectionManager().setUuidProvider((playerConnection, username) -> {
+            // This method will be called at players connection to set their UUID
+            return UUID.fromString(MinetopiaPlayer.getUUID(username)); /* Set here your custom UUID registration system */
+        });
+
         // Add an event callback to specify the spawning instance (and the spawn position)
         GlobalEventHandler globalEventHandler = MinecraftServer.getGlobalEventHandler();
         globalEventHandler.addListener(PlayerLoginEvent.class, event -> {
@@ -45,9 +53,10 @@ public class Main {
             event.setSpawningInstance(instanceContainer);
             // Set the spawn position
             player.setRespawnPoint(Config.SPAWN);
+            Log.getLogger().info("UUID of player " + player.getUsername() + " is " + player.getUuid());
         });
         // Start the server on port 25565
-        minecraftServer.start("0.0.0.0", 25565);
+        minecraftServer.start(Config.SERVER_HOST, Config.SERVER_PORT);
         // Register commands
         MinecraftServer.getCommandManager().register(new TestCommand());
 

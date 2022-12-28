@@ -35,4 +35,10 @@ public class Config {
 
     @Getter
     public static String DATABASE_NAME = getFeatherConfig().getString("database.name");
+
+    @Getter
+    public static String SERVER_HOST = getFeatherConfig().getString("server.host");
+
+    @Getter
+    public static int SERVER_PORT = getFeatherConfig().getInt("server.port");
 }

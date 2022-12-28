@@ -14,3 +14,12 @@ port = 3306
 x = 0
 y = 42
 z = 0
+
+[chat]
+format = "<levelcolor><level> <prefixcolor><prefix> <namecolor><player>: <chatcolor><message>"
+
+[scoreboard]
+enabled = true
+
+[messages]
+join = 'Welcome to the server, <player>!'
