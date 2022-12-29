@@ -10,20 +10,31 @@ import cc.ddev.feather.logger.Log;
 import cc.ddev.feather.models.MinetopiaPlayer;
 import cc.ddev.feather.sidebar.SidebarManager;
 import cc.ddev.feather.world.WorldManager;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.GlobalEventHandler;
 import net.minestom.server.event.player.PlayerLoginEvent;
 import net.minestom.server.event.player.PlayerSpawnEvent;
+import net.minestom.server.event.server.ServerListPingEvent;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.block.Block;
+import net.minestom.server.ping.ResponseData;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Base64;
 import java.util.UUID;
 
-public class Main {
+public class Server {
+
+    private static String cachedFavicon;
 
     public static void main(String[] args) {
         // Initialization
@@ -59,10 +70,42 @@ public class Main {
             return UUID.fromString(MinetopiaPlayer.getUUID(username)); /* Set here your custom UUID registration system */
         });
 
+        // Set serverlist information
+
+        // Cache favicon image displayed in server list, needs to be base64 format
+        try {
+            BufferedImage image = ImageIO.read(new File("./server-icon.png")); // Use vanilla file name
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            ImageIO.write(image, "png", outputStream);
+            cachedFavicon = Base64.getEncoder().encodeToString(outputStream.toByteArray());
+            outputStream.close();
+        } catch (IOException e) {
+            cachedFavicon = "";
+        }
+
         // Add an event callback to specify the spawning instance (and the spawn position)
         GlobalEventHandler globalEventHandler = MinecraftServer.getGlobalEventHandler();
+        globalEventHandler.addListener(ServerListPingEvent.class, event -> {
+            int onlinePlayers = MinecraftServer.getConnectionManager().getOnlinePlayers().size();
+            ResponseData responseData = event.getResponseData();
+            // Set the server's motd
+            responseData.setDescription(LegacyComponentSerializer.legacyAmpersand().deserialize(Config.Server.DESCRIPTION));
+            // Set online players
+            responseData.setOnline(onlinePlayers);
+            // Set the server's max player count
+            responseData.setMaxPlayer(Config.Server.MAX_PLAYERS);
+            // Set the server's icon
+            if(!cachedFavicon.isEmpty()) {
+                responseData.setFavicon("data:image/png;base64,"+cachedFavicon);
+            }
+        });
         globalEventHandler.addListener(PlayerLoginEvent.class, event -> {
             final Player player = event.getPlayer();
+            // Check if the server is full
+            if (MinecraftServer.getConnectionManager().getOnlinePlayers().size() >= Config.Server.MAX_PLAYERS) {
+                player.kick("Server is full!");
+            }
+            // Set the player's instance
             if (!WorldManager.worldsDirectoryIsEmpty()) {
                 event.setSpawningInstance(WorldManager.loadWorld(WorldManager.getWorldsDirectory() + File.separator + Config.Spawn.WORLD));
             } else {

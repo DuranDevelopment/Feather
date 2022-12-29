@@ -55,5 +55,11 @@ public class Config {
 
         @Getter
         public static int SERVER_PORT = getFeatherConfig().getInt("server.port");
+
+        @Getter
+        public static int MAX_PLAYERS = getFeatherConfig().getInt("server.max_players");
+
+        @Getter
+        public static String DESCRIPTION = getFeatherConfig().getString("server.description");
     }
 }
