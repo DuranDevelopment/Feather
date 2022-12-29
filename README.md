@@ -1,5 +1,5 @@
 # Feather
-[![discord-banner](https://img.shields.io/discord/1056305085895954523?label=discord&style=for-the-badge&color=7289da)](https://discord.gg/RkBzMFN6T6)
+[![discord-banner](https://img.shields.io/discord/1056305085895954523?label=discord&style=for-the-badge&color=7289da)](https://discord.gg/RkBzMFN6T6)\n
 A WIP lightweight Minestom implementation for Minetopia servers
 
 # Credits
