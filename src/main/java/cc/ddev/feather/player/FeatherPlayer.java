@@ -2,6 +2,7 @@ package cc.ddev.feather.player;
 
 import cc.ddev.feather.database.models.PlayerModel;
 import cc.ddev.feather.logger.Log;
+import cc.ddev.feather.world.WorldManager;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.Getter;
@@ -42,5 +43,12 @@ public class FeatherPlayer {
             uniqueId = "er";
         }
         return UUID.fromString(uniqueId);
+    }
+
+    public static String getInstanceName(Player player) {
+        if (player == null) {
+            return "null";
+        }
+        return WorldManager.getInstanceUniqueId(player.getInstance());
     }
 }

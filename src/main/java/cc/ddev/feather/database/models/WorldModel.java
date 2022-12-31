@@ -6,17 +6,14 @@ import com.craftmend.storm.api.markers.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.util.UUID;
-
 @Data
 @EqualsAndHashCode(callSuper=false)
-@Table(name = "players")
-public class PlayerModel extends StormModel {
+@Table(name = "worlds")
+public class WorldModel extends StormModel {
 
     @Column
-    private UUID uniqueId;
+    private String worldUniqueId;
 
-    @Column(defaultValue = "0")
-    private String lastLocation;
+    private String worldName;
 
 }

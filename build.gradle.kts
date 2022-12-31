@@ -2,12 +2,20 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
     java
+    kotlin("jvm") version "1.7.21"
     id("com.github.johnrengelman.shadow") version ("7.1.0")
     id("io.freefair.lombok") version "6.6.1"
+    application
 }
 
 group = "cc.ddev"
 version = "1.0-SNAPSHOT"
+
+tasks {
+    jar {
+        archiveFileName.set("feather.jar")
+    }
+}
 
 repositories {
     mavenCentral()
@@ -37,6 +45,14 @@ tasks {
         reloc("de.leonhard.storage")
         reloc("com.zaxxer.hikari")
     }
+}
+
+application {
+    mainClass.set("cc.ddev.feather.Server")
+}
+
+tasks.withType<JavaCompile> {
+    options.encoding = "UTF-8"
 }
 
 tasks {
