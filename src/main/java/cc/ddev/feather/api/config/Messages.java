@@ -21,4 +21,7 @@ public class Messages extends Config {
 
     @Getter
     public static String FLY_OFF = getFeatherConfig().getString("messages.fly_off");
+
+    @Getter
+    public static String JOIN_MESSAGE = getFeatherConfig().getString("messages.join_message");
 }

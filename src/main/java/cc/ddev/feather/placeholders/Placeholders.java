@@ -1,7 +1,6 @@
 package cc.ddev.feather.placeholders;
 
-import cc.ddev.feather.models.MinetopiaPlayer;
-import cc.ddev.feather.world.WorldManager;
+import cc.ddev.feather.database.models.PlayerModel;
 import net.minestom.server.entity.Player;
 
 import java.util.HashMap;
@@ -19,8 +18,7 @@ public class Placeholders {
 
     static {
         addPlaceholder("player", Player::getUsername);
-        addPlaceholder("world", MinetopiaPlayer::getWorld);
-
+        addPlaceholder("world", PlayerModel::getInstanceName);
     }
 
     /**

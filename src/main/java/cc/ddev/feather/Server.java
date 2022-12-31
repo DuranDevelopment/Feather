@@ -5,16 +5,21 @@ import cc.ddev.feather.commands.TestCommand;
 import cc.ddev.feather.commands.essential.GamemodeCommand;
 import cc.ddev.feather.commands.essential.OpCommand;
 import cc.ddev.feather.configuration.ConfigManager;
-import cc.ddev.feather.database.DatabaseConnection;
+import cc.ddev.feather.database.DataManager;
+import cc.ddev.feather.database.StormDatabase;
+import cc.ddev.feather.database.models.PlayerModel;
 import cc.ddev.feather.logger.Log;
-import cc.ddev.feather.models.MinetopiaPlayer;
+import cc.ddev.feather.placeholders.Placeholders;
+import cc.ddev.feather.player.FeatherPlayer;
 import cc.ddev.feather.sidebar.SidebarManager;
 import cc.ddev.feather.world.WorldManager;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.kyori.adventure.title.TitlePart;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.GlobalEventHandler;
+import net.minestom.server.event.player.PlayerDisconnectEvent;
 import net.minestom.server.event.player.PlayerLoginEvent;
 import net.minestom.server.event.player.PlayerSpawnEvent;
 import net.minestom.server.event.server.ServerListPingEvent;
@@ -28,9 +33,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Base64;
-import java.util.UUID;
 
 public class Server {
 
@@ -46,14 +49,7 @@ public class Server {
         ConfigManager configManager = ConfigManager.init();
         configManager.createConfigDirectory();
         // Make the database connection
-        DatabaseConnection database = new DatabaseConnection();
-        try {
-            database.connect();
-            Log.getLogger().info("Feather successfully connected to database!");
-        } catch (SQLException e) {
-            Log.getLogger().error("Feather couldn't connect to database:");
-            e.printStackTrace();
-        }
+        new DataManager().initialize();
         // Create the worlds directory
         WorldManager.createWorldsDirectory();
         // Check if worlds are present
@@ -67,7 +63,7 @@ public class Server {
         // Set the UUID provider
         MinecraftServer.getConnectionManager().setUuidProvider((playerConnection, username) -> {
             // This method will be called at players connection to set their UUID
-            return UUID.fromString(MinetopiaPlayer.getUUID(username)); /* Set here your custom UUID registration system */
+            return FeatherPlayer.getUniqueId(username); /* Set here your custom UUID registration system */
         });
 
         // Set serverlist information
@@ -99,8 +95,11 @@ public class Server {
                 responseData.setFavicon("data:image/png;base64,"+cachedFavicon);
             }
         });
+        // Handle the login event
         globalEventHandler.addListener(PlayerLoginEvent.class, event -> {
             final Player player = event.getPlayer();
+            // Load player model
+            StormDatabase.getInstance().loadPlayerModel(player.getUuid());
             // Check if the server is full
             if (MinecraftServer.getConnectionManager().getOnlinePlayers().size() >= Config.Server.MAX_PLAYERS) {
                 player.kick("Server is full!");
@@ -115,9 +114,21 @@ public class Server {
             player.setRespawnPoint(Config.Spawn.COORDS);
             Log.getLogger().info("UUID of player " + player.getUsername() + " is " + player.getUuid());
         });
+        // Handle the spawn event
         globalEventHandler.addListener(PlayerSpawnEvent.class, event -> {
             final Player player = event.getPlayer();
+            player.sendTitlePart(TitlePart.TITLE, Component.text("Welkom in"));
+            player.sendTitlePart(TitlePart.SUBTITLE, Component.text(Placeholders.parse(player, "<world>")));
             SidebarManager.buildSidebar(player);
+        });
+        // Handle the DisconnectEvent
+        globalEventHandler.addListener(PlayerDisconnectEvent.class, event -> {
+            final Player player = event.getPlayer();
+            // Get PlayerModel
+            PlayerModel playerModel = StormDatabase.getInstance().loadPlayerModel(player.getUuid()).join();
+            // Save player model
+            StormDatabase.getInstance().saveStormModel(playerModel);
+            Log.getLogger().info("Saved player " + player.getUsername() + " with UUID " + player.getUuid());
         });
         // Start the server from config values
         minecraftServer.start(Config.Server.SERVER_HOST, Config.Server.SERVER_PORT);

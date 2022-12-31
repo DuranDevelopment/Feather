@@ -19,6 +19,8 @@ dependencies {
     implementation("com.zaxxer:HikariCP:5.0.1")
     implementation("com.github.simplix-softworks:simplixstorage:3.2.5")
     implementation("net.kyori:adventure-text-minimessage:4.12.0")
+    implementation("com.github.Mindgamesnl:storm:prod125")
+    implementation("mysql:mysql-connector-java:8.0.31")
     compileOnly("junit:junit:4.13.2")
     implementation("org.slf4j:slf4j-api:2.0.6")
 }
@@ -33,6 +35,7 @@ tasks {
 
         fun reloc(pkg: String) = relocate(pkg, "cc.ddev.shaded.$pkg")
         reloc("de.leonhard.storage")
+        reloc("com.zaxxer.hikari")
     }
 }
 

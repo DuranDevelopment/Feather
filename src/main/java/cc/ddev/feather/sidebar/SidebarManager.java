@@ -9,7 +9,7 @@ import net.minestom.server.scoreboard.Sidebar;
 public class SidebarManager {
 
     public static void buildSidebar(Player player) {
-        Component titleComponent = Component.text(Placeholders.parse(player, Config.Sidebar.TITLE.toUpperCase()));
+        Component titleComponent = Component.text(Placeholders.parse(player, Config.Sidebar.TITLE).toUpperCase());
         Sidebar sidebar = new Sidebar(titleComponent);
         Sidebar.ScoreboardLine line = new Sidebar.ScoreboardLine(
                 "player_name",

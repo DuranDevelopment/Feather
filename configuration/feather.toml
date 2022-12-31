@@ -7,12 +7,14 @@ port = 25565
 [database]
 type = 'mysql'
 username = 'root'
-password = 'root'
+password = ''
 database = 'feather'
 host = '127.0.0.1'
 port = 3306
 
 [spawn]
+spawn_on_join = true
+send_join_message = true
 world = 'demo'
 x = 7.5
 y = -24
@@ -20,16 +22,21 @@ z = -3.5
 
 [chat]
 format = '<levelcolor><level> <prefixcolor><prefix> <namecolor><player>: <chatcolor><message>'
+    [radius]
+    enabled = true
+    radius = 100
+    MessageWhenNobodyInRange = false
+
 
 [sidebar]
 enabled = true
 title = '<world>'
 
 [messages]
-join = 'Welcome to the server, <player>!'
+join_message = 'Welcome to the server, <player>!'
 invalid_arguments = '<red>You provided invalid arguments for this command.'
 invalid_username = '<red>That username is invalid.'
 not_online = '<red>That player is not online.'
-no_permission = '<red>You do not have permission to use this command.'
+no_permission = "<red>You don't have permission to use this command."
 fly_on = '<green>Fly mode has been enabled!'
 fly_off = '<red>Fly mode has been disabled!'

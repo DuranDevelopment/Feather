@@ -31,7 +31,7 @@ public class Config {
         public static int PORT = getFeatherConfig().getInt("database.port");
 
         @Getter
-        public static String NAME = getFeatherConfig().getString("database.name");
+        public static String NAME = getFeatherConfig().getString("database.database");
     }
 
     public static class Spawn {
@@ -42,6 +42,12 @@ public class Config {
         @Getter
         @Setter
         public static String WORLD = getFeatherConfig().getString("spawn.world");
+
+        @Getter
+        public static boolean SPAWN_ON_JOIN = getFeatherConfig().getBoolean("spawn.spawn_on_join");
+
+        @Getter
+        public static boolean SEND_JOIN_MESSAGE = getFeatherConfig().getBoolean("spawn.send_join_message");
     }
 
     public static class Sidebar {

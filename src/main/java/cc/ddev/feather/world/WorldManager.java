@@ -3,7 +3,6 @@ package cc.ddev.feather.world;
 import cc.ddev.feather.logger.Log;
 import lombok.Getter;
 import net.minestom.server.MinecraftServer;
-import net.minestom.server.entity.Player;
 import net.minestom.server.instance.AnvilLoader;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.InstanceContainer;
@@ -18,11 +17,11 @@ public class WorldManager {
     @Getter
     public static final String worldsDirectory = currentDirectory + File.separator + "worlds";
 
-    public static void saveWorld(String savePath, InstanceContainer instanceContainer){
+    public static void saveWorld(String savePath, InstanceContainer instanceContainer) {
         instanceContainer.saveChunksToStorage();
     }
 
-    public static InstanceContainer loadWorld(String loadPath){
+    public static InstanceContainer loadWorld(String loadPath) {
         InstanceContainer instanceContainer = MinecraftServer.getInstanceManager().createInstanceContainer();
         instanceContainer.setChunkLoader(new AnvilLoader(loadPath));
         Log.getLogger().info("Loaded world!");
@@ -40,7 +39,7 @@ public class WorldManager {
         }
     }
 
-    public static String getWorldName(Instance instance) {
+    public static String getInstanceUniqueId(Instance instance) {
         String name = instance.getTag(Tag.String("name"));
         if (name == null) {
             name = instance.getUniqueId().toString();
@@ -55,6 +54,9 @@ public class WorldManager {
 
     public static boolean worldsDirectoryIsEmpty() {
         File f = new File(worldsDirectory);
+        if (f.list() == null) {
+            return true;
+        }
         return f.list().length == 0;
     }
 }
