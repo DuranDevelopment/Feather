@@ -55,6 +55,11 @@ public class Config {
         public static String TITLE = getFeatherConfig().getString("sidebar.title");
     }
 
+    public static class Economy {
+        @Getter
+        public static final double STARTING_BALANCE = getFeatherConfig().getDouble("economy.starting_balance");
+    }
+
     public static class Server {
         @Getter
         public static String SERVER_HOST = getFeatherConfig().getString("server.host");

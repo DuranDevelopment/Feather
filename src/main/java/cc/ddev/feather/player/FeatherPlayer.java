@@ -25,13 +25,13 @@ public class FeatherPlayer {
 
     public FeatherPlayer(@NotNull Player player, @NotNull PlayerModel playerModel) {
         this.player = player;
-        this.uniqueId = getUniqueId(player.getName().toString());
+        this.uniqueId = player.getUuid();
         this.username = player.getName();
         this.playerModel = playerModel;
     }
 
     //Get UUID of player from username
-    public static UUID getUniqueId(String name) {
+    public static UUID getMojangUniqueId(String name) {
         String uniqueId;
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(new URL("https://api.mojang.com/users/profiles/minecraft/" + name).openStream()));

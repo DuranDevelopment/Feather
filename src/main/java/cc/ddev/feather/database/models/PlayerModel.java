@@ -13,10 +13,12 @@ import java.util.UUID;
 @Table(name = "players")
 public class PlayerModel extends StormModel {
 
-    @Column
+    @Column(name = "uuid", unique = true)
     private UUID uniqueId;
 
     @Column(defaultValue = "0")
     private String lastLocation;
 
+    @Column(defaultValue = "0")
+    private Double money;
 }

@@ -6,6 +6,7 @@ import cc.ddev.feather.commands.essential.GamemodeCommand;
 import cc.ddev.feather.commands.essential.OpCommand;
 import cc.ddev.feather.configuration.ConfigManager;
 import cc.ddev.feather.database.DataManager;
+import cc.ddev.feather.database.StormDatabase;
 import cc.ddev.feather.listeners.player.PlayerDisconnectListener;
 import cc.ddev.feather.listeners.player.PlayerLoginListener;
 import cc.ddev.feather.listeners.player.PlayerSpawnListener;
@@ -15,6 +16,7 @@ import cc.ddev.feather.player.FeatherPlayer;
 import cc.ddev.feather.world.WorldManager;
 import lombok.Getter;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.entity.Player;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.block.Block;
@@ -48,7 +50,7 @@ public class Server {
         // Set the UUID provider
         MinecraftServer.getConnectionManager().setUuidProvider((playerConnection, username) -> {
             // This method will be called at players connection to set their UUID
-            return FeatherPlayer.getUniqueId(username); /* Set here your custom UUID registration system */
+            return FeatherPlayer.getMojangUniqueId(username); /* Set here your custom UUID registration system */
         });
 
         // Register server listeners
@@ -63,6 +65,10 @@ public class Server {
         MinecraftServer.getCommandManager().register(new TestCommand());
         MinecraftServer.getCommandManager().register(new OpCommand());
         MinecraftServer.getCommandManager().register(new GamemodeCommand());
+
+        for (Player player : MinecraftServer.getConnectionManager().getOnlinePlayers()) {
+            StormDatabase.getInstance().loadPlayerModel(player.getUuid());
+        }
 
         Log.getLogger().info("Feather has started!");
     }

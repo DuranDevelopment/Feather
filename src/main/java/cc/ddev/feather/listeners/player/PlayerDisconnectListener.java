@@ -1,6 +1,5 @@
 package cc.ddev.feather.listeners.player;
 
-import cc.ddev.feather.database.StormDatabase;
 import cc.ddev.feather.database.models.PlayerModel;
 import cc.ddev.feather.listeners.handler.Listen;
 import cc.ddev.feather.listeners.handler.Listener;
@@ -14,10 +13,10 @@ public class PlayerDisconnectListener implements Listener {
     @Listen(event = PlayerDisconnectEvent.class)
     public void onPlayerDisconnect(PlayerDisconnectEvent event) {
         final Player player = event.getPlayer();
-        // Get PlayerModel
-        PlayerModel playerModel = StormDatabase.getInstance().loadPlayerModel(player.getUuid()).join();
+
         // Save player model
-        StormDatabase.getInstance().saveStormModel(playerModel);
+        PlayerModel playerModel = new PlayerModel();
+        playerModel.setLastLocation(player.getPosition().toString());
         Log.getLogger().info("Saved player " + player.getUsername() + " with UUID " + player.getUuid());
     }
 }

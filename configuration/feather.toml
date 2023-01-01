@@ -27,10 +27,12 @@ format = '<levelcolor><level> <prefixcolor><prefix> <namecolor><player>: <chatco
     radius = 100
     MessageWhenNobodyInRange = false
 
-
 [sidebar]
 enabled = true
 title = '<world>'
+
+[economy]
+starting_balance = 1000
 
 [messages]
 join_message = 'Welcome to the server, <player>!'

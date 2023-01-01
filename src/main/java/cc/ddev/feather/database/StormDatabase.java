@@ -1,8 +1,8 @@
 package cc.ddev.feather.database;
 
 import cc.ddev.feather.api.config.Config;
-import cc.ddev.feather.logger.Log;
 import cc.ddev.feather.database.models.PlayerModel;
+import cc.ddev.feather.logger.Log;
 import cc.ddev.feather.player.PlayerWrapper;
 import com.craftmend.storm.Storm;
 import com.craftmend.storm.api.StormModel;
@@ -14,6 +14,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.timer.Scheduler;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -28,20 +29,19 @@ import java.util.concurrent.Executors;
 public class StormDatabase {
     private static @Getter @Setter(AccessLevel.PRIVATE) StormDatabase instance;
     private @Getter Storm storm;
-    private static @Getter ExecutorService executorService;
+    private final static @Getter ExecutorService executorService = Executors.newFixedThreadPool(10);
 
     private final String currentDirectory = System.getProperty("user.dir");
 
     public StormDatabase() {
         setInstance(this);
-        executorService = Executors.newFixedThreadPool(10);
     }
 
     public void init() throws SQLException, ClassNotFoundException {
         if (Config.Database.TYPE.equalsIgnoreCase("sqlite")) {
+            Class.forName("org.sqlite.JDBC");
             storm = new Storm(new SqliteFileDriver(new File(currentDirectory, "database.db")));
         } else {
-
             Class.forName("com.mysql.cj.jdbc.MysqlDataSource");
             HikariConfig config = new HikariConfig();
 
@@ -61,7 +61,52 @@ public class StormDatabase {
         storm.registerModel(new PlayerModel());
         storm.runMigrations();
 
-        Log.getLogger().info("Succesfully connected to the database.");
+        Log.getLogger().info("Successfully connected to the database.");
+    }
+
+    public CompletableFuture<Optional<PlayerModel>> findPlayerModel(@NotNull UUID uuid) {
+        CompletableFuture<Optional<PlayerModel>> completableFuture = new CompletableFuture<>();
+        executorService.submit(() -> {
+            try {
+                Collection<PlayerModel> playerModel;
+                playerModel = storm.buildQuery(PlayerModel.class)
+                        .where("uuid", Where.EQUAL, uuid.toString())
+                        .limit(1)
+                        .execute()
+                        .join();
+
+                Scheduler scheduler = MinecraftServer.getSchedulerManager();
+                scheduler.scheduleNextTick(() -> completableFuture.complete(playerModel.stream().findFirst()));
+            } catch (Exception exception) {
+                exception.printStackTrace();
+                completableFuture.completeExceptionally(exception);
+            }
+        });
+
+        return completableFuture;
+    }
+
+    public CompletableFuture<PlayerModel> loadPlayerModel(UUID uuid) {
+        CompletableFuture<PlayerModel> completableFuture = new CompletableFuture<>();
+        StormDatabase.getInstance().findPlayerModel(uuid).thenAccept(playerModel -> {
+            PlayerWrapper.playerModels.remove(uuid);
+
+            if (playerModel.isEmpty()) {
+                PlayerModel createdModel = new PlayerModel();
+                createdModel.setUniqueId(uuid);
+                createdModel.setMoney(Config.Economy.STARTING_BALANCE);
+                PlayerWrapper.playerModels.put(uuid, createdModel);
+                completableFuture.complete(createdModel);
+
+                StormDatabase.getInstance().saveStormModel(createdModel);
+                return;
+            }
+
+            PlayerWrapper.playerModels.put(uuid, playerModel.get());
+            completableFuture.complete(playerModel.get());
+        });
+
+        return completableFuture;
     }
 
     public CompletableFuture<Integer> saveStormModel(StormModel stormModel) {
@@ -72,48 +117,6 @@ public class StormDatabase {
             } catch (SQLException exception) {
                 completableFuture.completeExceptionally(exception);
             }
-        });
-
-        return completableFuture;
-    }
-
-    public CompletableFuture<Optional<PlayerModel>> findPlayerModel(@NotNull UUID uuid) {
-        CompletableFuture<Optional<PlayerModel>> completableFuture = new CompletableFuture<>();
-        executorService.submit(() -> {
-            try {
-                Collection<PlayerModel> playerModel;
-                playerModel = storm.buildQuery(PlayerModel.class)
-                        .where("unique_id", Where.EQUAL, uuid.toString())
-                        .limit(1)
-                        .execute()
-                        .join();
-
-                MinecraftServer.getSchedulerManager().buildTask(() -> completableFuture.complete(playerModel.stream().findFirst()));
-            } catch (Exception exception) {
-                completableFuture.completeExceptionally(exception);
-            }
-        });
-
-        return completableFuture;
-    }
-
-    public CompletableFuture<PlayerModel> loadPlayerModel(UUID uuid) {
-        CompletableFuture<PlayerModel> completableFuture = new CompletableFuture<>();
-        findPlayerModel(uuid).thenAccept(playerModel -> {
-            PlayerWrapper.playerModels.remove(uuid);
-
-            if (playerModel.isEmpty()) {
-                PlayerModel createdModel = new PlayerModel();
-                createdModel.setUniqueId(uuid);
-                PlayerWrapper.playerModels.put(uuid, createdModel);
-                completableFuture.complete(createdModel);
-
-                this.saveStormModel(createdModel);
-                return;
-            }
-
-            PlayerWrapper.playerModels.put(uuid, playerModel.get());
-            completableFuture.complete(playerModel.get());
         });
 
         return completableFuture;

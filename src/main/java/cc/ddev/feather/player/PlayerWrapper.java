@@ -11,10 +11,10 @@ public class PlayerWrapper {
     public static @Getter HashMap<UUID, PlayerModel> playerModels = new HashMap<>();
 
     public static FeatherPlayer getFeatherPlayer(Player player) {
-        if (!playerModels.containsKey(FeatherPlayer.getUniqueId(player.getName().toString()))) {
+        if (!playerModels.containsKey(player.getUuid())) {
             return null;
         }
 
-        return new FeatherPlayer(player, playerModels.get(FeatherPlayer.getUniqueId(player.getName().toString())));
+        return new FeatherPlayer(player, playerModels.get(player.getUuid()));
     }
 }

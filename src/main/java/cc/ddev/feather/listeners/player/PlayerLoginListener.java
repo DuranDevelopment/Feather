@@ -19,12 +19,15 @@ public class PlayerLoginListener implements Listener {
     @Listen(event = PlayerLoginEvent.class)
     public void onPlayerLogin(PlayerLoginEvent event) {
         final Player player = event.getPlayer();
-        // Load player model
-        StormDatabase.getInstance().loadPlayerModel(player.getUuid());
+
         // Check if the server is full
         if (MinecraftServer.getConnectionManager().getOnlinePlayers().size() >= Config.Server.MAX_PLAYERS) {
             player.kick("Server is full!");
         }
+
+        // Load player model
+        StormDatabase.getInstance().loadPlayerModel(player.getUuid());
+
         // Set the player's instance
         if (!WorldManager.worldsDirectoryIsEmpty()) {
             event.setSpawningInstance(WorldManager.loadWorld(WorldManager.getWorldsDirectory() + File.separator + Config.Spawn.WORLD));
