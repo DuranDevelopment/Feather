@@ -34,8 +34,10 @@ public class PlayerLoginListener implements Listener {
         } else {
             event.setSpawningInstance(Server.getInstanceContainer());
         }
+
         // Set the spawn position
         player.setRespawnPoint(Config.Spawn.COORDS);
+
         Log.getLogger().info("UUID of player " + player.getUsername() + " is " + player.getUuid());
     }
 }

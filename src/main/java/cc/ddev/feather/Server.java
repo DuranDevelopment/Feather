@@ -12,7 +12,8 @@ import cc.ddev.feather.listeners.player.PlayerLoginListener;
 import cc.ddev.feather.listeners.player.PlayerSpawnListener;
 import cc.ddev.feather.listeners.server.ServerListPingListener;
 import cc.ddev.feather.logger.Log;
-import cc.ddev.feather.player.FeatherPlayer;
+import cc.ddev.feather.player.PlayerProfile;
+import cc.ddev.feather.world.SaveWorldTask;
 import cc.ddev.feather.world.WorldManager;
 import lombok.Getter;
 import net.minestom.server.MinecraftServer;
@@ -30,6 +31,8 @@ public class Server {
         // Initialization
         MinecraftServer minecraftServer = MinecraftServer.init();
         InstanceManager instanceManager = MinecraftServer.getInstanceManager();
+        // Set brand name
+        MinecraftServer.setBrandName("Feather");
         // Create the instance
         instanceContainer = instanceManager.createInstanceContainer();
         // Load the configuration file
@@ -50,7 +53,7 @@ public class Server {
         // Set the UUID provider
         MinecraftServer.getConnectionManager().setUuidProvider((playerConnection, username) -> {
             // This method will be called at players connection to set their UUID
-            return FeatherPlayer.getMojangUniqueId(username); /* Set here your custom UUID registration system */
+            return PlayerProfile.getMojangUniqueId(username); /* Set here your custom UUID registration system */
         });
 
         // Register server listeners
@@ -69,7 +72,7 @@ public class Server {
         for (Player player : MinecraftServer.getConnectionManager().getOnlinePlayers()) {
             StormDatabase.getInstance().loadPlayerModel(player.getUuid());
         }
-
-        Log.getLogger().info("Feather has started!");
+        SaveWorldTask.registerTask();
+        SaveWorldTask.registerShutdownHook();
     }
 }

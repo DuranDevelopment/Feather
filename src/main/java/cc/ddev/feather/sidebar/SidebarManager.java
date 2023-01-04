@@ -12,7 +12,7 @@ public class SidebarManager {
         Component titleComponent = Component.text(Placeholders.parse(player, Config.Sidebar.TITLE).toUpperCase());
         Sidebar sidebar = new Sidebar(titleComponent);
         Sidebar.ScoreboardLine line = new Sidebar.ScoreboardLine(
-                "player_name",
+                "player_money",
                 player.getName(),
                 0
         );

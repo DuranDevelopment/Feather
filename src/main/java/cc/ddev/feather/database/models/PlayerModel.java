@@ -21,4 +21,7 @@ public class PlayerModel extends StormModel {
 
     @Column(defaultValue = "0")
     private Double money;
+
+    @Column(defaultValue = "0")
+    private Integer level;
 }

@@ -6,7 +6,7 @@ import cc.ddev.feather.listeners.handler.Listen;
 import cc.ddev.feather.listeners.handler.Listener;
 import cc.ddev.feather.logger.Log;
 import cc.ddev.feather.placeholders.Placeholders;
-import cc.ddev.feather.player.FeatherPlayer;
+import cc.ddev.feather.player.PlayerProfile;
 import cc.ddev.feather.player.PlayerWrapper;
 import cc.ddev.feather.sidebar.SidebarManager;
 import net.kyori.adventure.text.Component;
@@ -21,10 +21,11 @@ public class PlayerSpawnListener implements Listener {
     public void onPlayerSpawn(PlayerSpawnEvent event) {
         final Player player = event.getPlayer();
 
-        FeatherPlayer featherPlayer = PlayerWrapper.getFeatherPlayer(player);
-        PlayerModel playerModel = featherPlayer.getPlayerModel();
-        playerModel.setLastLocation(player.getPosition().toString());
+        PlayerProfile playerProfile = PlayerWrapper.getPlayerProfile(player);
+        PlayerModel playerModel = playerProfile.getPlayerModel();
         StormDatabase.getInstance().saveStormModel(playerModel);
+
+        playerModel.setLastLocation(player.getPosition().toString());
 
         Log.getLogger().info(player.getPosition().toString());
         player.sendTitlePart(TitlePart.TITLE, Component.text("Welkom in"));

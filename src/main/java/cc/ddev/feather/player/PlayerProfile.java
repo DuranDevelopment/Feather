@@ -15,7 +15,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.UUID;
 
-public class FeatherPlayer {
+public class PlayerProfile {
 
     private final @Getter Player player;
     private final @Getter
@@ -23,7 +23,7 @@ public class FeatherPlayer {
     private final @Getter UUID uniqueId;
     private final @Getter Component username;
 
-    public FeatherPlayer(@NotNull Player player, @NotNull PlayerModel playerModel) {
+    public PlayerProfile(@NotNull Player player, @NotNull PlayerModel playerModel) {
         this.player = player;
         this.uniqueId = player.getUuid();
         this.username = player.getName();

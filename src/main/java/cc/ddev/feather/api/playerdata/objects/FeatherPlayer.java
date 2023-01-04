@@ -1,5 +1,10 @@
 package cc.ddev.feather.api.playerdata.objects;
 
-public class FeatherPlayer {
+import net.minestom.server.coordinate.Pos;
 
+import java.util.UUID;
+
+public interface FeatherPlayer {
+    UUID getUUID();
+    Pos getLastLocation();
 }

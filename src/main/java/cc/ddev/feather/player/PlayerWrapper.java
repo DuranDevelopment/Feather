@@ -10,11 +10,11 @@ import java.util.UUID;
 public class PlayerWrapper {
     public static @Getter HashMap<UUID, PlayerModel> playerModels = new HashMap<>();
 
-    public static FeatherPlayer getFeatherPlayer(Player player) {
+    public static PlayerProfile getPlayerProfile(Player player) {
         if (!playerModels.containsKey(player.getUuid())) {
             return null;
         }
 
-        return new FeatherPlayer(player, playerModels.get(player.getUuid()));
+        return new PlayerProfile(player, playerModels.get(player.getUuid()));
     }
 }

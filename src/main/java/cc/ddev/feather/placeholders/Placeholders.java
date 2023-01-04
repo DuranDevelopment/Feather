@@ -1,6 +1,6 @@
 package cc.ddev.feather.placeholders;
 
-import cc.ddev.feather.player.FeatherPlayer;
+import cc.ddev.feather.player.PlayerProfile;
 import net.minestom.server.entity.Player;
 
 import java.util.HashMap;
@@ -18,7 +18,7 @@ public class Placeholders {
 
     static {
         addPlaceholder("player", Player::getUsername);
-        addPlaceholder("world", FeatherPlayer::getInstanceName);
+        addPlaceholder("world", PlayerProfile::getInstanceName);
     }
 
     /**
