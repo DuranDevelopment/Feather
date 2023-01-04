@@ -31,7 +31,7 @@ tasks {
         archiveBaseName.set("shadow")
         mergeServiceFiles()
         manifest {
-            attributes(mapOf("Main-Class" to "cc.ddev.feather.Main", "Multi-Release" to "true"))
+            attributes(mapOf("Main-Class" to "cc.ddev.feather.Server", "Multi-Release" to "true"))
         }
 
         fun reloc(pkg: String) = relocate(pkg, "cc.ddev.shaded.$pkg")
