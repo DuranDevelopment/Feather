@@ -4,6 +4,7 @@ import cc.ddev.feather.api.config.Config;
 import cc.ddev.feather.commands.TestCommand;
 import cc.ddev.feather.commands.essential.GamemodeCommand;
 import cc.ddev.feather.commands.essential.OpCommand;
+import cc.ddev.feather.commands.mtworld.MTWorldCommand;
 import cc.ddev.feather.configuration.ConfigManager;
 import cc.ddev.feather.database.DataManager;
 import cc.ddev.feather.database.StormDatabase;
@@ -70,7 +71,7 @@ public class Server {
         MinecraftServer.getCommandManager().register(new TestCommand());
         MinecraftServer.getCommandManager().register(new OpCommand());
         MinecraftServer.getCommandManager().register(new GamemodeCommand());
-
+        MinecraftServer.getCommandManager().register(new MTWorldCommand());
         for (Player player : MinecraftServer.getConnectionManager().getOnlinePlayers()) {
             StormDatabase.getInstance().loadPlayerModel(player.getUuid());
         }

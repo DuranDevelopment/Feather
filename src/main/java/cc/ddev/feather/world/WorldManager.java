@@ -26,7 +26,7 @@ public class WorldManager {
         instanceContainer.setChunkLoader(new AnvilLoader(loadPath));
         String worldName = new File(loadPath).getName();
         setInstanceName(instanceContainer, worldName);
-        Log.getLogger().info("Loaded world!");
+        Log.getLogger().info("Loaded world \"" + worldName + "\" (UUID: " + instanceContainer.getUniqueId() + ")" + "!");
 
         return instanceContainer;
     }
@@ -37,7 +37,6 @@ public class WorldManager {
                 return (InstanceContainer) instance;
             }
         }
-
         return null;
     }
 
@@ -61,6 +60,13 @@ public class WorldManager {
             name = instance.getUniqueId().toString();
         }
         return name;
+    }
+
+    public static String getInstanceUniqueId(Instance instance) {
+        if (instance.getUniqueId().toString() == null) {
+            return null;
+        }
+        return instance.getUniqueId().toString();
     }
 
     public static boolean worldExists(String worldName) {

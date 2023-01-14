@@ -101,7 +101,7 @@ public class StormDatabase {
                 PlayerWrapper.playerModels.put(uuid, createdModel);
                 completableFuture.complete(createdModel);
 
-                StormDatabase.getInstance().saveStormModel(createdModel);
+                saveStormModel(createdModel);
                 return;
             }
 

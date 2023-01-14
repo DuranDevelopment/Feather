@@ -42,13 +42,6 @@ public class OpCommand extends Command {
 
             EntityFinder finder = context.get(playerArgument);
 
-            PlayerProfile playerProfile = PlayerWrapper.getPlayerProfile((Player) sender);
-            PlayerModel playerModel = playerProfile.getPlayerModel();
-
-            if (sender instanceof Player && playerModel.getIsOperator()) {
-                executeOthers(sender, finder.find(sender));
-            }
-
             //Set the gamemode for the targets
             executeOthers(sender, finder.find(sender));
         }, playerArgument);
