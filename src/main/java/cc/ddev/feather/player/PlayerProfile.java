@@ -49,6 +49,6 @@ public class PlayerProfile {
         if (player == null) {
             return "null";
         }
-        return WorldManager.getInstanceUniqueId(player.getInstance());
+        return WorldManager.getInstanceName(player.getInstance());
     }
 }

@@ -164,3 +164,7 @@ gradle-app.setting
 # Java heap dump
 *.hprof
 /.gradle/
+
+### Feather ###
+# World
+worlds/

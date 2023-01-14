@@ -23,9 +23,12 @@ public class PlayerSpawnListener implements Listener {
 
         PlayerProfile playerProfile = PlayerWrapper.getPlayerProfile(player);
         PlayerModel playerModel = playerProfile.getPlayerModel();
+        playerModel.setLastLocation(player.getPosition().toString());
         StormDatabase.getInstance().saveStormModel(playerModel);
 
-        playerModel.setLastLocation(player.getPosition().toString());
+        if (playerModel.getIsOperator()) {
+            player.setPermissionLevel(4);
+        }
 
         Log.getLogger().info(player.getPosition().toString());
         player.sendTitlePart(TitlePart.TITLE, Component.text("Welkom in"));

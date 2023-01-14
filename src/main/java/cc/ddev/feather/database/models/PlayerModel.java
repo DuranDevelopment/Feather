@@ -20,8 +20,11 @@ public class PlayerModel extends StormModel {
     private String lastLocation;
 
     @Column(defaultValue = "0")
-    private Double money;
+    private Double balance;
 
     @Column(defaultValue = "0")
     private Integer level;
+
+    @Column(name = "operator")
+    private Boolean isOperator;
 }

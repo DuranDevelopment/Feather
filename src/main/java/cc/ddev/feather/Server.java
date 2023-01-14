@@ -22,6 +22,8 @@ import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.block.Block;
 
+import java.io.File;
+
 public class Server {
 
     @Getter
@@ -33,8 +35,6 @@ public class Server {
         InstanceManager instanceManager = MinecraftServer.getInstanceManager();
         // Set brand name
         MinecraftServer.setBrandName("Feather");
-        // Create the instance
-        instanceContainer = instanceManager.createInstanceContainer();
         // Load the configuration file
         ConfigManager configManager = ConfigManager.init();
         configManager.createConfigDirectory();
@@ -46,6 +46,8 @@ public class Server {
         if (WorldManager.worldsDirectoryIsEmpty()) {
             Log.getLogger().error("No worlds found! Please create a world in the worlds directory!");
             Log.getLogger().error("Resorting to default world...");
+            // Create the instance
+            instanceContainer = instanceManager.createInstanceContainer();
             // Set the ChunkGenerator
             instanceContainer.setGenerator(unit ->
                 unit.modifier().fillHeight(0, 40, Block.GRASS_BLOCK));
@@ -72,6 +74,8 @@ public class Server {
         for (Player player : MinecraftServer.getConnectionManager().getOnlinePlayers()) {
             StormDatabase.getInstance().loadPlayerModel(player.getUuid());
         }
+
+        WorldManager.loadWorld(WorldManager.getWorldsDirectory() + File.separator + Config.Spawn.WORLD);
         SaveWorldTask.registerTask();
         SaveWorldTask.registerShutdownHook();
     }

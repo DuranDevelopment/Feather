@@ -2,6 +2,7 @@ package cc.ddev.feather.database;
 
 import cc.ddev.feather.api.config.Config;
 import cc.ddev.feather.database.models.PlayerModel;
+import cc.ddev.feather.database.models.WorldModel;
 import cc.ddev.feather.logger.Log;
 import cc.ddev.feather.player.PlayerWrapper;
 import com.craftmend.storm.Storm;
@@ -57,7 +58,7 @@ public class StormDatabase {
 
             storm = new Storm(new HikariDriver(config));
         }
-
+        storm.registerModel(new WorldModel());
         storm.registerModel(new PlayerModel());
         storm.runMigrations();
 
@@ -94,7 +95,9 @@ public class StormDatabase {
             if (playerModel.isEmpty()) {
                 PlayerModel createdModel = new PlayerModel();
                 createdModel.setUniqueId(uuid);
-                createdModel.setMoney(Config.Economy.STARTING_BALANCE);
+                createdModel.setBalance(Config.Economy.STARTING_BALANCE);
+                createdModel.setLevel(0);
+                createdModel.setIsOperator(false);
                 PlayerWrapper.playerModels.put(uuid, createdModel);
                 completableFuture.complete(createdModel);
 

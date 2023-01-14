@@ -24,9 +24,21 @@ public class WorldManager {
     public static InstanceContainer loadWorld(String loadPath) {
         InstanceContainer instanceContainer = MinecraftServer.getInstanceManager().createInstanceContainer();
         instanceContainer.setChunkLoader(new AnvilLoader(loadPath));
+        String worldName = new File(loadPath).getName();
+        setInstanceName(instanceContainer, worldName);
         Log.getLogger().info("Loaded world!");
 
         return instanceContainer;
+    }
+
+    public static InstanceContainer getWorld(String worldName) {
+        for (Instance instance : MinecraftServer.getInstanceManager().getInstances()) {
+            if (instance.getTag(Tag.String("name")).equalsIgnoreCase(worldName)) {
+                return (InstanceContainer) instance;
+            }
+        }
+
+        return null;
     }
 
     public static void createWorldsDirectory() {
@@ -39,7 +51,11 @@ public class WorldManager {
         }
     }
 
-    public static String getInstanceUniqueId(Instance instance) {
+    public static void setInstanceName(Instance instance, String name) {
+        instance.setTag(Tag.String("name"), name);
+    }
+
+    public static String getInstanceName(Instance instance) {
         String name = instance.getTag(Tag.String("name"));
         if (name == null) {
             name = instance.getUniqueId().toString();

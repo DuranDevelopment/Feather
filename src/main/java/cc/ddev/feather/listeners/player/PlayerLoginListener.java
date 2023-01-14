@@ -11,8 +11,6 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.player.PlayerLoginEvent;
 
-import java.io.File;
-
 public class PlayerLoginListener implements Listener {
 
     // Handle the player login event
@@ -30,7 +28,7 @@ public class PlayerLoginListener implements Listener {
 
         // Set the player's instance
         if (!WorldManager.worldsDirectoryIsEmpty()) {
-            event.setSpawningInstance(WorldManager.loadWorld(WorldManager.getWorldsDirectory() + File.separator + Config.Spawn.WORLD));
+            event.setSpawningInstance(WorldManager.getWorld(Config.Spawn.WORLD));
         } else {
             event.setSpawningInstance(Server.getInstanceContainer());
         }
