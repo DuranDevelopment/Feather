@@ -19,6 +19,8 @@ public class Placeholders {
     static {
         addPlaceholder("player", Player::getUsername);
         addPlaceholder("world", PlayerProfile::getInstanceName);
+        addPlaceholder("loadingname", PlayerProfile::getInstanceLoadingName);
+        addPlaceholder("worldcolor", PlayerProfile::getInstanceColor);
     }
 
     /**

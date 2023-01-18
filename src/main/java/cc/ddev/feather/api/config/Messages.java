@@ -23,5 +23,11 @@ public class Messages extends Config {
     public static String FLY_OFF = getFeatherConfig().getString("messages.fly_off");
 
     @Getter
-    public static String JOIN_MESSAGE = getFeatherConfig().getString("messages.join_message");
+    public static String JOIN_MESSAGE = getFeatherConfig().getString("messages.join.message");
+
+    @Getter
+    public static String TITLE_LINE_1 = getFeatherConfig().getString("messages.title.line1");
+
+    @Getter
+    public static String TITLE_LINE_2 = getFeatherConfig().getString("messages.title.line2");
 }

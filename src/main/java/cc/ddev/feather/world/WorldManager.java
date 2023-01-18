@@ -1,14 +1,19 @@
 package cc.ddev.feather.world;
 
+import cc.ddev.feather.database.StormDatabase;
+import cc.ddev.feather.database.models.WorldModel;
 import cc.ddev.feather.logger.Log;
+import com.craftmend.storm.api.enums.Where;
 import lombok.Getter;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.instance.AnvilLoader;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.tag.Tag;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
+import java.util.Collection;
 
 public class WorldManager {
 
@@ -80,5 +85,28 @@ public class WorldManager {
             return true;
         }
         return f.list().length == 0;
+    }
+
+    @Nullable
+    public static Collection<WorldModel> findWorldModel(String worldName) {
+        try {
+            Collection<WorldModel> worldModel;
+            worldModel = StormDatabase.getInstance().getStorm().buildQuery(WorldModel.class)
+                    .where("worldname", Where.EQUAL, worldName)
+                    .limit(1)
+                    .execute()
+                    .join();
+            return worldModel;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public static String getLoadingName(String worldName) {
+        return findWorldModel(worldName).iterator().next().getLoadingName();
+    }
+
+    public static String getColor(String worldName) {
+        return findWorldModel(worldName).iterator().next().getColor();
     }
 }

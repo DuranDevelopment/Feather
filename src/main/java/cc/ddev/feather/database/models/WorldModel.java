@@ -10,14 +10,10 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper=false)
 @Table(name = "worlds")
 public class WorldModel extends StormModel {
-
-    @Column(name = "uuid", unique = true)
-    private String worldUniqueId;
-
     @Column(name = "worldname", unique = true)
     private String worldName;
 
-    @Column(name = "color", defaultValue = "&7")
+    @Column(name = "color", defaultValue = "<gray>")
     private String color;
 
     @Column(name = "title")

@@ -1,5 +1,6 @@
 package cc.ddev.feather.listeners.player;
 
+import cc.ddev.feather.api.config.Messages;
 import cc.ddev.feather.database.StormDatabase;
 import cc.ddev.feather.database.models.PlayerModel;
 import cc.ddev.feather.listeners.handler.Listen;
@@ -9,7 +10,7 @@ import cc.ddev.feather.placeholders.Placeholders;
 import cc.ddev.feather.player.PlayerProfile;
 import cc.ddev.feather.player.PlayerWrapper;
 import cc.ddev.feather.sidebar.SidebarManager;
-import net.kyori.adventure.text.Component;
+import cc.ddev.feather.utils.ChatUtils;
 import net.kyori.adventure.title.TitlePart;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.player.PlayerSpawnEvent;
@@ -31,8 +32,8 @@ public class PlayerSpawnListener implements Listener {
         }
 
         Log.getLogger().info(player.getPosition().toString());
-        player.sendTitlePart(TitlePart.TITLE, Component.text("Welkom in"));
-        player.sendTitlePart(TitlePart.SUBTITLE, Component.text(Placeholders.parse(player, "<world>")));
+        player.sendTitlePart(TitlePart.TITLE, ChatUtils.translateMiniMessage(Placeholders.parse(player, Messages.TITLE_LINE_1)));
+        player.sendTitlePart(TitlePart.SUBTITLE, ChatUtils.translateMiniMessage(Placeholders.parse(player, Messages.TITLE_LINE_2)));
         SidebarManager.buildSidebar(player);
     }
 }

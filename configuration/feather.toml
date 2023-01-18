@@ -20,9 +20,17 @@ x = 7.5
 y = -24
 z = -3.5
 
+[player]
+    [player.default]
+    prefix = 'Zwerver'
+    prefix_color = '&7'
+    level = 1
+    city_color = '&7'
+    chat_color = '&7'
+
 [chat]
 format = '<levelcolor><level> <prefixcolor><prefix> <namecolor><player>: <chatcolor><message>'
-    [radius]
+    [chat.radius]
     enabled = true
     radius = 100
     MessageWhenNobodyInRange = false
@@ -35,7 +43,15 @@ title = '<world>'
 starting_balance = 1000
 
 [messages]
-join_message = 'Welcome to the server, <player>!'
+    [messages.join]
+    enabled = true
+    message = '&7<player> joined the game'
+    [messages.leave]
+    enabled = true
+    message = '&7<player> left the game'
+    [messages.title]
+    line1 = '<worldcolor>Welkom in'
+    line2 = '<worldcolor><loadingname>'
 invalid_arguments = '<red>You provided invalid arguments for this command.'
 invalid_username = '<red>That username is invalid.'
 not_online = '<red>That player is not online.'
