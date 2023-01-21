@@ -2,6 +2,7 @@ package cc.ddev.feather;
 
 import cc.ddev.feather.api.config.Config;
 import cc.ddev.feather.commands.TestCommand;
+import cc.ddev.feather.commands.banking.OpenBankCommand;
 import cc.ddev.feather.commands.economy.EconomyCommand;
 import cc.ddev.feather.commands.essential.GamemodeCommand;
 import cc.ddev.feather.commands.essential.OpCommand;
@@ -75,6 +76,7 @@ public class Server {
         MinecraftServer.getCommandManager().register(new GamemodeCommand());
         MinecraftServer.getCommandManager().register(new MTWorldCommand());
         MinecraftServer.getCommandManager().register(new EconomyCommand());
+        MinecraftServer.getCommandManager().register(new OpenBankCommand());
         for (Player player : MinecraftServer.getConnectionManager().getOnlinePlayers()) {
             StormDatabase.getInstance().loadPlayerModel(player.getUuid());
         }
