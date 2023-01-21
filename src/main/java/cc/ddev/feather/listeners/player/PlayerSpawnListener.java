@@ -1,6 +1,8 @@
 package cc.ddev.feather.listeners.player;
 
+import cc.ddev.feather.api.banking.SelectorGUI;
 import cc.ddev.feather.api.config.Messages;
+import cc.ddev.feather.api.enums.ATMOpenType;
 import cc.ddev.feather.database.StormDatabase;
 import cc.ddev.feather.database.models.PlayerModel;
 import cc.ddev.feather.listeners.handler.Listen;
@@ -11,6 +13,7 @@ import cc.ddev.feather.player.PlayerProfile;
 import cc.ddev.feather.player.PlayerWrapper;
 import cc.ddev.feather.sidebar.SidebarManager;
 import cc.ddev.feather.utils.ChatUtils;
+import cc.ddev.feather.world.WorldManager;
 import net.kyori.adventure.title.TitlePart;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.player.PlayerSpawnEvent;
@@ -32,8 +35,13 @@ public class PlayerSpawnListener implements Listener {
         }
 
         Log.getLogger().info(player.getPosition().toString());
-        player.sendTitlePart(TitlePart.TITLE, ChatUtils.translateMiniMessage(Placeholders.parse(player, Messages.TITLE_LINE_1)));
-        player.sendTitlePart(TitlePart.SUBTITLE, ChatUtils.translateMiniMessage(Placeholders.parse(player, Messages.TITLE_LINE_2)));
-        SidebarManager.buildSidebar(player);
+        // Check if player is in an MTWorld
+        if (WorldManager.isMTWorld(WorldManager.getInstanceName(player.getInstance()))) {
+            // Build sidebar
+            SidebarManager.buildSidebar(player);
+            player.sendTitlePart(TitlePart.TITLE, ChatUtils.translateMiniMessage(Placeholders.parse(player, Messages.TITLE_LINE_1)));
+            player.sendTitlePart(TitlePart.SUBTITLE, ChatUtils.translateMiniMessage(Placeholders.parse(player, Messages.TITLE_LINE_2)));
+        }
+        SelectorGUI.openSelectionMenu(player, player, ATMOpenType.CLICK_ATM);
     }
 }

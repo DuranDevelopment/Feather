@@ -1,6 +1,5 @@
 package cc.ddev.feather.api;
 
-import cc.ddev.feather.api.config.Config;
 import cc.ddev.feather.configuration.ConfigManager;
 import lombok.Getter;
 import net.minestom.server.entity.Player;
@@ -8,7 +7,7 @@ import net.minestom.server.entity.Player;
 public class API {
 
     @Getter
-    public static ConfigManager configManager = Config.getConfigManager();
+    public static ConfigManager configManager = ConfigManager.init();
 
     public static boolean isOp(Player player) {
         return player.getPermissionLevel() == 4;

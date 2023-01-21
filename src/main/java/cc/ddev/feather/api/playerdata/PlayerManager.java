@@ -4,6 +4,10 @@ import cc.ddev.feather.api.playerdata.objects.FeatherPlayer;
 import cc.ddev.feather.api.playerdata.objects.OfflineFeatherPlayer;
 import cc.ddev.feather.api.playerdata.objects.OnlineFeatherPlayer;
 import cc.ddev.feather.database.models.PlayerModel;
+import cc.ddev.feather.player.PlayerProfile;
+import cc.ddev.feather.player.PlayerWrapper;
+import net.minestom.server.MinecraftServer;
+import net.minestom.server.entity.Player;
 
 import java.util.Collection;
 import java.util.UUID;
@@ -43,5 +47,20 @@ public class PlayerManager {
 
     private void changeUUID(UUID newUuid, PlayerModel playerModel) {
         playerModel.setUniqueId(newUuid);
+    }
+
+    public void loadPlayer(UUID uuid) {
+        Player player = MinecraftServer.getConnectionManager().getPlayer(uuid);
+        PlayerProfile playerProfile = PlayerWrapper.getPlayerProfile(player);
+        PlayerModel playerModel = playerProfile.getPlayerModel();
+
+        String lastLocation = playerModel.getLastLocation();
+        double balance = playerModel.getBalance();
+        OnlineFeatherPlayer onlineFeatherPlayer = new OnlineFeatherPlayer(uuid, lastLocation, balance);
+        featherplayers.put(uuid, onlineFeatherPlayer);
+    }
+
+    public void unloadPlayer(UUID uuid) {
+        featherplayers.remove(uuid);
     }
 }

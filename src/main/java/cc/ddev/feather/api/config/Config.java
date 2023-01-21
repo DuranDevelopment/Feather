@@ -9,10 +9,7 @@ import net.minestom.server.coordinate.Pos;
 public class Config {
 
     @Getter
-    private static final ConfigManager configManager = ConfigManager.init();
-
-    @Getter
-    public static final Toml featherConfig = configManager.getFeatherConfig();
+    private static final Toml featherConfig = ConfigManager.init().getFeatherConfig();
 
     public static class Database {
         @Getter

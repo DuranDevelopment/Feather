@@ -1,0 +1,31 @@
+[join]
+enabled = true
+message = '&7<player> joined the game'
+[leave]
+enabled = true
+message = '&7<player> left the game'
+[title]
+line1 = '<worldcolor>Welkom in'
+line2 = '<worldcolor><loadingname>'
+[mtworldcmd]
+    [mtworldcmd.add]
+    success = '<dark_aqua>Succesfully <aqua>enabled<dark_aqua> Feather in this world!'
+[banking]
+    [banking.selector]
+    title = '<dark_aqua>Select the account type:'
+        [banking.selector.account]
+        title = '<dark_aqua>Select the account:'
+        lore = '(ID: <ID>)'
+        [banking.selector.accounttype]
+        government = '<dark_green>Government'
+        savings = '<dark_red>Savings'
+        private = '<gold>Private'
+        business = '<dark_aqua>Business'
+
+
+invalid_arguments = '<red>You provided invalid arguments for this command.'
+invalid_username = '<red>That username is invalid.'
+not_online = '<red>That player is not online.'
+no_permission = "<red>You don't have permission to use this command."
+fly_on = '<green>Fly mode has been enabled!'
+fly_off = '<red>Fly mode has been disabled!'

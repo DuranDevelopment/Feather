@@ -1,0 +1,9 @@
+[blocks]
+savings = 'minecraft:redstone_block'
+private = 'minecraft:gold_block'
+business = 'minecraft:diamond_block'
+government = 'minecraft:emerald_block'
+[atm]
+disable_bankaccounts = false
+[money-formatting]
+has_decimal = true

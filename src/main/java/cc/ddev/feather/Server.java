@@ -2,6 +2,7 @@ package cc.ddev.feather;
 
 import cc.ddev.feather.api.config.Config;
 import cc.ddev.feather.commands.TestCommand;
+import cc.ddev.feather.commands.economy.EconomyCommand;
 import cc.ddev.feather.commands.essential.GamemodeCommand;
 import cc.ddev.feather.commands.essential.OpCommand;
 import cc.ddev.feather.commands.mtworld.MTWorldCommand;
@@ -14,6 +15,7 @@ import cc.ddev.feather.listeners.player.PlayerSpawnListener;
 import cc.ddev.feather.listeners.server.ServerListPingListener;
 import cc.ddev.feather.logger.Log;
 import cc.ddev.feather.player.PlayerProfile;
+import cc.ddev.feather.sidebar.SidebarRefreshTask;
 import cc.ddev.feather.world.SaveWorldTask;
 import cc.ddev.feather.world.WorldManager;
 import lombok.Getter;
@@ -72,11 +74,13 @@ public class Server {
         MinecraftServer.getCommandManager().register(new OpCommand());
         MinecraftServer.getCommandManager().register(new GamemodeCommand());
         MinecraftServer.getCommandManager().register(new MTWorldCommand());
+        MinecraftServer.getCommandManager().register(new EconomyCommand());
         for (Player player : MinecraftServer.getConnectionManager().getOnlinePlayers()) {
             StormDatabase.getInstance().loadPlayerModel(player.getUuid());
         }
 
         WorldManager.loadWorld(WorldManager.getWorldsDirectory() + File.separator + Config.Spawn.WORLD);
+        SidebarRefreshTask.registerTask();
         SaveWorldTask.registerTask();
         SaveWorldTask.registerShutdownHook();
     }

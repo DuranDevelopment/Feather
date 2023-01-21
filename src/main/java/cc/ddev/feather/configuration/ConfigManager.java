@@ -18,6 +18,12 @@ public class ConfigManager {
     @Getter
     private final Toml featherConfig = new Toml("feather", configDirectory);
 
+    @Getter
+    private final Toml messagesConfig = new Toml("messages", configDirectory);
+
+    @Getter
+    private final Toml bankingConfig = new Toml("banking", configDirectory);
+
     public void createConfigDirectory() {
         File f = new File(configDirectory);
         if (!f.exists()) {

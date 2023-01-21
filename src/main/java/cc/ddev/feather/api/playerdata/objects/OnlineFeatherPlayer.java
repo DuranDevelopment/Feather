@@ -11,7 +11,14 @@ import java.util.UUID;
 
 public class OnlineFeatherPlayer implements FeatherPlayer {
     private UUID uuid;
-    private Pos lastLocation;
+    private String lastLocation;
+    private double balance;
+
+    public OnlineFeatherPlayer(UUID uuid, String lastLocation, double balance) {
+        this.uuid = uuid;
+        this.lastLocation = lastLocation;
+        this.balance = balance;
+    }
 
     @Override
     public UUID getUUID() {
@@ -32,5 +39,13 @@ public class OnlineFeatherPlayer implements FeatherPlayer {
         double y = Double.parseDouble(extractedCoords[1]);
         double z = Double.parseDouble(extractedCoords[2]);
         return new Pos(x, y, z);
+    }
+
+    @Override
+    public double getBalance() {
+        Player player = MinecraftServer.getConnectionManager().getPlayer(uuid);
+        PlayerProfile playerProfile = PlayerWrapper.getPlayerProfile(player);
+        PlayerModel playerModel = playerProfile.getPlayerModel();
+        return playerModel.getBalance();
     }
 }

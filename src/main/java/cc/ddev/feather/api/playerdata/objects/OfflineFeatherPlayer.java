@@ -13,13 +13,25 @@ import java.util.UUID;
 public class OfflineFeatherPlayer implements FeatherPlayer {
 
     private UUID uuid;
+    private String lastLocation;
+    private double balance;
 
     public OfflineFeatherPlayer(UUID uuid) {
         StackTraceElement[] traces = Thread.currentThread().getStackTrace();
         if (traces.length >= 3 && !traces[2].getClassName().startsWith("cc.ddev.feather.api.playerdata")) {
             Log.getLogger().warn(traces[2] + " created an instance of OfflineFeatherPlayer. This is not expected and might lead to issues!");
             this.uuid = uuid;
+            refreshDatabase();
         }
+    }
+
+    public void refreshDatabase() {
+        Player player = MinecraftServer.getConnectionManager().getPlayer(uuid);
+        PlayerProfile playerProfile = PlayerWrapper.getPlayerProfile(player);
+        PlayerModel playerModel = playerProfile.getPlayerModel();
+
+        this.lastLocation = playerModel.getLastLocation();
+        this.balance = playerModel.getBalance();
     }
 
     @Override
@@ -41,5 +53,13 @@ public class OfflineFeatherPlayer implements FeatherPlayer {
         double y = Double.parseDouble(extractedCoords[1]);
         double z = Double.parseDouble(extractedCoords[2]);
         return new Pos(x, y, z);
+    }
+
+    @Override
+    public double getBalance() {
+        Player player = MinecraftServer.getConnectionManager().getPlayer(uuid);
+        PlayerProfile playerProfile = PlayerWrapper.getPlayerProfile(player);
+        PlayerModel playerModel = playerProfile.getPlayerModel();
+        return playerModel.getBalance();
     }
 }

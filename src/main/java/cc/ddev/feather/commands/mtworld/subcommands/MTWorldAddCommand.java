@@ -1,7 +1,10 @@
 package cc.ddev.feather.commands.mtworld.subcommands;
 
+import cc.ddev.feather.api.config.Messages;
 import cc.ddev.feather.database.StormDatabase;
 import cc.ddev.feather.database.models.WorldModel;
+import cc.ddev.feather.sidebar.SidebarManager;
+import cc.ddev.feather.utils.ChatUtils;
 import cc.ddev.feather.world.WorldManager;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -11,8 +14,8 @@ import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.minestom.server.entity.Player;
 import net.minestom.server.instance.Instance;
 
-public class MTWorldAdd extends Command {
-    public MTWorldAdd() {
+public class MTWorldAddCommand extends Command {
+    public MTWorldAddCommand() {
         super("add");
 
         ArgumentString worldArgument = ArgumentType.String("world");
@@ -29,15 +32,16 @@ public class MTWorldAdd extends Command {
                 sender.sendMessage(Component.text("You don't have permission to use this command.", NamedTextColor.RED));
                 return;
             }
-
             Instance instance = WorldManager.getWorld(context.get(worldArgument));
             WorldModel worldModel = new WorldModel();
             worldModel.setColor("&f");
             worldModel.setTitle(WorldManager.getInstanceName(instance));
             worldModel.setLoadingName(WorldManager.getInstanceName(instance));
-            worldModel.setTemperature(0.5);
+            worldModel.setTemperature(21.64);
             worldModel.setWorldName(context.get(worldArgument));
             StormDatabase.getInstance().saveStormModel(worldModel);
+            sender.sendMessage(ChatUtils.translateMiniMessage(Messages.MTWorldCMD.ADD_SUCCES));
+            SidebarManager.buildSidebar((Player) sender);
         }, worldArgument);
     }
 }

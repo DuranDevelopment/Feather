@@ -43,18 +43,3 @@ title = '<world>'
 starting_balance = 1000
 
 [messages]
-    [messages.join]
-    enabled = true
-    message = '&7<player> joined the game'
-    [messages.leave]
-    enabled = true
-    message = '&7<player> left the game'
-    [messages.title]
-    line1 = '<worldcolor>Welkom in'
-    line2 = '<worldcolor><loadingname>'
-invalid_arguments = '<red>You provided invalid arguments for this command.'
-invalid_username = '<red>That username is invalid.'
-not_online = '<red>That player is not online.'
-no_permission = "<red>You don't have permission to use this command."
-fly_on = '<green>Fly mode has been enabled!'
-fly_off = '<red>Fly mode has been disabled!'

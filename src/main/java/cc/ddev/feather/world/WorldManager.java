@@ -102,6 +102,10 @@ public class WorldManager {
         }
     }
 
+    public static boolean isMTWorld(String worldName) {
+        return !findWorldModel(worldName).isEmpty();
+    }
+
     public static String getLoadingName(String worldName) {
         return findWorldModel(worldName).iterator().next().getLoadingName();
     }

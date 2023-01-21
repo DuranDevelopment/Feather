@@ -17,6 +17,7 @@ public class PlayerDisconnectListener implements Listener {
         // Save player model
         PlayerModel playerModel = new PlayerModel();
         playerModel.setLastLocation(player.getPosition().toString());
+
         Log.getLogger().info("Saved player " + player.getUsername() + " with UUID " + player.getUuid());
     }
 }

@@ -7,4 +7,5 @@ import java.util.UUID;
 public interface FeatherPlayer {
     UUID getUUID();
     Pos getLastLocation();
+    double getBalance();
 }
