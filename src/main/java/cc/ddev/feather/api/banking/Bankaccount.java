@@ -105,7 +105,7 @@ public class Bankaccount {
         this.removeUserSilent(uuid);
         Collection<BankAccountUserModel> bankAccountUserModels =
                 StormDatabase.getInstance().getStorm().buildQuery(BankAccountUserModel.class)
-                        .where("bankId", Where.EQUAL, this.getId())
+                        .where("id", Where.EQUAL, this.getId())
                         .where("uuid", Where.EQUAL, uuid)
                         .limit(1)
                         .execute()
@@ -117,39 +117,5 @@ public class Bankaccount {
 
     public void removeUserSilent(UUID uuid) {
         this.users.remove(uuid);
-    }
-
-    @Deprecated
-    public void addUser(UUID user) {
-        this.users.put(user, BankPermission.ADMIN);
-    }
-
-    @Deprecated
-    public void addUserFromCommand(final UUID user) {
-        BankAccountUserModel bankAccountUserModel = new BankAccountUserModel();
-        bankAccountUserModel.setId(this.getId());
-        bankAccountUserModel.setUuid(user);
-        bankAccountUserModel.setPermission(BankPermission.ADMIN.name());
-        StormDatabase.getInstance().saveStormModel(bankAccountUserModel);
-    }
-
-    @Deprecated
-    public void removeUserFromCommand(UUID user) throws Exception {
-        this.removeUser(user);
-    }
-
-    @Deprecated
-    public void setNameWithoutChannels(String name) {
-        this.setNameSilent(name);
-    }
-
-    @Deprecated
-    public void setFrozenWithoutChannels(boolean frozen) {
-        this.setFrozenSilent(frozen);
-    }
-
-    @Deprecated
-    public void setBalanceWithoutChannels(double newBalance) {
-        this.setBalanceSilent(newBalance);
     }
 }

@@ -12,10 +12,10 @@ import java.util.UUID;
 @EqualsAndHashCode(callSuper = false)
 @Table(name = "bankaccountusers")
 public class BankAccountUserModel extends StormModel {
-    @Column(name = "bankId")
-    private Integer id;
+
     @Column(name = "uuid")
     private UUID uuid;
+
     @Column(name = "permission")
     private String permission;
 }

@@ -9,7 +9,11 @@ import net.kyori.adventure.text.Component;
 import net.minestom.server.entity.Player;
 import net.minestom.server.scoreboard.Sidebar;
 
+import java.util.HashMap;
+
 public class SidebarManager {
+
+    public static HashMap<Player, Sidebar> sidebarMap = new HashMap<>();
 
     public static void buildSidebar(Player player) {
         Component titleComponent = Component.text(Placeholders.parse(player, Config.Sidebar.TITLE).toUpperCase());
@@ -27,5 +31,16 @@ public class SidebarManager {
         );
         sidebar.createLine(line);
         sidebar.addViewer(player);
+        sidebarMap.put(player, sidebar);
+    }
+
+    public static void removeSidebar(Player player) {
+        Sidebar sidebar = sidebarMap.get(player);
+        sidebar.removeViewer(player);
+        sidebarMap.remove(player);
+    }
+
+    public static HashMap<Player, Sidebar> getSidebarEnabled() {
+        return sidebarMap;
     }
 }

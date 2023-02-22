@@ -50,6 +50,9 @@ public class Config {
     public static class Sidebar {
         @Getter
         public static String TITLE = getFeatherConfig().getString("sidebar.title");
+
+        @Getter
+        public static boolean ENABLED = getFeatherConfig().getBoolean("sidebar.enabled");
     }
 
     public static class Economy {

@@ -10,6 +10,7 @@ import net.minestom.server.instance.AnvilLoader;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.tag.Tag;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
@@ -22,8 +23,16 @@ public class WorldManager {
     @Getter
     public static final String worldsDirectory = currentDirectory + File.separator + "worlds";
 
-    public static void saveWorld(String savePath, InstanceContainer instanceContainer) {
+    public static void saveWorld(InstanceContainer instanceContainer) {
+        Log.getLogger().info("Saving world \"" + WorldManager.getInstanceName(instanceContainer) + "\" (UUID: " + instanceContainer.getUniqueId() + ")" + "...");
         instanceContainer.saveChunksToStorage();
+    }
+
+    public static void saveWorlds() {
+        for (@NotNull Instance instance : MinecraftServer.getInstanceManager().getInstances()) {
+            Log.getLogger().info("Saving world \"" + WorldManager.getInstanceName(instance) + "\" (UUID: " + instance.getUniqueId() + ")" + "...");
+            instance.saveChunksToStorage();
+        }
     }
 
     public static InstanceContainer loadWorld(String loadPath) {

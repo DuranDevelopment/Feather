@@ -18,6 +18,12 @@ public class SidebarRefreshTask {
         });
     }
 
+    public static void refreshSidebar(Player player) {
+        if (WorldManager.isMTWorld(WorldManager.getInstanceName(player.getInstance()))) {
+            SidebarManager.buildSidebar(player);
+        }
+    }
+
     private static void refreshSidebar() {
         for (@NotNull Player player : MinecraftServer.getConnectionManager().getOnlinePlayers()) {
             if (WorldManager.isMTWorld(WorldManager.getInstanceName(player.getInstance()))) {

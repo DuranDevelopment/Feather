@@ -10,9 +10,6 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 @Table(name = "bankaccounts")
 public class BankAccountModel extends StormModel {
-
-    @Column(name = "bankId", unique = true)
-    private Integer id;
     @Column(name = "balance", defaultValue = "0")
     private Double balance;
     @Column(name = "bankAccountType")

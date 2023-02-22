@@ -5,6 +5,7 @@ import de.leonhard.storage.Toml;
 import lombok.Getter;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
+import net.minestom.server.utils.inventory.PlayerInventoryUtils;
 
 public class BankingConfig {
 
@@ -14,6 +15,9 @@ public class BankingConfig {
     public static class ATM {
         @Getter
         public static boolean DISABLE_BANKACCOUNTS = getBankingConfig().getBoolean("atm.disable_bankaccounts");
+
+        @Getter
+        public static boolean REALMONEY_ENABLED = getBankingConfig().getBoolean("atm.realmoney.enabled");
     }
 
     public static class Blocks {
@@ -30,6 +34,106 @@ public class BankingConfig {
         public static ItemStack GOVERNMENT_ACCOUNT = ItemStack.of(Material.fromNamespaceId(getBankingConfig().getString("blocks.government")));
     }
 
+    public static class Items {
+        public static class Ghast {
+            @Getter
+            public static ItemStack ITEM = ItemStack.of(Material.fromNamespaceId(getBankingConfig().getString("items.ghast.item")));
+
+            @Getter
+            public static double VALUE = getBankingConfig().getDouble("items.ghast.value");
+        }
+
+        public static class Diamond {
+            @Getter
+            public static ItemStack ITEM = ItemStack.of(Material.fromNamespaceId(getBankingConfig().getString("items.diamond.item")));
+
+            @Getter
+            public static double VALUE = getBankingConfig().getDouble("items.diamond.value");
+        }
+
+        public static class Redstone {
+            @Getter
+            public static ItemStack ITEM = ItemStack.of(Material.fromNamespaceId(getBankingConfig().getString("items.redstone.item")));
+
+            @Getter
+            public static double VALUE = getBankingConfig().getDouble("items.redstone.value");
+        }
+
+
+        public static class Emerald {
+            @Getter
+            public static ItemStack ITEM = ItemStack.of(Material.fromNamespaceId(getBankingConfig().getString("items.emerald.item")));
+
+            @Getter
+            public static double VALUE = getBankingConfig().getDouble("items.emerald.value");
+        }
+
+        public static class Coal {
+            @Getter
+            public static ItemStack ITEM = ItemStack.of(Material.fromNamespaceId(getBankingConfig().getString("items.coal.item")));
+
+            @Getter
+            public static double VALUE = getBankingConfig().getDouble("items.coal.value");
+        }
+
+        public static class IronIngot {
+            @Getter
+            public static ItemStack ITEM = ItemStack.of(Material.fromNamespaceId(getBankingConfig().getString("items.iron_ingot.item")));
+
+            @Getter
+            public static double VALUE = getBankingConfig().getDouble("items.iron_ingot.value");
+        }
+
+        public static class Quartz {
+            @Getter
+            public static ItemStack ITEM = ItemStack.of(Material.fromNamespaceId(getBankingConfig().getString("items.quartz.item")));
+
+            @Getter
+            public static double VALUE = getBankingConfig().getDouble("items.quartz.value");
+        }
+
+        public static class GoldIngot {
+            @Getter
+            public static ItemStack ITEM = ItemStack.of(Material.fromNamespaceId(getBankingConfig().getString("items.gold_ingot.item")));
+
+            @Getter
+            public static double VALUE = getBankingConfig().getDouble("items.gold_ingot.value");
+        }
+
+        public static class GoldNugget {
+            @Getter
+            public static ItemStack ITEM = ItemStack.of(Material.fromNamespaceId(getBankingConfig().getString("items.gold_nugget.item")));
+
+            @Getter
+            public static double VALUE = getBankingConfig().getDouble("items.gold_nugget.value");
+        }
+
+    }
+
     @Getter
     public static boolean HAS_DECIMALS = getBankingConfig().getBoolean("money-formatting.has_decimals");
+
+    // Get material value from config
+    public static double getMaterialValue(Material material) {
+        if (material.equals(Material.GHAST_TEAR)) {
+            return Items.Ghast.VALUE;
+        } else if (material.equals(Material.DIAMOND)) {
+            return Items.Diamond.VALUE;
+        } else if (material.equals(Material.REDSTONE)) {
+            return Items.Redstone.VALUE;
+        } else if (material.equals(Material.EMERALD)) {
+            return Items.Emerald.VALUE;
+        } else if (material.equals(Material.COAL)) {
+            return Items.Coal.VALUE;
+        } else if (material.equals(Material.IRON_INGOT)) {
+            return Items.IronIngot.VALUE;
+        } else if (material.equals(Material.QUARTZ)) {
+            return Items.Quartz.VALUE;
+        } else if (material.equals(Material.GOLD_INGOT)) {
+            return Items.GoldIngot.VALUE;
+        } else if (material.equals(Material.GOLD_NUGGET)) {
+            return Items.GoldNugget.VALUE;
+        }
+        return 0;
+    }
 }

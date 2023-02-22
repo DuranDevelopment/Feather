@@ -29,16 +29,16 @@ public class BankUtils {
         return cachedAccounts.get(id);
     }
 
-    public List<Bankaccount> getAccounts(BankAccountType ... accountTypes) {
-        return cachedAccounts.values().stream().filter(acc -> Arrays.asList(accountTypes).contains((Object)acc.getType())).collect(Collectors.toList());
+    public List<Bankaccount> getAccounts(BankAccountType... accountTypes) {
+        return cachedAccounts.values().stream().filter(acc -> Arrays.asList(accountTypes).contains(acc.getType())).collect(Collectors.toList());
     }
 
     public List<Bankaccount> getAccounts(UUID uuid) {
         return cachedAccounts.values().stream().filter(account -> account.getAuthorisedUsers().contains(uuid)).collect(Collectors.toList());
     }
 
-    public List<Bankaccount> getAccounts(UUID uuid, BankAccountType ... accountTypes) {
-        return this.getAccounts(uuid).stream().filter(acc -> Arrays.asList(accountTypes).contains((Object)acc.getType())).collect(Collectors.toList());
+    public List<Bankaccount> getAccounts(UUID uuid, BankAccountType... accountTypes) {
+        return this.getAccounts(uuid).stream().filter(acc -> Arrays.asList(accountTypes).contains(acc.getType())).collect(Collectors.toList());
     }
 
     public void pullCache() throws Exception {
@@ -75,7 +75,7 @@ public class BankUtils {
     public void toDatabase() throws Exception {
         for (Bankaccount bank : cachedAccounts.values()) {
             Collection<BankAccountModel> bankAccountModels = StormDatabase.getInstance().getStorm().buildQuery(BankAccountModel.class)
-                    .where("bankId", Where.EQUAL, bank.getId())
+                    .where("id", Where.EQUAL, bank.getId())
                     .limit(1)
                     .execute()
                     .join();
@@ -101,8 +101,32 @@ public class BankUtils {
         return this.decimalFormatNoComma.format(number).replace(",", ".");
     }
 
+    public void create(BankAccountType type) {
+        if (type == BankAccountType.PERSONAL) {
+            throw new IllegalArgumentException("Can't create a personal bank account!");
+        }
+        int id = 0;
+        try {
+            id = StormDatabase.getInstance().getStorm().buildQuery(BankAccountModel.class)
+                    .execute()
+                    .join()
+                    .size() + 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        BankAccountModel bankAccountModel = new BankAccountModel();
+        bankAccountModel.setBalance(0.0);
+        bankAccountModel.setName("<white>ID: " + id);
+        bankAccountModel.setFrozen(false);
+        bankAccountModel.setType(type.name());
+        StormDatabase.getInstance().saveStormModel(bankAccountModel);
+
+        silentlyCreateBankaccount(id, type);
+    }
+
     public void silentlyCreateBankaccount(int id, BankAccountType type) {
-        cachedAccounts.put(id, new Bankaccount(id, type, 0.0, "&fID: " + id, false, new HashMap<UUID, BankPermission>()));
+        cachedAccounts.put(id, new Bankaccount(id, type, 0.0, "&fID: " + id, false, new HashMap<>()));
     }
 
     public void silentlyDeleteBankaccount(int id) {
@@ -122,10 +146,7 @@ public class BankUtils {
         if (accounts > 27) {
             return 36;
         }
-        if (accounts > 18) {
-            return 27;
-        }
-        return 18;
+        return 27;
     }
 
     static {

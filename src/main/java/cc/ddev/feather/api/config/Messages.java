@@ -31,10 +31,10 @@ public class Messages {
     public static String JOIN_MESSAGE = getMessagesConfig().getString("join.message");
 
     @Getter
-    public static String TITLE_LINE_1 = getMessagesConfig().getString("title.line1");
+    public static String JOIN_TITLE = getMessagesConfig().getString("join_title.title");
 
     @Getter
-    public static String TITLE_LINE_2 = getMessagesConfig().getString("title.line2");
+    public static String JOIN_SUBTITLE = getMessagesConfig().getString("join_title.subtitle");
 
     public static class MTWorldCMD {
         @Getter
@@ -64,5 +64,70 @@ public class Messages {
             @Getter
             public static String SAVINGS = getMessagesConfig().getString("banking.selector.accounttype.savings");
         }
+
+        public static class Menu {
+            @Getter
+            public static String TITLE = getMessagesConfig().getString("banking.menu.title");
+
+            @Getter
+            public static String ITEM_LORE = getMessagesConfig().getString("banking.menu.item_lore");
+
+        }
+
+        public static class Money {
+            @Getter
+            public static String LORE = getMessagesConfig().getString("banking.money.lore");
+
+            @Getter
+            public static String INSUFFICIENT_BALANCE = getMessagesConfig().getString("banking.money.insufficient_balance");
+
+            @Getter
+            public static String IS_FAKE_MONEY = getMessagesConfig().getString("banking.money.is_fake_money");
+
+            public static class Withdraw {
+                @Getter
+                public static String INVENTORY_FULL = getMessagesConfig().getString("banking.money.withdraw.inventory_full");
+
+                @Getter
+                public static String MESSAGE_PRIVATE = getMessagesConfig().getString("banking.money.withdraw.private");
+
+                @Getter
+                public static String MESSAGE_BUSINESS = getMessagesConfig().getString("banking.money.withdraw.business");
+
+                @Getter
+                public static String MESSAGE_SAVINGS = getMessagesConfig().getString("banking.money.withdraw.savings");
+
+                @Getter
+                public static String MESSAGE_GOVERNMENT = getMessagesConfig().getString("banking.money.withdraw.government");
+            }
+
+            public static class Deposit {
+                @Getter
+                public static String MESSAGE_PRIVATE = getMessagesConfig().getString("banking.money.deposit.private");
+
+                @Getter
+                public static String MESSAGE_BUSINESS = getMessagesConfig().getString("banking.money.deposit.business");
+
+                @Getter
+                public static String MESSAGE_SAVINGS = getMessagesConfig().getString("banking.money.deposit.savings");
+
+                @Getter
+                public static String MESSAGE_GOVERNMENT = getMessagesConfig().getString("banking.money.deposit.government");
+            }
+        }
+
+        public static class NoBankingPermission {
+            @Getter
+            public static String DEPOSIT = getMessagesConfig().getString("banking.nobankingpermission.deposit");
+        }
+
+        @Getter
+        public static String FROZEN = getMessagesConfig().getString("banking.frozen");
+
+        @Getter
+        public static String NO_SAVINGS_ACCOUNT = getMessagesConfig().getString("banking.selector.accounttype.no_savings_accounts");
+
+        @Getter
+        public static String NO_BUSINESS_ACCOUNT = getMessagesConfig().getString("banking.selector.accounttype.no_business_accounts");
     }
 }

@@ -1,8 +1,7 @@
 package cc.ddev.feather.database;
 
 import cc.ddev.feather.api.config.Config;
-import cc.ddev.feather.database.models.PlayerModel;
-import cc.ddev.feather.database.models.WorldModel;
+import cc.ddev.feather.database.models.*;
 import cc.ddev.feather.logger.Log;
 import cc.ddev.feather.player.PlayerWrapper;
 import com.craftmend.storm.Storm;
@@ -60,6 +59,8 @@ public class StormDatabase {
         }
         storm.registerModel(new WorldModel());
         storm.registerModel(new PlayerModel());
+        storm.registerModel(new BankAccountUserModel());
+        storm.registerModel(new BankAccountModel());
         storm.runMigrations();
 
         Log.getLogger().info("Successfully connected to the database.");

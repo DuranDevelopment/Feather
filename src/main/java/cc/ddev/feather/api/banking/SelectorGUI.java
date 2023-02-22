@@ -45,7 +45,7 @@ public class SelectorGUI {
     }
 
     public static void openAccountSelector(Player player, Player target, BankAccountType type) {
-        Inventory inv = new Inventory(InventoryType.CHEST_2_ROW, Messages.Banking.Selector.ACCOUNT_TITLE);
+        Inventory inv = new Inventory(InventoryType.CHEST_2_ROW, ChatUtils.translateMiniMessage(Messages.Banking.Selector.ACCOUNT_TITLE));
         if (type == BankAccountType.PERSONAL) {
             inv.setItemStack(0, BankingConfig.Blocks.PRIVATE_ACCOUNT.withDisplayName(target.getName()).withLore(List.of(ChatUtils.translateMiniMessage(Messages.Banking.Selector.ACCOUNT_LORE.replace("<ID>", "2491")))));
         } else {
@@ -58,7 +58,8 @@ public class SelectorGUI {
                 mat = BankingConfig.Blocks.GOVERNMENT_ACCOUNT;
             }
             for (Bankaccount acc : BankUtils.getInstance().getAccounts(target.getUuid(), type)) {
-                ItemStack accItem = mat.withDisplayName(Component.text(acc.getName())).withLore(List.of(ChatUtils.translateMiniMessage(Messages.Banking.Selector.ACCOUNT_LORE.replace("<ID>", "" + acc.getId()))));
+                ItemStack accItem = mat.withDisplayName(ChatUtils.translateMiniMessage(acc.getName()))
+                        .withLore(List.of(ChatUtils.translateMiniMessage(Messages.Banking.Selector.ACCOUNT_LORE.replace("<ID>", "" + acc.getId()))));
                 inv.addItemStack(accItem.withTag(Tag.Integer("accountId"), acc.getId()));
             }
         }

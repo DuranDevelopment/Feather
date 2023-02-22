@@ -18,8 +18,7 @@ import java.util.UUID;
 public class PlayerProfile {
 
     private final @Getter Player player;
-    private final @Getter
-    PlayerModel playerModel;
+    private final @Getter PlayerModel playerModel;
     private final @Getter UUID uniqueId;
     private final @Getter Component username;
 

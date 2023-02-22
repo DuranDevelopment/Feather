@@ -1,23 +1,25 @@
 package cc.ddev.feather;
 
 import cc.ddev.feather.api.config.Config;
-import cc.ddev.feather.commands.TestCommand;
-import cc.ddev.feather.commands.banking.OpenBankCommand;
-import cc.ddev.feather.commands.economy.EconomyCommand;
-import cc.ddev.feather.commands.essential.GamemodeCommand;
-import cc.ddev.feather.commands.essential.OpCommand;
-import cc.ddev.feather.commands.mtworld.MTWorldCommand;
+import cc.ddev.feather.command.TestCommand;
+import cc.ddev.feather.command.banking.OpenBankCommand;
+import cc.ddev.feather.command.banking.bankaccount.BankAccountCommand;
+import cc.ddev.feather.command.economy.EconomyCommand;
+import cc.ddev.feather.command.essential.GamemodeCommand;
+import cc.ddev.feather.command.essential.OpCommand;
+import cc.ddev.feather.command.mtworld.MTWorldCommand;
 import cc.ddev.feather.configuration.ConfigManager;
 import cc.ddev.feather.database.DataManager;
 import cc.ddev.feather.database.StormDatabase;
-import cc.ddev.feather.listeners.player.PlayerDisconnectListener;
-import cc.ddev.feather.listeners.player.PlayerLoginListener;
-import cc.ddev.feather.listeners.player.PlayerSpawnListener;
-import cc.ddev.feather.listeners.server.ServerListPingListener;
+import cc.ddev.feather.listener.player.PlayerClickInventoryListener;
+import cc.ddev.feather.listener.player.PlayerDisconnectListener;
+import cc.ddev.feather.listener.player.PlayerLoginListener;
+import cc.ddev.feather.listener.player.PlayerSpawnListener;
+import cc.ddev.feather.listener.server.ServerListPingListener;
 import cc.ddev.feather.logger.Log;
 import cc.ddev.feather.player.PlayerProfile;
-import cc.ddev.feather.sidebar.SidebarRefreshTask;
-import cc.ddev.feather.world.SaveWorldTask;
+import cc.ddev.feather.task.ShutdownTask;
+import cc.ddev.feather.task.SaveWorldTask;
 import cc.ddev.feather.world.WorldManager;
 import lombok.Getter;
 import net.minestom.server.MinecraftServer;
@@ -68,6 +70,7 @@ public class Server {
         new PlayerLoginListener().register();
         new PlayerSpawnListener().register();
         new PlayerDisconnectListener().register();
+        new PlayerClickInventoryListener().register();
         // Start the server from config values
         minecraftServer.start(Config.Server.SERVER_HOST, Config.Server.SERVER_PORT);
         // Register commands
@@ -77,13 +80,15 @@ public class Server {
         MinecraftServer.getCommandManager().register(new MTWorldCommand());
         MinecraftServer.getCommandManager().register(new EconomyCommand());
         MinecraftServer.getCommandManager().register(new OpenBankCommand());
+        MinecraftServer.getCommandManager().register(new BankAccountCommand());
         for (Player player : MinecraftServer.getConnectionManager().getOnlinePlayers()) {
             StormDatabase.getInstance().loadPlayerModel(player.getUuid());
         }
 
         WorldManager.loadWorld(WorldManager.getWorldsDirectory() + File.separator + Config.Spawn.WORLD);
-        SidebarRefreshTask.registerTask();
+        //SidebarRefreshTask.registerTask();
         SaveWorldTask.registerTask();
-        SaveWorldTask.registerShutdownHook();
+        ShutdownTask.registerTask();
+        ShutdownTask.registerShutdownHook();
     }
 }
