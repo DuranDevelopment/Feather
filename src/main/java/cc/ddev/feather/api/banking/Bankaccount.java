@@ -9,6 +9,7 @@ import cc.ddev.feather.logger.Log;
 import com.craftmend.storm.api.enums.Where;
 
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 public class Bankaccount {
     private final int id;
@@ -49,10 +50,12 @@ public class Bankaccount {
             Collection<BankAccountModel> bankAccountModels =
                     StormDatabase.getInstance().getStorm().buildQuery(BankAccountModel.class)
                             .where("id", Where.EQUAL, this.id)
+                            .limit(1)
                             .execute()
                             .join();
             BankAccountModel bankAccountModel = bankAccountModels.iterator().next();
             bankAccountModel.setBalance(newBalance);
+            StormDatabase.getInstance().saveStormModel(bankAccountModel);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -76,6 +79,7 @@ public class Bankaccount {
                             .join();
             BankAccountModel bankAccountModel = bankAccountModels.iterator().next();
             bankAccountModel.setFrozen(frozen);
+            StormDatabase.getInstance().saveStormModel(bankAccountModel);
         } catch (Exception e) {
             e.printStackTrace();
         }

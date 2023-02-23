@@ -87,7 +87,7 @@ public class BankingHandler {
                     if (message == null) return;
 
                     player.sendMessage(ChatUtils.translateMiniMessage(message.replace("<amount>", BankUtils.getInstance().format(itemValue)).replace("<account>", ChatUtils.stripMiniMessage(ChatUtils.translateMiniMessage(bankaccount.getName())))));
-                    BankingGUI.getInstance().open(player, inventory.getPlayer(), inventory.getBankAccountType(), inventory.getSize());
+                    BankingGUI.getInstance().open(player, inventory.getPlayer(), inventory.getBankAccountType(), bankaccount.getId());
                 } else {
                     player.sendMessage(ChatUtils.translateMiniMessage(Messages.Banking.Money.INSUFFICIENT_BALANCE));
                 }
