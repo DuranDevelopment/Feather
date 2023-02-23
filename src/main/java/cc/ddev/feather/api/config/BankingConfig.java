@@ -3,9 +3,9 @@ package cc.ddev.feather.api.config;
 import cc.ddev.feather.configuration.ConfigManager;
 import de.leonhard.storage.Toml;
 import lombok.Getter;
+import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
-import net.minestom.server.utils.inventory.PlayerInventoryUtils;
 
 public class BankingConfig {
 
@@ -13,6 +13,15 @@ public class BankingConfig {
     private static final Toml bankingConfig = ConfigManager.init().getBankingConfig();
 
     public static class ATM {
+        @Getter
+        public static Block BLOCK = Block.fromNamespaceId(getBankingConfig().getString("atm.block"));
+
+        @Getter
+        public static Material DEBIT_CARD_ITEM = Material.fromNamespaceId(getBankingConfig().getString("atm.debit_card_item"));
+
+        @Getter
+        public static boolean REQUIRE_DEBIT_CARD = getBankingConfig().getBoolean("atm.require_card");
+
         @Getter
         public static boolean DISABLE_BANKACCOUNTS = getBankingConfig().getBoolean("atm.disable_bankaccounts");
 

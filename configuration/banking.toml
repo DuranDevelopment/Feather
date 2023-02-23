@@ -33,6 +33,9 @@ government = 'minecraft:emerald_block'
     item = "minecraft:gold_nugget"
 [atm]
 disable_bankaccounts = false
+debit_card_item = "minecraft:lime_dye"
+require_card = true
+block = "minecraft:red_sandstone_stairs"
     [atm.realmoney]
     enabled = true
 [money-formatting]

@@ -149,4 +149,9 @@ public class Messages {
             public static String ALREADY_ADDED = getMessagesConfig().getString("bankaccountcmd.adduser.already_added");
         }
     }
+
+    public static class ATM {
+        @Getter
+        public static String DEBIT_CARD_REQUIRED = getMessagesConfig().getString("atm.require_card");
+    }
 }
