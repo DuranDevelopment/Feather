@@ -10,6 +10,9 @@ public class Messages {
     private static final Toml messagesConfig = ConfigManager.init().getMessagesConfig();
 
     @Getter
+    public static String LANGUAGE = getMessagesConfig().getString("language");
+
+    @Getter
     public static String NO_PERMISSION = getMessagesConfig().getString("no_permissions");
 
     @Getter
@@ -129,5 +132,21 @@ public class Messages {
 
         @Getter
         public static String NO_BUSINESS_ACCOUNT = getMessagesConfig().getString("banking.selector.accounttype.no_business_accounts");
+    }
+
+    public static class BankaccountCMD {
+        @Getter
+        public static String ID_NOTEXIST = getMessagesConfig().getString("bankaccountcmd.id_does_not_exist");
+
+        @Getter
+        public static String INVALID_BANKPERMISSION = getMessagesConfig().getString("bankaccountcmd.invalid_bankpermission");
+
+        public static class AddUser {
+            @Getter
+            public static String SUCCESS = getMessagesConfig().getString("bankaccountcmd.adduser.success");
+
+            @Getter
+            public static String ALREADY_ADDED = getMessagesConfig().getString("bankaccountcmd.adduser.already_added");
+        }
     }
 }

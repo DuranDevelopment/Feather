@@ -18,6 +18,8 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.player.PlayerSpawnEvent;
+import net.minestom.server.network.packet.client.play.ClientUpdateSignPacket;
+import net.minestom.server.network.packet.server.play.OpenSignEditorPacket;
 import net.minestom.server.timer.TaskSchedule;
 
 public class PlayerSpawnListener implements Listener {
@@ -26,8 +28,6 @@ public class PlayerSpawnListener implements Listener {
     @Listen
     public void onPlayerSpawn(PlayerSpawnEvent event) {
         final Player player = event.getPlayer();
-
-//        Log.getLogger().info(player.getPosition().toString());
 
         // Delay the task to prevent the instance from being null
         MinecraftServer.getSchedulerManager().buildTask(() -> {

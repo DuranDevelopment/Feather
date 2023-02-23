@@ -24,6 +24,12 @@ public enum BankPermission {
     }
 
     public static BankPermission getPermission(String name) {
-        return Arrays.stream(BankPermission.values()).filter(enumValue -> enumValue.name().equalsIgnoreCase(name) || enumValue.getDutch().equalsIgnoreCase(name) || enumValue.getEnglish().equalsIgnoreCase(name)).findFirst().orElseThrow(() -> new IllegalArgumentException("No enum constant " + BankPermission.class.getCanonicalName() + "." + name));
+        return Arrays.stream(
+                BankPermission.values()).filter(
+                        enumValue -> enumValue.name().equalsIgnoreCase(name)
+                                || enumValue.getDutch().equalsIgnoreCase(name)
+                                || enumValue.getEnglish().equalsIgnoreCase(name)
+                ).findFirst().orElseThrow(() -> new IllegalArgumentException("No enum constant " + BankPermission.class.getCanonicalName() + "." + name)
+        );
     }
 }

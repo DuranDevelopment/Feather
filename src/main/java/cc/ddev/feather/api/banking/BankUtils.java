@@ -41,34 +41,37 @@ public class BankUtils {
         return this.getAccounts(uuid).stream().filter(acc -> Arrays.asList(accountTypes).contains(acc.getType())).collect(Collectors.toList());
     }
 
-    public void pullCache() throws Exception {
+    public void pullCache() {
         cachedAccounts.clear();
-        Collection<BankAccountModel> bankAccountModels =
-                StormDatabase.getInstance().getStorm().buildQuery(BankAccountModel.class)
-                        .execute()
-                        .join();
+        try {
+            Collection<BankAccountModel> bankAccountModels =
+                    StormDatabase.getInstance().getStorm().buildQuery(BankAccountModel.class)
+                            .execute()
+                            .join();
 
-        Collection<BankAccountUserModel> bankAccountUserModels =
-                StormDatabase.getInstance().getStorm().buildQuery(BankAccountUserModel.class)
-                        .execute()
-                        .join();
+            Collection<BankAccountUserModel> bankAccountUserModels =
+                    StormDatabase.getInstance().getStorm().buildQuery(BankAccountUserModel.class)
+                            .execute()
+                            .join();
+            for (BankAccountModel bankAccountModel : bankAccountModels) {
+                int id = bankAccountModel.getId();
+                double balance = bankAccountModel.getBalance();
+                String name = bankAccountModel.getName();
+                boolean frozen = bankAccountModel.getFrozen();
+                BankAccountType type = BankAccountType.valueOf(bankAccountModel.getType());
+                Bankaccount acc = new Bankaccount(id, type, balance, name, frozen, new HashMap<>());
+                cachedAccounts.put(id, acc);
+            }
 
-        for (BankAccountModel bankAccountModel : bankAccountModels) {
-            int id = bankAccountModel.getId();
-            double balance = bankAccountModel.getBalance();
-            String name = bankAccountModel.getName();
-            boolean frozen = bankAccountModel.getFrozen();
-            BankAccountType type = BankAccountType.valueOf(bankAccountModel.getType());
-            Bankaccount acc = new Bankaccount(id, type, balance, name, frozen, new HashMap<>());
-            cachedAccounts.put(id, acc);
-        }
-
-        for (BankAccountUserModel bankAccountUserModel : bankAccountUserModels) {
-            int id = bankAccountUserModel.getId();
-            UUID uuid = bankAccountUserModel.getUuid();
-            BankPermission permission = BankPermission.valueOf(bankAccountUserModel.getPermission());
-            if (cachedAccounts.get(id) == null) continue;
-            cachedAccounts.get(id).addUserSilent(uuid, permission);
+            for (BankAccountUserModel bankAccountUserModel : bankAccountUserModels) {
+                int id = bankAccountUserModel.getBankAccountId();
+                UUID uuid = bankAccountUserModel.getUuid();
+                BankPermission permission = BankPermission.valueOf(bankAccountUserModel.getPermission());
+                if (cachedAccounts.get(id) == null) continue;
+                cachedAccounts.get(id).addUserSilent(uuid, permission);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

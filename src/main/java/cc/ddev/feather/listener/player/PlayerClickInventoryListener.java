@@ -85,11 +85,9 @@ public class PlayerClickInventoryListener implements Listener {
         }
 
         if (event.getInventory() instanceof BankingInventory bankingInventory) {
-            Log.getLogger().info(event.getInventory().getInventoryType().name());
             event.setCancelled(true);
             BankingHandler.getInstance().withdrawMoney(player, bankingInventory, event.getClickedItem(), event.getClickType() == ClickType.LEFT_CLICK);
         }
-
         if (event.getInventory() == null && player.getOpenInventory() instanceof BankingInventory bankingInventory) {
             event.setCancelled(true);
             BankingHandler.getInstance().depositMoney(player, bankingInventory, event.getClickedItem(), event.getClickType() == ClickType.LEFT_CLICK);

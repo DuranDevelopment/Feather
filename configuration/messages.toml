@@ -1,3 +1,5 @@
+language = 'en'
+
 [join]
 enabled = true
 message = '&7<player> joined the game'
@@ -48,7 +50,12 @@ frozen = "<red>This account is frozen, you can no longer withdraw or deposit mon
         government = "<dark_aqua>You have deposited <aqua>€ <amount> <dark_aqua>to <aqua><account>'s <dark_aqua>government account"
     [banking.nobankingpermission]
     deposit = "<dark_red>You only have withdrawal rights for the account <account>! Unfortunately you cannot deposit money."
-
+[bankaccountcmd]
+id_does_not_exist = "<red>There is no bankaccount with this ID."
+invalid_bankpermission = "<dark_red>ERROR: <red>Invalid bankpermission, valid permissions are <permissions>."
+    [bankaccountcmd.adduser]
+    success = "<dark_aqua>Successfully added player <aqua><player> <dark_aqua>to this bankaccount."
+    already_added = "<red>The player <dark_red><player> <red>has already been added to this bankaccount."
 
 invalid_arguments = '<red>You provided invalid arguments for this command.'
 invalid_username = '<red>That username is invalid.'

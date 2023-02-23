@@ -1,5 +1,6 @@
 package cc.ddev.feather;
 
+import cc.ddev.feather.api.banking.BankUtils;
 import cc.ddev.feather.api.config.Config;
 import cc.ddev.feather.command.TestCommand;
 import cc.ddev.feather.command.banking.OpenBankCommand;
@@ -11,16 +12,14 @@ import cc.ddev.feather.command.mtworld.MTWorldCommand;
 import cc.ddev.feather.configuration.ConfigManager;
 import cc.ddev.feather.database.DataManager;
 import cc.ddev.feather.database.StormDatabase;
-import cc.ddev.feather.listener.player.PlayerClickInventoryListener;
-import cc.ddev.feather.listener.player.PlayerDisconnectListener;
-import cc.ddev.feather.listener.player.PlayerLoginListener;
-import cc.ddev.feather.listener.player.PlayerSpawnListener;
+import cc.ddev.feather.listener.player.*;
 import cc.ddev.feather.listener.server.ServerListPingListener;
 import cc.ddev.feather.logger.Log;
 import cc.ddev.feather.player.PlayerProfile;
-import cc.ddev.feather.task.ShutdownTask;
 import cc.ddev.feather.task.SaveWorldTask;
+import cc.ddev.feather.task.ShutdownTask;
 import cc.ddev.feather.world.WorldManager;
+import cc.ddev.feather.world.blockhandlers.RegisterHandlers;
 import lombok.Getter;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
@@ -46,6 +45,10 @@ public class Server {
         configManager.createConfigDirectory();
         // Make the database connection
         new DataManager().initialize();
+        // Register block handlers
+        RegisterHandlers.initHandlers();
+        // Pull database cache
+        BankUtils.getInstance().pullCache();
         // Create the worlds directory
         WorldManager.createWorldsDirectory();
         // Check if worlds are present
@@ -71,6 +74,7 @@ public class Server {
         new PlayerSpawnListener().register();
         new PlayerDisconnectListener().register();
         new PlayerClickInventoryListener().register();
+        new PlayerBlockPlaceListener().register();
         // Start the server from config values
         minecraftServer.start(Config.Server.SERVER_HOST, Config.Server.SERVER_PORT);
         // Register commands

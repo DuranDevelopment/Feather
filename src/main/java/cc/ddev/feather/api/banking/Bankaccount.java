@@ -3,7 +3,9 @@ package cc.ddev.feather.api.banking;
 import cc.ddev.feather.api.enums.BankAccountType;
 import cc.ddev.feather.api.enums.BankPermission;
 import cc.ddev.feather.database.StormDatabase;
+import cc.ddev.feather.database.models.BankAccountModel;
 import cc.ddev.feather.database.models.BankAccountUserModel;
+import cc.ddev.feather.logger.Log;
 import com.craftmend.storm.api.enums.Where;
 
 import java.util.*;
@@ -43,6 +45,17 @@ public class Bankaccount {
 
     public void setBalance(double newBalance) {
         double balanceChange = newBalance - this.balance;
+        try {
+            Collection<BankAccountModel> bankAccountModels =
+                    StormDatabase.getInstance().getStorm().buildQuery(BankAccountModel.class)
+                            .where("id", Where.EQUAL, this.id)
+                            .execute()
+                            .join();
+            BankAccountModel bankAccountModel = bankAccountModels.iterator().next();
+            bankAccountModel.setBalance(newBalance);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         this.balance = newBalance;
     }
 
@@ -55,6 +68,17 @@ public class Bankaccount {
     }
 
     public void setFrozen(boolean frozen) {
+        try {
+            Collection<BankAccountModel> bankAccountModels =
+                    StormDatabase.getInstance().getStorm().buildQuery(BankAccountModel.class)
+                            .where("id", Where.EQUAL, this.id)
+                            .execute()
+                            .join();
+            BankAccountModel bankAccountModel = bankAccountModels.iterator().next();
+            bankAccountModel.setFrozen(frozen);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         this.frozen = frozen;
     }
 
@@ -72,10 +96,10 @@ public class Bankaccount {
 
     public boolean hasPermission(UUID uuid, BankPermission permission) {
         if (!this.getUsers().containsKey(uuid)) {
-            return false;
+            return true;
         }
         BankPermission userPerm = this.getUsers().get(uuid);
-        return userPerm == BankPermission.ADMIN || userPerm == permission;
+        return userPerm != BankPermission.ADMIN && userPerm != permission;
     }
 
     public void setName(String name) {
@@ -89,10 +113,11 @@ public class Bankaccount {
     public void addUser(final UUID uuid, final BankPermission permission) {
         this.addUserSilent(uuid, permission);
         BankAccountUserModel bankAccountUserModel = new BankAccountUserModel();
-        bankAccountUserModel.setId(this.getId());
+        bankAccountUserModel.setBankAccountId(this.getId());
         bankAccountUserModel.setUuid(uuid);
         bankAccountUserModel.setPermission(permission.name());
         StormDatabase.getInstance().saveStormModel(bankAccountUserModel);
+        Log.getLogger().info("Added user " + uuid + " to bank account " + this.getId() + " with permission " + permission.name());
     }
 
     public void addUserSilent(UUID uuid, BankPermission permission) {

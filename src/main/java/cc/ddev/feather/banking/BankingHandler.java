@@ -8,7 +8,6 @@ import cc.ddev.feather.api.config.BankingConfig;
 import cc.ddev.feather.api.config.Messages;
 import cc.ddev.feather.api.enums.BankAccountType;
 import cc.ddev.feather.api.enums.BankPermission;
-import cc.ddev.feather.logger.Log;
 import cc.ddev.feather.utils.ChatUtils;
 import net.minestom.server.entity.Player;
 import net.minestom.server.inventory.TransactionOption;
@@ -58,9 +57,9 @@ public class BankingHandler {
                 }
             } else {
                 Bankaccount bankaccount = BankUtils.getInstance().getBankAccount(inventory.getId());
-                if (!bankaccount.hasPermission(inventory.getPlayer().getUuid(), BankPermission.WITHDRAW)) {
+                if (bankaccount.hasPermission(inventory.getPlayer().getUuid(), BankPermission.WITHDRAW)) {
                     String accountName = bankaccount.getName().startsWith("<white>ID: ") ? "" + bankaccount.getId() : ChatUtils.stripMiniMessage(ChatUtils.translateMiniMessage(bankaccount.getName()));
-                    player.sendMessage(Messages.Banking.NoBankingPermission.DEPOSIT.replace("<account>", accountName));
+                    player.sendMessage(ChatUtils.translateMiniMessage(Messages.Banking.NoBankingPermission.DEPOSIT.replace("<account>", accountName)));
                     return;
                 }
                 if (bankaccount.isFrozen()) {
@@ -119,7 +118,7 @@ public class BankingHandler {
             } else {
                 ItemStack stack;
                 Bankaccount bankaccount = BankUtils.getInstance().getBankAccount(inventory.getId());
-                if (!bankaccount.hasPermission(inventory.getPlayer().getUuid(), BankPermission.DEPOSIT)) {
+                if (bankaccount.hasPermission(inventory.getPlayer().getUuid(), BankPermission.DEPOSIT)) {
                     String accountName = bankaccount.getName().startsWith("<white>ID: ") ? "" + bankaccount.getId() : ChatUtils.stripMiniMessage(ChatUtils.translateMiniMessage(bankaccount.getName()));
                     player.sendMessage(ChatUtils.translateMiniMessage(Messages.Banking.NoBankingPermission.DEPOSIT.replace("<account>", accountName)));
                     return;

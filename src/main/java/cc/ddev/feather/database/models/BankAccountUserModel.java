@@ -13,6 +13,9 @@ import java.util.UUID;
 @Table(name = "bankaccountusers")
 public class BankAccountUserModel extends StormModel {
 
+    @Column(name = "bankAccountId")
+    private Integer bankAccountId;
+
     @Column(name = "uuid")
     private UUID uuid;
 

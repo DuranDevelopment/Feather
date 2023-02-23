@@ -27,11 +27,6 @@ public class OpenBankCommand extends Command {
 
             SelectorGUI.openSelectionMenu(player, target, ATMOpenType.OPENBANK_CMD);
             sender.sendMessage("Opening bank for " + target.getUsername());
-            try {
-                BankUtils.getInstance().pullCache();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
         }, playerArgument);
 
         // If no player is specified, open the bank for the sender
@@ -39,11 +34,6 @@ public class OpenBankCommand extends Command {
             Player player = (Player) sender;
             SelectorGUI.openSelectionMenu(player, player, ATMOpenType.OPENBANK_CMD);
             sender.sendMessage("Opening bank for " + player.getUsername());
-            try {
-                BankUtils.getInstance().pullCache();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
         });
     }
 }
