@@ -10,7 +10,6 @@ public class TestCommand extends Command {
         super("test", "testcommand");
         setDefaultExecutor((sender, context) -> {
             Player player = (Player) sender;
-            player.setPermissionLevel(4);
             WorldManager.saveWorlds();
         });
     }
