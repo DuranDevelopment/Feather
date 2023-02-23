@@ -8,5 +8,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface Listen {
+    boolean ignoreArgs() default true;
 // no need for an event parameter
 }

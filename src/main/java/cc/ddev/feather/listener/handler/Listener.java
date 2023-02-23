@@ -1,5 +1,6 @@
 package cc.ddev.feather.listener.handler;
 
+import cc.ddev.feather.logger.Log;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.event.Event;
 
@@ -21,6 +22,7 @@ public interface Listener {
                     // Check if the event is a subclass of Event
                     if(Event.class.isAssignableFrom(eventToStickTo)) {
                         // Register the event
+
                         eventHandler.addListener(eventToStickTo.asSubclass(Event.class), event -> {
                             try {
                                 method.invoke(this, event);
@@ -28,6 +30,7 @@ public interface Listener {
                                 throw new RuntimeException(e);
                             }
                         });
+                        Log.getLogger().debug("Registered listener for event " + eventToStickTo.getSimpleName());
                     } else {
                         throw new IllegalArgumentException("Method annotated with @Listen must have a single parameter of type Event or a subclass of Event.");
                     }

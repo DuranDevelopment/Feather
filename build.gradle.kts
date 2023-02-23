@@ -15,7 +15,8 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.Minestom:Minestom:-SNAPSHOT")
+//    implementation("com.github.Minestom:Minestom:-SNAPSHOT")
+    implementation("com.github.Minestom.Minestom:Minestom:1.19.3-SNAPSHOT")
     implementation("com.zaxxer:HikariCP:5.0.1")
     implementation("com.github.simplix-softworks:simplixstorage:3.2.5")
     implementation("net.kyori:adventure-text-minimessage:4.12.0")

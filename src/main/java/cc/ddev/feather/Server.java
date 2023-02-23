@@ -2,6 +2,7 @@ package cc.ddev.feather;
 
 import cc.ddev.feather.api.banking.BankUtils;
 import cc.ddev.feather.api.config.Config;
+import cc.ddev.feather.command.StopCommand;
 import cc.ddev.feather.command.TestCommand;
 import cc.ddev.feather.command.banking.OpenBankCommand;
 import cc.ddev.feather.command.banking.bankaccount.BankAccountCommand;
@@ -12,6 +13,7 @@ import cc.ddev.feather.command.mtworld.MTWorldCommand;
 import cc.ddev.feather.configuration.ConfigManager;
 import cc.ddev.feather.database.DataManager;
 import cc.ddev.feather.database.StormDatabase;
+import cc.ddev.feather.listener.client.ClientUpdateSignListener;
 import cc.ddev.feather.listener.player.*;
 import cc.ddev.feather.listener.server.ServerListPingListener;
 import cc.ddev.feather.logger.Log;
@@ -26,6 +28,7 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.block.Block;
+import net.minestom.server.network.packet.client.play.ClientUpdateSignPacket;
 
 import java.io.File;
 
@@ -74,8 +77,9 @@ public class Server {
         new PlayerSpawnListener().register();
         new PlayerDisconnectListener().register();
         new PlayerClickInventoryListener().register();
-        new PlayerBlockPlaceListener().register();
+        new ClientUpdateSignListener().register();
         new PlayerBlockInteractListener().register();
+        new PlayerBlockPlaceListener().register();
         // Start the server from config values
         minecraftServer.start(Config.Server.SERVER_HOST, Config.Server.SERVER_PORT);
         // Register commands
@@ -86,12 +90,12 @@ public class Server {
         MinecraftServer.getCommandManager().register(new EconomyCommand());
         MinecraftServer.getCommandManager().register(new OpenBankCommand());
         MinecraftServer.getCommandManager().register(new BankAccountCommand());
+        MinecraftServer.getCommandManager().register(new StopCommand());
         for (Player player : MinecraftServer.getConnectionManager().getOnlinePlayers()) {
             StormDatabase.getInstance().loadPlayerModel(player.getUuid());
         }
 
         WorldManager.loadWorld(WorldManager.getWorldsDirectory() + File.separator + Config.Spawn.WORLD);
-        //SidebarRefreshTask.registerTask();
         SaveWorldTask.registerTask();
         ShutdownTask.registerTask();
         ShutdownTask.registerShutdownHook();
