@@ -1,5 +1,6 @@
 package cc.ddev.feather.api.economy;
 
+import cc.ddev.feather.database.StormDatabase;
 import cc.ddev.feather.database.models.PlayerModel;
 import cc.ddev.feather.player.PlayerProfile;
 import cc.ddev.feather.player.PlayerWrapper;
@@ -22,6 +23,7 @@ public class Economy {
         PlayerModel playerModel = playerProfile.getPlayerModel();
 
         playerModel.setBalance(playerModel.getBalance() - amount);
+        StormDatabase.getInstance().saveStormModel(playerModel);
     }
 
     public void addBalance(Player player, double amount) {
@@ -30,6 +32,7 @@ public class Economy {
         PlayerModel playerModel = playerProfile.getPlayerModel();
 
         playerModel.setBalance(playerModel.getBalance() + amount);
+        StormDatabase.getInstance().saveStormModel(playerModel);
     }
 
     public void setBalance(Player player, double amount) {
@@ -38,6 +41,7 @@ public class Economy {
         PlayerModel playerModel = playerProfile.getPlayerModel();
 
         playerModel.setBalance(amount);
+        StormDatabase.getInstance().saveStormModel(playerModel);
     }
 
     public double getBalance(Player player) {
