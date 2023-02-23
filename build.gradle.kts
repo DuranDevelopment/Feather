@@ -30,7 +30,8 @@ dependencies {
 
 tasks {
     named<ShadowJar>("shadowJar") {
-        archiveBaseName.set("shadow")
+        archiveBaseName.set("feather")
+        archiveFileName.set("feather-${project.version}.jar")
         mergeServiceFiles()
         manifest {
             attributes(mapOf("Main-Class" to "cc.ddev.feather.Server", "Multi-Release" to "true"))
