@@ -25,7 +25,7 @@ dependencies {
     implementation("org.xerial:sqlite-jdbc:3.40.1.0")
     compileOnly("junit:junit:4.13.2")
     implementation("org.slf4j:slf4j-api:2.0.6")
-    implementation("me.hsgamer:hscore-minestom-gui:4.2.3")
+    implementation("me.hsgamer:hscore-minestom-gui:4.2.10")
 }
 
 tasks {
