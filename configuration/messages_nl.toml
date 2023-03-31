@@ -1,0 +1,76 @@
+language = "nl"
+invalid_arguments = "<red>You provided invalid arguments for this command."
+invalid_username = "<red>That username is invalid."
+not_online = "<red>That player is not online."
+no_permission = "<red>You don't have permission to use this command."
+fly_on = "<green>Fly mode has been enabled!"
+fly_off = "<red>Fly mode has been disabled!"
+
+[join]
+enabled = true
+message = "&7<player> joined the game"
+
+[leave]
+enabled = true
+message = "&7<player> left the game"
+
+[join_title]
+title = "<worldcolor>Welcome to"
+subtitle = "<worldcolor><loadingname>"
+
+[mtworldcmd.add]
+success = "<dark_aqua>Succesfully <aqua>enabled<dark_aqua> Feather in this world!"
+
+[banking]
+frozen = "<red>This account is frozen, you can no longer withdraw or deposit money!"
+
+  [banking.selector]
+  title = "<dark_aqua>Select the account type:"
+
+    [banking.selector.account]
+    title = "<dark_aqua>Select the account:"
+    lore = "(ID: <ID>)"
+
+    [banking.selector.accounttype]
+    government = "<dark_green>Government"
+    savings = "<dark_red>Savings"
+    private = "<gold>Private"
+    business = "<dark_aqua>Business"
+    no_business_accounts = "<red>You <dark_red>don't have any <red>Business <dark_red>accounts!"
+    no_savings_accounts = "<red>You <dark_red>don't have any <red>Savings <dark_red>accounts!"
+
+  [banking.menu]
+  title = "<dark_aqua>Total value: <aqua>€ <amount>"
+  item_lore = "<dark_aqua>This piece of money has a %newline%<dark_aqua>value of <aqua>€ <amount><dark_aqua>."
+
+  [banking.money]
+  lore = "<red>Official Minetopia banknote!"
+  insufficient_balance = "<red>There is not enough money in this account"
+  is_fake_money = "<dark_red>You have counterfeit money with you! We are currently unable to accept money!"
+
+    [banking.money.withdraw]
+    inventory_full = "<red>You can't withdraw money when your inventory is full!"
+    private = "<dark_aqua>You have withdrawn <aqua>€ <amount> <dark_aqua>from <aqua><account>'s <dark_aqua>account"
+    savings = "<dark_aqua>You have withdrawn <aqua>€ <amount> <dark_aqua>from <aqua><account>'s <dark_aqua>savings account"
+    business = "<dark_aqua>You have withdrawn <aqua>€ <amount> <dark_aqua>from <aqua><account>'s <dark_aqua>business account"
+    government = "<dark_aqua>You have withdrawn <aqua>€ <amount> <dark_aqua>from <aqua><account>'s <dark_aqua>government account"
+
+    [banking.money.deposit]
+    private = "<dark_aqua>You have deposited <aqua>€ <amount> <dark_aqua>to <aqua><account>'s <dark_aqua>account"
+    savings = "<dark_aqua>You have deposited <aqua>€ <amount> <dark_aqua>to <aqua><account>'s <dark_aqua>savings account"
+    business = "<dark_aqua>You have deposited <aqua>€ <amount> <dark_aqua>to <aqua><account>'s <dark_aqua>business account"
+    government = "<dark_aqua>You have deposited <aqua>€ <amount> <dark_aqua>to <aqua><account>'s <dark_aqua>government account"
+
+  [banking.nobankingpermission]
+  deposit = "<dark_red>You only have withdrawal rights for the account <account>! Unfortunately you cannot deposit money."
+
+[bankaccountcmd]
+id_does_not_exist = "<red>There is no bankaccount with this ID."
+invalid_bankpermission = "<dark_red>ERROR: <red>Invalid bankpermission, valid permissions are <permissions>."
+
+  [bankaccountcmd.adduser]
+  success = "<dark_aqua>Successfully added player <aqua><player> <dark_aqua>to this bankaccount."
+  already_added = "<red>The player <dark_red><player> <red>has already been added to this bankaccount."
+
+[atm]
+require_card = "<red>You need to hold <dark_red>a debit card <red>in your hand!"
