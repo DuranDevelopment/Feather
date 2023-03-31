@@ -1,0 +1,53 @@
+[blocks]
+savings = "minecraft:redstone_block"
+private = "minecraft:gold_block"
+business = "minecraft:diamond_block"
+government = "minecraft:emerald_block"
+
+[items.ghast]
+value = 500
+item = "minecraft:ghast_tear"
+
+[items.diamond]
+value = 200
+item = "minecraft:diamond"
+
+[items.redstone]
+value = 100
+item = "minecraft:redstone"
+
+[items.emerald]
+value = 50
+item = "minecraft:emerald"
+
+[items.coal]
+value = 20
+item = "minecraft:coal"
+
+[items.iron]
+value = 10
+item = "minecraft:iron_ingot"
+
+[items.quartz]
+value = 5
+item = "minecraft:quartz"
+
+[items.gold_ingot]
+value = 1
+item = "minecraft:gold_ingot"
+
+[items.gold_nugget]
+value = "0.1"
+item = "minecraft:gold_nugget"
+
+[atm]
+disable_bankaccounts = false
+debit_card_item = "minecraft:lime_dye"
+require_card = true
+block = "minecraft:red_sandstone_stairs"
+
+  [atm.realmoney]
+  enabled = true
+
+[money-formatting]
+has_decimal = false
