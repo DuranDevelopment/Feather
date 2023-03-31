@@ -2,7 +2,7 @@ messages = { }
 
 [server]
 max_players = 100
-description = "A Feather Server"
+description = "Een Feather Server"
 host = "0.0.0.0"
 port = 25_565
 
