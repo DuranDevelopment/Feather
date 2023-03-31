@@ -1,0 +1,3 @@
+files:
+  - source: /configuration/*.toml
+    translation: '%original_path%'
