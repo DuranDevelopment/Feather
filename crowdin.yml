@@ -1,3 +1,3 @@
 files:
   - source: /configuration/*.toml
-    translation: '%original_path%/%original_file_name%_%two_letters_code%'
+    translation: /configuration/%file_name%_%two_letters_code%.%file_extension%
