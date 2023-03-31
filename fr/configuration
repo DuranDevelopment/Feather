@@ -1,53 +1,45 @@
-[blocks]
-savings = "minecraft:redstone_block"
-private = "minecraft:gold_block"
-business = "minecraft:diamond_block"
-government = "minecraft:emerald_block"
+messages = { }
 
-[items.ghast]
-value = 500
-item = "minecraft:ghast_tear"
+[server]
+max_players = 100
+description = "A Feather Server"
+host = "0.0.0.0"
+port = 25_565
 
-[items.diamond]
-value = 200
-item = "minecraft:diamond"
+[database]
+type = "mysql"
+username = "root"
+password = ""
+database = "feather"
+host = "127.0.0.1"
+port = 3_306
 
-[items.redstone]
-value = 100
-item = "minecraft:redstone"
+[spawn]
+spawn_on_join = true
+send_join_message = true
+world = "demo"
+x = "7.5"
+y = -24
+z = "-3.5"
 
-[items.emerald]
-value = 50
-item = "minecraft:emerald"
+[player.default]
+prefix = "Zwerver"
+prefix_color = "&7"
+level = 1
+city_color = "&7"
+chat_color = "&7"
 
-[items.coal]
-value = 20
-item = "minecraft:coal"
+[chat]
+format = "<levelcolor><level> <prefixcolor><prefix> <namecolor><player>: <chatcolor><message>"
 
-[items.iron]
-value = 10
-item = "minecraft:iron_ingot"
-
-[items.quartz]
-value = 5
-item = "minecraft:quartz"
-
-[items.gold_ingot]
-value = 1
-item = "minecraft:gold_ingot"
-
-[items.gold_nugget]
-value = "0.1"
-item = "minecraft:gold_nugget"
-
-[atm]
-disable_bankaccounts = false
-debit_card_item = "minecraft:lime_dye"
-require_card = true
-block = "minecraft:red_sandstone_stairs"
-
-  [atm.realmoney]
+  [chat.radius]
   enabled = true
+  radius = 100
+  MessageWhenNobodyInRange = false
 
-[money-formatting]
-has_decimal = false
+[sidebar]
+enabled = true
+title = "<world>"
+
+[economy]
+starting_balance = 1_000
