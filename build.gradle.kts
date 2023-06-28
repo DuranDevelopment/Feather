@@ -18,13 +18,13 @@ dependencies {
     implementation("com.github.Minestom:Minestom:-SNAPSHOT")
     implementation("com.zaxxer:HikariCP:5.0.1")
     implementation("com.github.simplix-softworks:simplixstorage:3.2.5")
-    implementation("net.kyori:adventure-text-minimessage:4.12.0")
+    implementation("net.kyori:adventure-text-minimessage:4.13.1")
     implementation("com.github.Mindgamesnl:storm:prod125")
     implementation("mysql:mysql-connector-java:8.0.32") /* Adding drivers for MySQL and SQLite  */
-    implementation("org.xerial:sqlite-jdbc:3.40.1.0")
+    implementation("org.xerial:sqlite-jdbc:3.42.0.0")
     compileOnly("junit:junit:4.13.2")
     implementation("org.slf4j:slf4j-api:2.0.6")
-    implementation("me.hsgamer:hscore-minestom-gui:4.2.3")
+    implementation("me.hsgamer:hscore-minestom-gui:4.3.4")
 }
 
 tasks {
