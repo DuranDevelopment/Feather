@@ -3,7 +3,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 plugins {
     java
     id("com.github.johnrengelman.shadow") version ("7.1.0")
-    id("io.freefair.lombok") version "8.0.1"
+    id("io.freefair.lombok") version "6.6.2"
 }
 
 group = "cc.ddev"
@@ -15,9 +15,9 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.Minestom:Minestom:-SNAPSHOT")
+    implementation("com.github.Minestom:Minestom:954e8b3915")
     implementation("com.zaxxer:HikariCP:5.0.1")
-    implementation("com.github.simplix-softworks:simplixstorage:3.2.5")
+    implementation("com.github.simplix-softworks:simplixstorage:3.2.6")
     implementation("net.kyori:adventure-text-minimessage:4.13.1")
     implementation("com.github.Mindgamesnl:storm:prod125")
     implementation("mysql:mysql-connector-java:8.0.32") /* Adding drivers for MySQL and SQLite  */
