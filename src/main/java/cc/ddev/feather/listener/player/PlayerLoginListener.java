@@ -16,6 +16,7 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.player.PlayerLoginEvent;
 import net.minestom.server.instance.Instance;
+import net.minestom.server.permission.Permission;
 import net.minestom.server.timer.TaskSchedule;
 
 public class PlayerLoginListener implements Listener {
@@ -65,5 +66,8 @@ public class PlayerLoginListener implements Listener {
         }).delay(TaskSchedule.seconds(5)).schedule();
 
         Log.getLogger().info("UUID of player " + player.getUsername() + " is " + player.getUuid());
+        // Remove on production
+        player.setPermissionLevel(4);
+        player.addPermission(new Permission("server.stop"));
     }
 }

@@ -11,11 +11,18 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
+    mavenLocal()
     maven(url = "https://jitpack.io")
 }
 
 dependencies {
     implementation("com.github.Minestom:Minestom:954e8b3915")
+    implementation("com.github.DuranDevelopment:instanceguard:66384b842c") {
+        exclude(group = "dev.hollowcube", module = "minestom-ce")
+    }
+    /* Used for local testing
+        implementation("cc.ddev:instanceguard:1.0-SNAPSHOT")
+     */
     implementation("com.zaxxer:HikariCP:5.0.1")
     implementation("com.github.simplix-softworks:simplixstorage:3.2.6")
     implementation("net.kyori:adventure-text-minimessage:4.13.1")

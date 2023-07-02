@@ -1,6 +1,5 @@
 package cc.ddev.feather.command;
 
-import cc.ddev.feather.api.config.Messages;
 import cc.ddev.feather.world.WorldManager;
 import net.minestom.server.command.builder.Command;
 import net.minestom.server.entity.Player;
