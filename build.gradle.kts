@@ -30,7 +30,7 @@ dependencies {
     implementation("com.github.simplix-softworks:simplixstorage:3.2.6")
     implementation("net.kyori:adventure-text-minimessage:4.13.1")
     implementation("com.github.Mindgamesnl:storm:prod125")
-    implementation("mysql:mysql-connector-java:8.0.32") /* Adding drivers for MySQL and SQLite  */
+    implementation("mysql:mysql-connector-java:8.0.33") /* Adding drivers for MySQL and SQLite  */
     implementation("org.xerial:sqlite-jdbc:3.42.0.0")
     compileOnly("junit:junit:4.13.2")
     implementation("org.slf4j:slf4j-api:2.0.7")
