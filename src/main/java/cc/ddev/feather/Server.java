@@ -10,6 +10,8 @@ import cc.ddev.feather.command.economy.EconomyCommand;
 import cc.ddev.feather.command.essential.GamemodeCommand;
 import cc.ddev.feather.command.essential.OpCommand;
 import cc.ddev.feather.command.mtworld.MTWorldCommand;
+import cc.ddev.feather.command.plots.PlotCommand;
+import cc.ddev.feather.command.plots.PlotwandCommand;
 import cc.ddev.feather.configuration.ConfigManager;
 import cc.ddev.feather.database.DataManager;
 import cc.ddev.feather.database.StormDatabase;
@@ -22,6 +24,7 @@ import cc.ddev.feather.task.SaveWorldTask;
 import cc.ddev.feather.task.ShutdownTask;
 import cc.ddev.feather.world.WorldManager;
 import cc.ddev.feather.world.blockhandlers.RegisterHandlers;
+import cc.ddev.instanceguard.InstanceGuard;
 import lombok.Getter;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
@@ -80,6 +83,7 @@ public class Server {
         new ClientUpdateSignListener().register();
         new PlayerBlockInteractListener().register();
         new PlayerBlockPlaceListener().register();
+        new PlayerBlockBreakListener().register();
         // Start the server from config values
         minecraftServer.start(Config.Server.SERVER_HOST, Config.Server.SERVER_PORT);
         // Register commands
@@ -91,6 +95,9 @@ public class Server {
         MinecraftServer.getCommandManager().register(new OpenBankCommand());
         MinecraftServer.getCommandManager().register(new BankAccountCommand());
         MinecraftServer.getCommandManager().register(new StopCommand());
+        MinecraftServer.getCommandManager().register(new PlotwandCommand());
+        MinecraftServer.getCommandManager().register(new PlotCommand());
+
         for (Player player : MinecraftServer.getConnectionManager().getOnlinePlayers()) {
             StormDatabase.getInstance().loadPlayerModel(player.getUuid());
         }

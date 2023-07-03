@@ -1,16 +1,19 @@
 package cc.ddev.feather.listener.player;
 
+import cc.ddev.feather.api.API;
 import cc.ddev.feather.api.banking.SelectorGUI;
 import cc.ddev.feather.api.config.BankingConfig;
+import cc.ddev.feather.api.config.Config;
 import cc.ddev.feather.api.config.Messages;
 import cc.ddev.feather.api.enums.ATMOpenType;
 import cc.ddev.feather.listener.handler.Listen;
 import cc.ddev.feather.listener.handler.Listener;
-import cc.ddev.feather.logger.Log;
+import cc.ddev.feather.player.PlayerProfile;
+import cc.ddev.feather.player.PlayerWrapper;
 import cc.ddev.feather.utils.ChatUtils;
 import cc.ddev.feather.world.WorldManager;
 import cc.ddev.instanceguard.InstanceGuard;
-import cc.ddev.instanceguard.objects.Region;
+import cc.ddev.instanceguard.region.Region;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.player.PlayerBlockInteractEvent;
@@ -18,8 +21,7 @@ import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.ItemStack;
 
 public class PlayerBlockInteractListener implements Listener {
-
-    InstanceGuard instanceGuard = new InstanceGuard();
+    private final InstanceGuard instanceGuard = API.getInstanceGuard();
 
     @Listen
     public void onPlayerBlockInteract(PlayerBlockInteractEvent event) {
@@ -36,13 +38,27 @@ public class PlayerBlockInteractListener implements Listener {
             SelectorGUI.openSelectionMenu(player, player, ATMOpenType.CLICK_ATM);
         }
 
+        if (player.getInstance() == null) return;
+
+        if (player.getItemInMainHand().equals(Config.Plot.PLOTWAND)) {
+            PlayerProfile playerProfile = PlayerWrapper.getPlayerProfile(player);
+            if (playerProfile == null) return;
+
+            playerProfile.setPlotWandPos2(event.getBlockPosition());
+            player.sendMessage(ChatUtils.translateMiniMessage("<green>Position 2 set to <dark_green>" + playerProfile.getPlotWandPos2()));
+            event.setCancelled(true);
+        }
+
         String instanceName = WorldManager.getInstanceName(player.getInstance());
 
-        if (instanceGuard.getRegionManager().getRegions(instanceName) == null) {
+        if (instanceGuard.getRegionManager().getRegions().isEmpty()) {
             instanceGuard.getRegionManager().createRegion("test", instanceName, new Pos(6, -24, -2), new Pos(9, -21, 1));
         }
-        if (instanceGuard.getRegionManager().getRegions(instanceName).containsLocation(player.getPosition())) {
-            player.sendMessage(ChatUtils.translateMiniMessage("<red>You are in a region called <dark_red>" + instanceGuard.getRegionManager().getRegions(instanceName).getName() + "<red>!"));
+
+        for (Region region : instanceGuard.getRegionManager().getRegions()) {
+            if (region.containsLocation(player.getPosition())) {
+                player.sendMessage(ChatUtils.translateMiniMessage("<red>You are in a region called <dark_red>" + region.getName() + "<red>!"));
+            }
         }
     }
 }

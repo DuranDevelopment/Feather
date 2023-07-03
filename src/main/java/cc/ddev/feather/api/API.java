@@ -3,6 +3,7 @@ package cc.ddev.feather.api;
 import cc.ddev.feather.api.economy.Economy;
 import cc.ddev.feather.configuration.ConfigManager;
 import cc.ddev.feather.sidebar.SidebarManager;
+import cc.ddev.instanceguard.InstanceGuard;
 import lombok.Getter;
 import net.minestom.server.entity.Player;
 
@@ -13,6 +14,9 @@ public class API {
 
     @Getter
     public static Economy economy = Economy.getInstance();
+
+    @Getter
+    public static InstanceGuard instanceGuard = new InstanceGuard();
 
     public static boolean hasScoreboard(Player player) {
         return SidebarManager.getSidebarEnabled().containsKey(player);

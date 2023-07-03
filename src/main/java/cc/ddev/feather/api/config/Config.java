@@ -1,10 +1,13 @@
 package cc.ddev.feather.api.config;
 
 import cc.ddev.feather.configuration.ConfigManager;
+import cc.ddev.feather.utils.ChatUtils;
 import de.leonhard.storage.Toml;
 import lombok.Getter;
 import lombok.Setter;
 import net.minestom.server.coordinate.Pos;
+import net.minestom.server.item.ItemStack;
+import net.minestom.server.item.Material;
 
 public class Config {
 
@@ -72,5 +75,14 @@ public class Config {
 
         @Getter
         public static String DESCRIPTION = getFeatherConfig().getString("server.description");
+    }
+
+    public static class Plot {
+        @Getter
+        public static ItemStack PLOTWAND = ItemStack.builder(Material.STICK)
+                .displayName(ChatUtils.translateMiniMessage("<dark_aqua>Plot<aqua>Wand"))
+                .lore(ChatUtils.splitStringByNewLineToComponent("<aqua>Right click <dark_aqua>to select the first position\n\n" +
+                        "<aqua>Left click <dark_aqua>to select the second position"))
+                .build();
     }
 }

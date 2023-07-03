@@ -17,8 +17,11 @@ repositories {
 
 dependencies {
     implementation("com.github.Minestom:Minestom:954e8b3915")
-    implementation("com.github.DuranDevelopment:instanceguard:66384b842c") {
-        exclude(group = "dev.hollowcube", module = "minestom-ce")
+//    implementation("com.github.DuranDevelopment:instanceguard:66384b842c") {
+//        exclude(group = "com.github.Minestom", module = "Minestom")
+//    }
+    implementation("cc.ddev:instanceguard:1.0-SNAPSHOT") {
+        exclude(group = "com.github.Minestom", module = "Minestom")
     }
     /* Used for local testing
         implementation("cc.ddev:instanceguard:1.0-SNAPSHOT")

@@ -36,9 +36,9 @@ public class ChatUtils {
         return componentList;
     }
 
-    public static boolean compareComponent(Component title, String compare) {
-        // Clear all styles from the title
-        Component clearedTitle = title.style(Style.style());
+    public static boolean compareComponent(Component component, String compare) {
+        // Clear all styles from the component
+        Component clearedTitle = component.style(Style.style());
         // Clear all styles from the compare component
         Component clearedCompareComponent = ChatUtils.translateMiniMessage(compare).style(Style.style());
         return clearedTitle.equals(clearedCompareComponent);

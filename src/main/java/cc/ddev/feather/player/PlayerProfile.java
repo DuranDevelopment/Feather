@@ -6,7 +6,10 @@ import cc.ddev.feather.world.WorldManager;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.Getter;
+import lombok.Setter;
 import net.kyori.adventure.text.Component;
+import net.minestom.server.coordinate.Point;
+import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -21,6 +24,8 @@ public class PlayerProfile {
     private final @Getter PlayerModel playerModel;
     private final @Getter UUID uniqueId;
     private final @Getter Component username;
+    public @Getter @Setter Point plotWandPos1;
+    public @Getter @Setter Point plotWandPos2;
 
     public PlayerProfile(@NotNull Player player, @NotNull PlayerModel playerModel) {
         this.player = player;

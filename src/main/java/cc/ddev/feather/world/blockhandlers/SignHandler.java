@@ -2,7 +2,6 @@ package cc.ddev.feather.world.blockhandlers;
 
 import cc.ddev.feather.logger.Log;
 import net.minestom.server.instance.block.BlockHandler;
-import net.minestom.server.network.NetworkBuffer;
 import net.minestom.server.network.packet.server.play.OpenSignEditorPacket;
 import net.minestom.server.tag.Tag;
 import net.minestom.server.utils.NamespaceID;
@@ -22,7 +21,7 @@ public class SignHandler implements BlockHandler {
     public void onPlace(@NotNull BlockHandler.Placement placement) {
         Log.getLogger().info("Sign placed");
         if (!(placement instanceof PlayerPlacement playerPlacement)) return;
-        OpenSignEditorPacket openSignEditorPacket = new OpenSignEditorPacket(new NetworkBuffer());
+        OpenSignEditorPacket openSignEditorPacket = new OpenSignEditorPacket(placement.getBlockPosition());
         playerPlacement.getPlayer().getPlayerConnection().sendPacket(openSignEditorPacket);
     }
 
