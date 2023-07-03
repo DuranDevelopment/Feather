@@ -17,15 +17,15 @@ repositories {
 
 dependencies {
     implementation("com.github.Minestom:Minestom:954e8b3915")
-//    implementation("com.github.DuranDevelopment:instanceguard:66384b842c") {
-//        exclude(group = "com.github.Minestom", module = "Minestom")
-//    }
-    implementation("cc.ddev:instanceguard:1.0-SNAPSHOT") {
+    implementation("com.github.DuranDevelopment:instanceguard:140d6d11a2") {
         exclude(group = "com.github.Minestom", module = "Minestom")
     }
+
     /* Used for local testing
-        implementation("cc.ddev:instanceguard:1.0-SNAPSHOT")
-     */
+        implementation("cc.ddev:instanceguard:1.0-SNAPSHOT") {
+            exclude(group = "com.github.Minestom", module = "Minestom")
+        }
+    */
     implementation("com.zaxxer:HikariCP:5.0.1")
     implementation("com.github.simplix-softworks:simplixstorage:3.2.6")
     implementation("net.kyori:adventure-text-minimessage:4.13.1")
