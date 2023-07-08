@@ -1,21 +1,21 @@
 package cc.ddev.feather.command.plots.subcommands;
 
-import cc.ddev.feather.Server;
 import cc.ddev.feather.api.API;
+import cc.ddev.feather.api.playerdata.PlayerManager;
 import cc.ddev.feather.player.PlayerProfile;
 import cc.ddev.feather.player.PlayerWrapper;
 import cc.ddev.feather.world.WorldManager;
 import cc.ddev.instanceguard.flag.DefaultFlag;
-import cc.ddev.instanceguard.flag.FlagValue;
+import cc.ddev.instanceguard.flag.DefaultFlagValue;
 import net.minestom.server.command.builder.Command;
 import net.minestom.server.command.builder.arguments.ArgumentBoolean;
 import net.minestom.server.command.builder.arguments.ArgumentString;
 import net.minestom.server.command.builder.arguments.ArgumentType;
+import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.UUID;
 
 public class PlotCreateCommand extends Command {
 
@@ -28,31 +28,38 @@ public class PlotCreateCommand extends Command {
 //        setCondition((sender, command) -> sender.hasPermission("feather.plotcreate"));
 
         setDefaultExecutor((sender, context) -> {
+            sender.sendMessage("Usage: /plot create <name> [<topToBottom>]");
+        });
+
+        addSyntax((sender, context) -> {
             Player player = (Player) sender;
+            UUID uuid = player.getUuid();
+            Point pos1 = PlayerManager.getPlotWandPos1(uuid);
+            Point pos2 = PlayerManager.getPlotWandPos2(uuid);
             PlayerProfile playerProfile = PlayerWrapper.getPlayerProfile(player);
             String plotName = context.get(plotNameArgument);
 
             if (playerProfile == null) return;
-            if (playerProfile.getPlotWandPos1() == null || playerProfile.getPlotWandPos2() == null) {
+            if (pos1 == null || pos2 == null) {
                 player.sendMessage("You must select two positions with the plot wand first.");
                 return;
             }
             if (player.getInstance() == null) return;
-            Map<DefaultFlag, FlagValue> flags = new HashMap<>();
-            flags.put(DefaultFlag.USE, FlagValue.ALLOW);
-            flags.put(DefaultFlag.USE_GROUP, FlagValue.MEMBERS);
-            flags.put(DefaultFlag.INTERACT, FlagValue.ALLOW);
-            flags.put(DefaultFlag.INTERACT_GROUP, FlagValue.MEMBERS);
-            flags.put(DefaultFlag.PVP, FlagValue.ALLOW);
-            flags.put(DefaultFlag.CHEST_ACCESS, FlagValue.DENY);
-            flags.put(DefaultFlag.CHEST_ACCESS_GROUP, FlagValue.NON_MEMBERS);
+
+            String instanceName = WorldManager.getInstanceName(player.getInstance());
+
             API.getInstanceGuard().getRegionManager().createRegion(
-                    plotName,
-                    WorldManager.getInstanceName(player.getInstance()),
-                    new Pos(playerProfile.getPlotWandPos1()),
-                    new Pos(playerProfile.getPlotWandPos2())
+                    plotName, instanceName,
+                    new Pos(pos1), new Pos(pos2)
             );
-            player.sendMessage("Plot created.");
-        });
+            API.getInstanceGuard().getRegionManager().setFlag(plotName, instanceName, DefaultFlag.USE.getName(), DefaultFlagValue.ALLOW.getValue());
+            API.getInstanceGuard().getRegionManager().setFlag(plotName, instanceName, DefaultFlag.USE_GROUP.getName(), DefaultFlagValue.MEMBERS.getValue());
+            API.getInstanceGuard().getRegionManager().setFlag(plotName,instanceName, DefaultFlag.INTERACT.getName(), DefaultFlagValue.ALLOW.getValue());
+            API.getInstanceGuard().getRegionManager().setFlag(plotName,instanceName, DefaultFlag.INTERACT_GROUP.getName(), DefaultFlagValue.MEMBERS.getValue());
+            API.getInstanceGuard().getRegionManager().setFlag(plotName,instanceName, DefaultFlag.PVP.getName(), DefaultFlagValue.ALLOW.getValue());
+            API.getInstanceGuard().getRegionManager().setFlag(plotName,instanceName, DefaultFlag.CHEST_ACCESS.getName(), DefaultFlagValue.DENY.getValue());
+            API.getInstanceGuard().getRegionManager().setFlag(plotName,instanceName, DefaultFlag.CHEST_ACCESS_GROUP.getName(), DefaultFlagValue.NON_MEMBERS.getValue());
+            player.sendMessage("You have created a plot named " + plotName + " at " + pos1 + " and " + pos2 + ".");
+        }, plotNameArgument, topToBottomArgument.setDefaultValue(true));
     }
 }

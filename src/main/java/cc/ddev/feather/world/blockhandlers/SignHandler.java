@@ -19,7 +19,6 @@ public class SignHandler implements BlockHandler {
 
     @Override
     public void onPlace(@NotNull BlockHandler.Placement placement) {
-        Log.getLogger().info("Sign placed");
         if (!(placement instanceof PlayerPlacement playerPlacement)) return;
         OpenSignEditorPacket openSignEditorPacket = new OpenSignEditorPacket(placement.getBlockPosition());
         playerPlacement.getPlayer().getPlayerConnection().sendPacket(openSignEditorPacket);

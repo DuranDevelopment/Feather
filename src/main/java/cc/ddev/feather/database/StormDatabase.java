@@ -84,7 +84,6 @@ public class StormDatabase {
                 completableFuture.completeExceptionally(exception);
             }
         });
-
         return completableFuture;
     }
 

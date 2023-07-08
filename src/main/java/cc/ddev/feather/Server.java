@@ -1,5 +1,6 @@
 package cc.ddev.feather;
 
+import cc.ddev.feather.api.API;
 import cc.ddev.feather.api.banking.BankUtils;
 import cc.ddev.feather.api.config.Config;
 import cc.ddev.feather.command.StopCommand;
@@ -11,6 +12,7 @@ import cc.ddev.feather.command.essential.GamemodeCommand;
 import cc.ddev.feather.command.essential.OpCommand;
 import cc.ddev.feather.command.mtworld.MTWorldCommand;
 import cc.ddev.feather.command.plots.PlotCommand;
+import cc.ddev.feather.command.plots.PlotInfoCommand;
 import cc.ddev.feather.command.plots.PlotwandCommand;
 import cc.ddev.feather.configuration.ConfigManager;
 import cc.ddev.feather.database.DataManager;
@@ -97,11 +99,12 @@ public class Server {
         MinecraftServer.getCommandManager().register(new StopCommand());
         MinecraftServer.getCommandManager().register(new PlotwandCommand());
         MinecraftServer.getCommandManager().register(new PlotCommand());
-
+        MinecraftServer.getCommandManager().register(new PlotInfoCommand());
         for (Player player : MinecraftServer.getConnectionManager().getOnlinePlayers()) {
             StormDatabase.getInstance().loadPlayerModel(player.getUuid());
         }
 
+        API.getInstanceGuard().getFlagManager().registerCustomFlag("feather-description", "");
         WorldManager.loadWorld(WorldManager.getWorldsDirectory() + File.separator + Config.Spawn.WORLD);
         SaveWorldTask.registerTask();
         ShutdownTask.registerTask();

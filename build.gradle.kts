@@ -16,8 +16,8 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.Minestom:Minestom:954e8b3915")
-    implementation("com.github.DuranDevelopment:instanceguard:140d6d11a2") {
+    implementation("com.github.Minestom:Minestom:824ae0a25b")
+    implementation("com.github.DuranDevelopment:instanceguard:bf2ee4495f") {
         exclude(group = "com.github.Minestom", module = "Minestom")
     }
 

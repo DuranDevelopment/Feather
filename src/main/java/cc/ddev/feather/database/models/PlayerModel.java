@@ -16,6 +16,9 @@ public class PlayerModel extends StormModel {
     @Column(name = "uuid", unique = true)
     private UUID uniqueId;
 
+    @Column(name = "last_known_username")
+    private String username;
+
     @Column(defaultValue = "0")
     private String lastLocation;
 

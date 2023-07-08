@@ -3,6 +3,7 @@ package cc.ddev.feather.player;
 import cc.ddev.feather.database.models.PlayerModel;
 import cc.ddev.feather.logger.Log;
 import cc.ddev.feather.world.WorldManager;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.Getter;
@@ -24,8 +25,6 @@ public class PlayerProfile {
     private final @Getter PlayerModel playerModel;
     private final @Getter UUID uniqueId;
     private final @Getter Component username;
-    public @Getter @Setter Point plotWandPos1;
-    public @Getter @Setter Point plotWandPos2;
 
     public PlayerProfile(@NotNull Player player, @NotNull PlayerModel playerModel) {
         this.player = player;
@@ -50,8 +49,8 @@ public class PlayerProfile {
     }
 
     public static String getInstanceName(Player player) {
-        if (player == null) {
-            return "null";
+        if (player == null || player.getInstance() == null) {
+            return null;
         }
         return WorldManager.getInstanceName(player.getInstance());
     }

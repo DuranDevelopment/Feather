@@ -30,7 +30,7 @@ public interface Listener {
                                 throw new RuntimeException(e);
                             }
                         });
-                        Log.getLogger().debug("Registered listener for event " + eventToStickTo.getSimpleName());
+                        if (Log.getLogger().isDebugEnabled()) Log.getLogger().debug("Registered listener for event " + eventToStickTo.getSimpleName());
                     } else {
                         throw new IllegalArgumentException("Method annotated with @Listen must have a single parameter of type Event or a subclass of Event.");
                     }

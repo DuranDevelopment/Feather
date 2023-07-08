@@ -13,7 +13,7 @@ public class RegisterHandlers {
         for (Block block : Block.values()) {
             if (block.name().endsWith("sign")) {
                 MinecraftServer.getBlockManager().registerHandler(block.name(), () -> signHandler);
-                Log.getLogger().debug("Registered handler for " + block.name());
+                if (Log.getLogger().isDebugEnabled()) Log.getLogger().debug("Registered handler for " + block.name());
             }
         }
         Log.getLogger().debug("Registered block handlers");

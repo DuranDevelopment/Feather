@@ -29,33 +29,42 @@ public class PlayerSpawnListener implements Listener {
     public void onPlayerSpawn(PlayerSpawnEvent event) {
         final Player player = event.getPlayer();
 
-        // Delay the task to prevent the instance from being null
-        MinecraftServer.getSchedulerManager().buildTask(() -> {
-            // Check if player is in an MTWorld
-            if (WorldManager.isMTWorld(WorldManager.getInstanceName(player.getInstance()))) {
-                PlayerProfile playerProfile = PlayerWrapper.getPlayerProfile(player);
-                PlayerModel playerModel = playerProfile.getPlayerModel();
+        if (player.getInstance() == null) {
+            player.kick("Failed to load player instance!");
+            return;
+        }
 
-                // Extract X, Y and Z from the position string
-                String[] position = playerModel.getLastLocation().split(",");
-                double x = Double.parseDouble(position[0].replace("Pos[x=", ""));
-                double y = Double.parseDouble(position[1].replace("y=", ""));
-                double z = Double.parseDouble(position[2].replace("z=", ""));
-                float yaw = Float.parseFloat(position[3].replace("yaw=", ""));
-                float pitch = Float.parseFloat(position[4].replace("pitch=", "").replace("]", ""));
-
-                player.teleport(new Pos(x, y, z, yaw, pitch));
-                StormDatabase.getInstance().saveStormModel(playerModel);
-
-                if (playerModel.getIsOperator()) {
-                    player.setPermissionLevel(4);
-                }
-
-                // Build sidebar
-                SidebarManager.buildSidebar(player);
-                player.sendTitlePart(TitlePart.TITLE, ChatUtils.translateMiniMessage(Placeholders.parse(player, Messages.JOIN_TITLE)));
-                player.sendTitlePart(TitlePart.SUBTITLE, ChatUtils.translateMiniMessage(Placeholders.parse(player, Messages.JOIN_SUBTITLE)));
+        // Check if player is in an MTWorld
+        if (WorldManager.isMTWorld(WorldManager.getInstanceName(player.getInstance()))) {
+            PlayerProfile playerProfile = PlayerWrapper.getPlayerProfile(player);
+            if (playerProfile == null) {
+                player.kick("Failed to load player profile!");
+                return;
             }
-        }).delay(TaskSchedule.seconds(1)).schedule();
+            PlayerModel playerModel = playerProfile.getPlayerModel();
+
+            // Update username if it has changed
+            if (!playerModel.getUsername().equals(player.getUsername()) || playerModel.getUsername() == null) playerModel.setUsername(player.getUsername());
+
+            // Extract X, Y and Z from the position string
+            String[] position = playerModel.getLastLocation().split(",");
+            double x = Double.parseDouble(position[0].replace("Pos[x=", ""));
+            double y = Double.parseDouble(position[1].replace("y=", ""));
+            double z = Double.parseDouble(position[2].replace("z=", ""));
+            float yaw = Float.parseFloat(position[3].replace("yaw=", ""));
+            float pitch = Float.parseFloat(position[4].replace("pitch=", "").replace("]", ""));
+
+            player.teleport(new Pos(x, y, z, yaw, pitch));
+            StormDatabase.getInstance().saveStormModel(playerModel);
+
+            if (playerModel.getIsOperator()) {
+                player.setPermissionLevel(4);
+            }
+
+            // Build sidebar
+            SidebarManager.buildSidebar(player);
+            player.sendTitlePart(TitlePart.TITLE, ChatUtils.translateMiniMessage(Placeholders.parse(player, Messages.JOIN_TITLE)));
+            player.sendTitlePart(TitlePart.SUBTITLE, ChatUtils.translateMiniMessage(Placeholders.parse(player, Messages.JOIN_SUBTITLE)));
+        }
     }
 }

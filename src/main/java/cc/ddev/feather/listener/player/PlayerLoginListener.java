@@ -43,31 +43,40 @@ public class PlayerLoginListener implements Listener {
             event.setSpawningInstance(Server.getInstanceContainer());
         }
 
-        // Load player model
         StormDatabase.getInstance().loadPlayerModel(player.getUuid());
 
+        // Delay to ensure the player model is loaded
         MinecraftServer.getSchedulerManager().buildTask(() -> {
+            // Load player profile
             PlayerProfile playerProfile = PlayerWrapper.getPlayerProfile(player);
+            if (playerProfile == null) {
+                player.kick("Failed to load player profile!");
+                return;
+            }
+
+            // Load player model
             PlayerModel playerModel = playerProfile.getPlayerModel();
             if (playerModel == null) {
                 player.kick("Failed to load player model!");
                 return;
             }
+
             // Extract X, Y and Z from the position string
-            String[] position = playerModel.getLastLocation().split(",");
-            double x = Double.parseDouble(position[0].replace("Pos[x=", ""));
-            double y = Double.parseDouble(position[1].replace("y=", ""));
-            double z = Double.parseDouble(position[2].replace("z=", ""));
-            float yaw = Float.parseFloat(position[3].replace("yaw=", ""));
-            float pitch = Float.parseFloat(position[4].replace("pitch=", "").replace("]", ""));
+            String[] rawPosition = playerModel.getLastLocation().split(",");
+            double x = Double.parseDouble(rawPosition[0].replace("Pos[x=", ""));
+            double y = Double.parseDouble(rawPosition[1].replace("y=", ""));
+            double z = Double.parseDouble(rawPosition[2].replace("z=", ""));
+            float yaw = Float.parseFloat(rawPosition[3].replace("yaw=", ""));
+            float pitch = Float.parseFloat(rawPosition[4].replace("pitch=", "").replace("]", ""));
+            Pos pos = new Pos(x, y, z, yaw, pitch);
 
             // Set the spawn position
-            player.setRespawnPoint(new Pos(x, y, z, yaw, pitch));
-        }).delay(TaskSchedule.seconds(5)).schedule();
+            player.setRespawnPoint(pos);
 
-        Log.getLogger().info("UUID of player " + player.getUsername() + " is " + player.getUuid());
-        // Remove on production
-        player.setPermissionLevel(4);
-        player.addPermission(new Permission("server.stop"));
+            Log.getLogger().info("UUID of player " + player.getUsername() + " is " + player.getUuid());
+            // Remove on production
+            player.setPermissionLevel(4);
+            player.addPermission(new Permission("server.stop"));
+        }).delay(TaskSchedule.seconds(5)).schedule();
     }
 }

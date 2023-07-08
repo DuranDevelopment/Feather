@@ -27,7 +27,7 @@ public interface PacketListener {
                             throw new RuntimeException(e);
                         }
                     });
-                    Log.getLogger().debug("Registered listener for packet " + packetToStickTo.getSimpleName());
+                    if (Log.getLogger().isDebugEnabled()) Log.getLogger().debug("Registered listener for packet " + packetToStickTo.getSimpleName());
                 } else {
                     throw new IllegalArgumentException("Method annotated with @Listen must have a single parameter of type ClientPacket or a subclass of ClientPacket.");
                 }
