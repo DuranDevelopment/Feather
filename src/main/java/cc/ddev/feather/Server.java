@@ -27,6 +27,7 @@ import cc.ddev.feather.task.ShutdownTask;
 import cc.ddev.feather.world.WorldManager;
 import cc.ddev.feather.world.blockhandlers.RegisterHandlers;
 import cc.ddev.instanceguard.InstanceGuard;
+import cc.ddev.instanceguard.flag.FlagValue;
 import lombok.Getter;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
@@ -104,7 +105,7 @@ public class Server {
             StormDatabase.getInstance().loadPlayerModel(player.getUuid());
         }
 
-        API.getInstanceGuard().getFlagManager().registerCustomFlag("feather-description", "");
+        API.getInstanceGuard().getFlagManager().registerCustomFlag("feather-description", new FlagValue<>(""));
         WorldManager.loadWorld(WorldManager.getWorldsDirectory() + File.separator + Config.Spawn.WORLD);
         SaveWorldTask.registerTask();
         ShutdownTask.registerTask();
