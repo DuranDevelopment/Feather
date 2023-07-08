@@ -31,7 +31,7 @@ public class PlotAddMemberCommand extends Command {
                 if (region.containsLocation(new Pos(player.getPosition()))) {
                     region.addMember(target);
                 } else {
-                    player.sendMessage(ChatUtils.translateMiniMessage("<red>You are not in a plot!"));
+                    player.sendMessage(ChatUtils.translateMiniMessage("<red>You are not currently on a plot"));
                 }
             }
         }, playerArgument);

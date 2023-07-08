@@ -26,7 +26,6 @@ import cc.ddev.feather.task.SaveWorldTask;
 import cc.ddev.feather.task.ShutdownTask;
 import cc.ddev.feather.world.WorldManager;
 import cc.ddev.feather.world.blockhandlers.RegisterHandlers;
-import cc.ddev.instanceguard.InstanceGuard;
 import cc.ddev.instanceguard.flag.FlagValue;
 import lombok.Getter;
 import net.minestom.server.MinecraftServer;
@@ -34,7 +33,6 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.block.Block;
-import net.minestom.server.network.packet.client.play.ClientUpdateSignPacket;
 
 import java.io.File;
 

@@ -25,7 +25,7 @@ public class PlotInfoCommand extends Command {
         setDefaultExecutor((sender, context) -> {
             Player player = (Player) sender;
             if (instanceGuard.getRegionManager().getRegions().size() == 0) {
-                player.sendMessage(ChatUtils.translateMiniMessage("<red>You are not in a plot!"));
+                player.sendMessage(ChatUtils.translateMiniMessage("<red>You are not currently on a plot."));
                 return;
             }
 
@@ -34,10 +34,10 @@ public class PlotInfoCommand extends Command {
                     player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>----------------------------------------"));
                     player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>Plot info of plot: <aqua>" + region.getName()));
                     if (region.getOwners().size() == 0) {
-                        player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>Owners:"));
+                        player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>Owners: <aqua>None"));
                     } else {
+                        List<String> ownerNames = new ArrayList<>();
                         for (UUID uuid : region.getOwners()) {
-                            List<String> ownerNames = new ArrayList<>();
                             try {
                                 Collection<PlayerModel> playerModels =
                                         StormDatabase.getInstance().getStorm().buildQuery(PlayerModel.class)
@@ -51,15 +51,15 @@ public class PlotInfoCommand extends Command {
                             } catch (Exception exception) {
                                 throw new RuntimeException(exception);
                             }
-                            player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>Owners: <aqua>" + ownerNames));
                         }
+                        player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>Owners: <aqua>" + ownerNames.toString().replace("[", "").replace("]", "")));
                     }
 
                     if (region.getMembers().size() == 0) {
-                        player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>Members:"));
+                        player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>Members: <aqua>None"));
                     } else {
+                        List<String> memberNames = new ArrayList<>();
                         for (UUID uuid : region.getMembers()) {
-                            List<String> memberNames = new ArrayList<>();
                             try {
                                 Collection<PlayerModel> playerModels =
                                         StormDatabase.getInstance().getStorm().buildQuery(PlayerModel.class)
@@ -73,8 +73,8 @@ public class PlotInfoCommand extends Command {
                             } catch (Exception exception) {
                                 throw new RuntimeException(exception);
                             }
-                            player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>Members: <aqua>" + memberNames));
                         }
+                        player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>Members: <aqua>" + memberNames.toString().replace("[", "").replace("]", "")));
                     }
                     if (region.getFlagValue("feather-description") == null) {
                         player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>Description: <aqua>None"));
@@ -84,7 +84,7 @@ public class PlotInfoCommand extends Command {
                     player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>----------------------------------------"));
 
                 } else {
-                    player.sendMessage(ChatUtils.translateMiniMessage("<red>You are not in a plot!"));
+                    player.sendMessage(ChatUtils.translateMiniMessage("<red>You are not currently on a plot."));
                 }
             }
         });

@@ -32,7 +32,7 @@ public class PlotAddOwnerCommand extends Command {
                 if (region.containsLocation(new Pos(player.getPosition()))) {
                     region.addOwner(target);
                 } else {
-                    player.sendMessage(ChatUtils.translateMiniMessage("<red>You are not in a plot!"));
+                    player.sendMessage(ChatUtils.translateMiniMessage("<red>You are not currently on a plot"));
                 }
             }
         }, playerArgument);

@@ -19,7 +19,7 @@ public class PlotSetDescriptionCommand extends Command {
         addSyntax((sender, context) -> {
             Player player = (Player) sender;
             if (API.getInstanceGuard().getRegionManager().getRegion(player.getPosition()) == null) {
-                sender.sendMessage("You are not in a plot!");
+                sender.sendMessage("You are not currently on a plot.");
                 return;
             }
             String description = context.get("description");
