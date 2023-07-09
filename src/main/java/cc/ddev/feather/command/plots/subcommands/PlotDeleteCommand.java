@@ -32,6 +32,6 @@ public class PlotDeleteCommand extends Command {
                 }
             }
 
-        });
+        }, plotNameArgument);
     }
 }
