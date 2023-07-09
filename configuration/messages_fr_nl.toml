@@ -1,28 +1,28 @@
-language = "en"
-invalid_arguments = "<red>You provided invalid arguments for this command."
-invalid_username = "<red>That username is invalid."
-not_online = "<red>That player is not online."
-no_permission = "<red>You don't have permission to use this command."
-fly_on = "<green>Fly mode has been enabled!"
-fly_off = "<red>Fly mode has been disabled!"
+language = "nl"
+invalid_arguments = "<red>Je hebt ongeldige argumenten opgegeven voor dit commando."
+invalid_username = "<red>Deze gebruikersnaam is ongeldig."
+not_online = "<red>Deze speler is niet online."
+no_permission = "<red>Je hebt geen toestemming om dit commando te gebruiken."
+fly_on = "<green>Vliegmodus is ingeschakeld!"
+fly_off = "<red>Vliegmodus is uitgeschakeld!"
 
 [join]
 enabled = true
-message = "&7<player> joined the game"
+message = "&7<player> heeft het spel toegetreden"
 
 [leave]
 enabled = true
-message = "&7<player> left the game"
+message = "&7<player> heeft het spel verlaten"
 
 [join_title]
-title = "<worldcolor>Welcome to"
+title = "<worldcolor>Welkom in"
 subtitle = "<worldcolor><loadingname>"
 
 [mtworldcmd.add]
-success = "<dark_aqua>Succesfully <aqua>enabled<dark_aqua> Feather in this world!"
+success = "<dark_aqua>Feather is succesvol <aqua>aangezet <dark_aqua>in deze wereld!"
 
 [banking]
-frozen = "<red>This account is frozen, you can no longer withdraw or deposit money!"
+frozen = "<red>Dit account is bevroren, je kan geen geld meer opnemen of storten!"
 
   [banking.selector]
   title = "<dark_aqua>Select the account type:"
