@@ -60,7 +60,7 @@ public class PlotInfoCommand extends Command {
         if (flagValue == null) {
             player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>" + "Description" + ": <aqua>None"));
         } else {
-            player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>" + "Description" + ": <aqua>" + flagValue));
+            player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>" + "Description" + ": <aqua>" + flagValue.getValue()));
         }
     }
 
