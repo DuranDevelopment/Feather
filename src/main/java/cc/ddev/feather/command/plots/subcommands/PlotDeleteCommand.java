@@ -24,12 +24,19 @@ public class PlotDeleteCommand extends Command {
             Player player = (Player) sender;
             String plotName = context.get(plotNameArgument);
 
+            int plotCount = 0;
             for (Region region : instanceGuard.getRegionManager().getRegions()) {
                 if (region.getName().equals(plotName)) {
                     instanceGuard.getRegionManager().removeRegion(region);
-                    player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>Successfully deleted plot <aqua>" + plotName));
+                    player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>Successfully deleted plot <aqua>" + plotName + "<dark_aqua>."));
                     return;
                 }
+                plotCount++;
+            }
+
+            // The loop has iterated over all the plots without finding a match
+            if (plotCount == instanceGuard.getRegionManager().getRegions().size()) {
+                player.sendMessage(ChatUtils.translateMiniMessage("<red>Plot <dark_red>" + plotName + " <red>does not exist."));
             }
 
         }, plotNameArgument);
