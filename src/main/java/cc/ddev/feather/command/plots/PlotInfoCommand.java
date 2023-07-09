@@ -3,17 +3,19 @@ package cc.ddev.feather.command.plots;
 import cc.ddev.feather.api.API;
 import cc.ddev.feather.database.StormDatabase;
 import cc.ddev.feather.database.models.PlayerModel;
-import cc.ddev.feather.logger.Log;
-import cc.ddev.feather.player.PlayerProfile;
 import cc.ddev.feather.utils.ChatUtils;
 import cc.ddev.instanceguard.InstanceGuard;
+import cc.ddev.instanceguard.flag.FlagValue;
 import cc.ddev.instanceguard.region.Region;
 import com.craftmend.storm.api.enums.Where;
 import net.minestom.server.command.builder.Command;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.UUID;
 
 public class PlotInfoCommand extends Command {
 
@@ -24,8 +26,9 @@ public class PlotInfoCommand extends Command {
 
         setDefaultExecutor((sender, context) -> {
             Player player = (Player) sender;
-            if (instanceGuard.getRegionManager().getRegions().size() == 0) {
-                player.sendMessage(ChatUtils.translateMiniMessage("<red>You are not currently on a plot."));
+
+            if (instanceGuard.getRegionManager().getRegions().isEmpty()) {
+                player.sendMessage(ChatUtils.translateMiniMessage("<red>You are currently not on a plot."));
                 return;
             }
 
@@ -33,60 +36,51 @@ public class PlotInfoCommand extends Command {
                 if (region.containsLocation(new Pos(player.getPosition()))) {
                     player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>----------------------------------------"));
                     player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>Plot info of plot: <aqua>" + region.getName()));
-                    if (region.getOwners().size() == 0) {
-                        player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>Owners: <aqua>None"));
-                    } else {
-                        List<String> ownerNames = new ArrayList<>();
-                        for (UUID uuid : region.getOwners()) {
-                            try {
-                                Collection<PlayerModel> playerModels =
-                                        StormDatabase.getInstance().getStorm().buildQuery(PlayerModel.class)
-                                                .where("uuid", Where.EQUAL, uuid.toString())
-                                                .limit(1)
-                                                .execute()
-                                                .join();
-                                for (PlayerModel playerModel : playerModels) {
-                                    ownerNames.add(playerModel.getUsername());
-                                }
-                            } catch (Exception exception) {
-                                throw new RuntimeException(exception);
-                            }
-                        }
-                        player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>Owners: <aqua>" + ownerNames.toString().replace("[", "").replace("]", "")));
-                    }
-
-                    if (region.getMembers().size() == 0) {
-                        player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>Members: <aqua>None"));
-                    } else {
-                        List<String> memberNames = new ArrayList<>();
-                        for (UUID uuid : region.getMembers()) {
-                            try {
-                                Collection<PlayerModel> playerModels =
-                                        StormDatabase.getInstance().getStorm().buildQuery(PlayerModel.class)
-                                                .where("uuid", Where.EQUAL, uuid.toString())
-                                                .limit(1)
-                                                .execute()
-                                                .join();
-                                for (PlayerModel playerModel : playerModels) {
-                                    memberNames.add(playerModel.getUsername());
-                                }
-                            } catch (Exception exception) {
-                                throw new RuntimeException(exception);
-                            }
-                        }
-                        player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>Members: <aqua>" + memberNames.toString().replace("[", "").replace("]", "")));
-                    }
-                    if (region.getFlagValue("feather-description") == null) {
-                        player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>Description: <aqua>None"));
-                    } else {
-                        player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>Description: <aqua>" + region.getFlagValue("feather-description").getValue()));
-                    }
+                    sendMessageWithList(player, "Owners", getNamesFromUUIDs(region.getOwners()));
+                    sendMessageWithList(player, "Members", getNamesFromUUIDs(region.getMembers()));
+                    sendMessageWithFlag(player, region);
                     player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>----------------------------------------"));
-
-                } else {
-                    player.sendMessage(ChatUtils.translateMiniMessage("<red>You are not currently on a plot."));
+                    return;
                 }
             }
+            player.sendMessage(ChatUtils.translateMiniMessage("<red>You are currently not on a plot."));
         });
+    }
+
+    private void sendMessageWithList(Player player, String label, List<String> values) {
+        if (values.isEmpty()) {
+            player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>" + label + ": <aqua>None"));
+        } else {
+            player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>" + label + ": <aqua>" + values.toString().replace("[", "").replace("]", "")));
+        }
+    }
+
+    private void sendMessageWithFlag(Player player, Region region) {
+        FlagValue<?> flagValue = instanceGuard.getRegionManager().getRegion(region).getFlagValue("feather-description");
+        if (flagValue == null) {
+            player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>" + "Description" + ": <aqua>None"));
+        } else {
+            player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>" + "Description" + ": <aqua>" + flagValue));
+        }
+    }
+
+    private List<String> getNamesFromUUIDs(Collection<UUID> uuids) {
+        List<String> names = new ArrayList<>();
+        for (UUID uuid : uuids) {
+            try {
+                Collection<PlayerModel> playerModels =
+                        StormDatabase.getInstance().getStorm().buildQuery(PlayerModel.class)
+                                .where("uuid", Where.EQUAL, uuid.toString())
+                                .limit(1)
+                                .execute()
+                                .join();
+                for (PlayerModel playerModel : playerModels) {
+                    names.add(playerModel.getUsername());
+                }
+            } catch (Exception exception) {
+                throw new RuntimeException(exception);
+            }
+        }
+        return names;
     }
 }

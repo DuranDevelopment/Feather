@@ -7,17 +7,17 @@ import cc.ddev.instanceguard.region.Region;
 import net.minestom.server.command.builder.Command;
 import net.minestom.server.command.builder.arguments.ArgumentType;
 import net.minestom.server.command.builder.arguments.minecraft.ArgumentEntity;
-import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
 import net.minestom.server.utils.entity.EntityFinder;
 
-public class PlotAddMemberCommand extends Command {
+public class PlotRemoveMemberCommand extends Command {
+
     private final InstanceGuard instanceGuard = API.getInstanceGuard();
 
-    public PlotAddMemberCommand() {
-        super("addmember");
+    public PlotRemoveMemberCommand() {
+        super("removemember");
 
-        setDefaultExecutor((sender, context) -> sender.sendMessage("Usage: /plot addmember <player>"));
+        setDefaultExecutor((sender, context) -> sender.sendMessage("Usage: /plot removemember <player>"));
 
         ArgumentEntity playerArgument = ArgumentType.Entity("player").onlyPlayers(true).singleEntity(true);
         playerArgument.setCallback((sender, exception) -> sender.sendMessage("Invalid player!"));
@@ -30,15 +30,11 @@ public class PlotAddMemberCommand extends Command {
             if (target == null) return;
 
             for (Region region : instanceGuard.getRegionManager().getRegions()) {
-                if (region.containsLocation(new Pos(player.getPosition()))) {
-                    if (region.isMember(target)) {
-                        player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>You have successfully made <aqua>" + target.getUsername() + " <dark_aqua>member of this plot."));
-                        return;
-                    }
-                    player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>You have successfully made <aqua>" + target.getUsername() + " <dark_aqua>member of this plot."));
-                    region.addMember(target);
+                if (region.containsLocation(player.getPosition())) {
+                    region.removeMember(target);
+                    player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>You have successfully removed <aqua>" + target.getUsername() + " <dark_aqua>as a member of this plot."));
                 } else {
-                    player.sendMessage(ChatUtils.translateMiniMessage("<red>You are not currently on a plot"));
+                    player.sendMessage("<red>You are not currently on a plot.");
                 }
             }
         }, playerArgument);

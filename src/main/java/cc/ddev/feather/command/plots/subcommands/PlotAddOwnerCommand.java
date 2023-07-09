@@ -28,8 +28,15 @@ public class PlotAddOwnerCommand extends Command {
             EntityFinder finder = context.get("player");
             Player target = finder.findFirstPlayer(player);
 
+            if (target == null) return;
+
             for (Region region : instanceGuard.getRegionManager().getRegions()) {
                 if (region.containsLocation(new Pos(player.getPosition()))) {
+                    if (region.isOwner(target)) {
+                        player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>You have successfully made <aqua>" + target.getUsername() + " <dark_aqua>owner of this plot."));
+                        return;
+                    }
+                    player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>You have successfully made <aqua>" + target.getUsername() + " <dark_aqua>owner of this plot."));
                     region.addOwner(target);
                 } else {
                     player.sendMessage(ChatUtils.translateMiniMessage("<red>You are not currently on a plot"));

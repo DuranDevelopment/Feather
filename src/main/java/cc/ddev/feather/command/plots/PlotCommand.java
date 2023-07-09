@@ -1,9 +1,6 @@
 package cc.ddev.feather.command.plots;
 
-import cc.ddev.feather.command.plots.subcommands.PlotAddMemberCommand;
-import cc.ddev.feather.command.plots.subcommands.PlotAddOwnerCommand;
-import cc.ddev.feather.command.plots.subcommands.PlotCreateCommand;
-import cc.ddev.feather.command.plots.subcommands.PlotSetDescriptionCommand;
+import cc.ddev.feather.command.plots.subcommands.*;
 import net.minestom.server.command.builder.Command;
 
 public class PlotCommand extends Command {
@@ -11,8 +8,11 @@ public class PlotCommand extends Command {
         super("plot");
 //        setCondition((sender, command) -> sender.hasPermission("feather.plot"));
         addSubcommand(new PlotCreateCommand());
+        addSubcommand(new PlotDeleteCommand());
         addSubcommand(new PlotAddOwnerCommand());
+        addSubcommand(new PlotRemoveOwnerCommand());
         addSubcommand(new PlotAddMemberCommand());
+        addSubcommand(new PlotRemoveMemberCommand());
         addSubcommand(new PlotSetDescriptionCommand());
         setDefaultExecutor((sender, context) -> sender.sendMessage("Usage: /plot <create|addowner|addmember|setdescription>"));
     }
