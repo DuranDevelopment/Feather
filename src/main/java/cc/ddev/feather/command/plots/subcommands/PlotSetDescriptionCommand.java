@@ -1,6 +1,7 @@
 package cc.ddev.feather.command.plots.subcommands;
 
 import cc.ddev.feather.api.API;
+import cc.ddev.feather.utils.ChatUtils;
 import cc.ddev.instanceguard.flag.FlagValue;
 import net.minestom.server.command.builder.Command;
 import net.minestom.server.command.builder.arguments.ArgumentString;
@@ -19,12 +20,12 @@ public class PlotSetDescriptionCommand extends Command {
         addSyntax((sender, context) -> {
             Player player = (Player) sender;
             if (API.getInstanceGuard().getRegionManager().getRegion(player.getPosition()) == null) {
-                sender.sendMessage("You are not currently on a plot.");
+                player.sendMessage(ChatUtils.translateMiniMessage("<red>You are currently not on a plot."));
                 return;
             }
             String description = context.get("description");
             API.getInstanceGuard().getRegionManager().getRegion(player.getPosition()).setFlag("feather-description", new FlagValue<>(description));
-            sender.sendMessage("Set the description of the plot to " + context.get("description"));
+            player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>Set the description of the plot to <aqua>" + context.get("description") + "<dark_aqua>."));
         }, ArgumentType.String("description"));
     }
 }

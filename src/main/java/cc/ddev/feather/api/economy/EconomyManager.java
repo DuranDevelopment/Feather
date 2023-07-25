@@ -6,13 +6,13 @@ import cc.ddev.feather.player.PlayerProfile;
 import cc.ddev.feather.player.PlayerWrapper;
 import net.minestom.server.entity.Player;
 
-public class Economy {
+public class EconomyManager {
 
-    private static Economy instance;
+    private static EconomyManager instance;
 
-    public static Economy getInstance() {
+    public static EconomyManager getInstance() {
         if (instance == null) {
-            instance = new Economy();
+            instance = new EconomyManager();
         }
         return instance;
     }

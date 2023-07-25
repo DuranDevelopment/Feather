@@ -3,7 +3,7 @@ package cc.ddev.feather.command.mtworld.subcommands;
 import cc.ddev.feather.api.config.Messages;
 import cc.ddev.feather.database.StormDatabase;
 import cc.ddev.feather.database.models.WorldModel;
-import cc.ddev.feather.sidebar.SidebarManager;
+import cc.ddev.feather.api.sidebar.SidebarManager;
 import cc.ddev.feather.utils.ChatUtils;
 import cc.ddev.feather.world.WorldManager;
 import net.kyori.adventure.text.Component;

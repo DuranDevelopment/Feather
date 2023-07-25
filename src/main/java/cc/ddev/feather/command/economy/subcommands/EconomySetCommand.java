@@ -4,7 +4,7 @@ import cc.ddev.feather.database.StormDatabase;
 import cc.ddev.feather.database.models.PlayerModel;
 import cc.ddev.feather.player.PlayerProfile;
 import cc.ddev.feather.player.PlayerWrapper;
-import cc.ddev.feather.sidebar.SidebarRefreshTask;
+import cc.ddev.feather.api.sidebar.SidebarManager;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.command.builder.Command;
 import net.minestom.server.command.builder.arguments.ArgumentType;
@@ -36,7 +36,7 @@ public class EconomySetCommand extends Command {
             PlayerModel playerModel = playerProfile.getPlayerModel();
             playerModel.setBalance(context.get("amount"));
             StormDatabase.getInstance().saveStormModel(playerModel);
-            SidebarRefreshTask.refreshSidebar(player);
+            SidebarManager.refreshSidebar(player);
             sender.sendMessage(Component.text("Set ").append(playerProfile.getUsername()).append(Component.text("'s balance to ").append(Component.text(playerModel.getBalance()))));
         }, playerArgument, amountArgument);
     }

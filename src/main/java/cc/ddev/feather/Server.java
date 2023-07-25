@@ -22,6 +22,7 @@ import cc.ddev.feather.listener.player.*;
 import cc.ddev.feather.listener.server.ServerListPingListener;
 import cc.ddev.feather.logger.Log;
 import cc.ddev.feather.player.PlayerProfile;
+import cc.ddev.feather.task.SidebarRefreshTask;
 import cc.ddev.feather.task.SaveWorldTask;
 import cc.ddev.feather.task.ShutdownTask;
 import cc.ddev.feather.world.WorldManager;
@@ -48,7 +49,7 @@ public class Server {
         // Set brand name
         MinecraftServer.setBrandName("Feather");
         // Load the configuration file
-        ConfigManager configManager = ConfigManager.init();
+        ConfigManager configManager = ConfigManager.getInstance();
         configManager.createConfigDirectory();
         // Make the database connection
         new DataManager().initialize();
@@ -105,6 +106,7 @@ public class Server {
 
         API.getInstanceGuard().getFlagManager().registerCustomFlag("feather-description", new FlagValue<>(""));
         WorldManager.loadWorld(WorldManager.getWorldsDirectory() + File.separator + Config.Spawn.WORLD);
+        SidebarRefreshTask.registerTask();
         SaveWorldTask.registerTask();
         ShutdownTask.registerTask();
         ShutdownTask.registerShutdownHook();

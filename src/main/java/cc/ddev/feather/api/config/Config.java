@@ -12,7 +12,7 @@ import net.minestom.server.item.Material;
 public class Config {
 
     @Getter
-    private static final Toml featherConfig = ConfigManager.init().getFeatherConfig();
+    private static final Toml featherConfig = ConfigManager.getInstance().getFeatherConfig();
 
     public static class Database {
         @Getter

@@ -1,18 +1,21 @@
-package cc.ddev.feather.sidebar;
+package cc.ddev.feather.api.sidebar;
 
 import cc.ddev.feather.api.config.Config;
 import cc.ddev.feather.database.models.PlayerModel;
 import cc.ddev.feather.placeholders.Placeholders;
 import cc.ddev.feather.player.PlayerProfile;
 import cc.ddev.feather.player.PlayerWrapper;
+import cc.ddev.feather.world.WorldManager;
+import lombok.Getter;
 import net.kyori.adventure.text.Component;
+import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.scoreboard.Sidebar;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 
 public class SidebarManager {
-
     public static HashMap<Player, Sidebar> sidebarMap = new HashMap<>();
 
     public static void buildSidebar(Player player) {
@@ -20,6 +23,7 @@ public class SidebarManager {
         Sidebar sidebar = new Sidebar(titleComponent);
 
         PlayerProfile playerProfile = PlayerWrapper.getPlayerProfile(player);
+        if (playerProfile == null) return;
         PlayerModel playerModel = playerProfile.getPlayerModel();
         Double balance = playerModel.getBalance();
 
@@ -38,6 +42,25 @@ public class SidebarManager {
         Sidebar sidebar = sidebarMap.get(player);
         sidebar.removeViewer(player);
         sidebarMap.remove(player);
+    }
+
+    public static void refreshSidebar(Player player) {
+        if (player.getInstance() == null) return;
+        if (WorldManager.isMTWorld(WorldManager.getInstanceName(player.getInstance()))) {
+            SidebarManager.buildSidebar(player);
+        }
+    }
+
+    public static void refreshSidebar() {
+        for (@NotNull Player player : MinecraftServer.getConnectionManager().getOnlinePlayers()) {
+            if (player.getInstance() == null) return;
+            if (SidebarManager.getSidebarEnabled().containsKey(player)) {
+                SidebarManager.removeSidebar(player);
+                if (WorldManager.isMTWorld(WorldManager.getInstanceName(player.getInstance()))) {
+                    SidebarManager.buildSidebar(player);
+                }
+            }
+        }
     }
 
     public static HashMap<Player, Sidebar> getSidebarEnabled() {

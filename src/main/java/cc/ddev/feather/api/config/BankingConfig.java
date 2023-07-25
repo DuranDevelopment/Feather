@@ -10,7 +10,7 @@ import net.minestom.server.item.Material;
 public class BankingConfig {
 
     @Getter
-    private static final Toml bankingConfig = ConfigManager.init().getBankingConfig();
+    private static final Toml bankingConfig = ConfigManager.getInstance().getBankingConfig();
 
     public static class ATM {
         @Getter

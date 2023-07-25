@@ -18,6 +18,7 @@ import net.minestom.server.entity.Player;
 import net.minestom.server.event.player.PlayerBlockInteractEvent;
 import net.minestom.server.instance.block.Block;
 import net.minestom.server.item.ItemStack;
+import net.minestom.server.network.packet.server.play.OpenSignEditorPacket;
 
 import java.util.UUID;
 
@@ -39,6 +40,15 @@ public class PlayerBlockInteractListener implements Listener {
             SelectorGUI.openSelectionMenu(player, player, ATMOpenType.CLICK_ATM);
         }
 
+        // Get current region
+        Region region = instanceGuard.getRegionManager().getRegion(player.getPosition());
+
+        if (event.getBlock().name().endsWith("sign")) {
+            if (player.getPermissionLevel() == 4 || region.isOwner(player)) {
+                OpenSignEditorPacket openSignEditorPacket = new OpenSignEditorPacket(event.getBlockPosition());
+                event.getPlayer().getPlayerConnection().sendPacket(openSignEditorPacket);
+            }
+        }
         if (player.getInstance() == null) return;
 
         if (player.getItemInMainHand().equals(Config.Plot.PLOTWAND)) {

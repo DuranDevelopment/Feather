@@ -1,8 +1,6 @@
 package cc.ddev.feather.listener.player;
 
-import cc.ddev.feather.api.banking.BankingGUI;
 import cc.ddev.feather.api.config.Messages;
-import cc.ddev.feather.api.enums.BankAccountType;
 import cc.ddev.feather.database.StormDatabase;
 import cc.ddev.feather.database.models.PlayerModel;
 import cc.ddev.feather.listener.handler.Listen;
@@ -10,17 +8,13 @@ import cc.ddev.feather.listener.handler.Listener;
 import cc.ddev.feather.placeholders.Placeholders;
 import cc.ddev.feather.player.PlayerProfile;
 import cc.ddev.feather.player.PlayerWrapper;
-import cc.ddev.feather.sidebar.SidebarManager;
+import cc.ddev.feather.api.sidebar.SidebarManager;
 import cc.ddev.feather.utils.ChatUtils;
 import cc.ddev.feather.world.WorldManager;
 import net.kyori.adventure.title.TitlePart;
-import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
 import net.minestom.server.event.player.PlayerSpawnEvent;
-import net.minestom.server.network.packet.client.play.ClientUpdateSignPacket;
-import net.minestom.server.network.packet.server.play.OpenSignEditorPacket;
-import net.minestom.server.timer.TaskSchedule;
 
 public class PlayerSpawnListener implements Listener {
 

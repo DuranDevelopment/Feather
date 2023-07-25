@@ -8,7 +8,7 @@ import java.io.File;
 
 public class ConfigManager {
 
-    public static ConfigManager init() {
+    public static ConfigManager getInstance() {
         return new ConfigManager();
     }
 

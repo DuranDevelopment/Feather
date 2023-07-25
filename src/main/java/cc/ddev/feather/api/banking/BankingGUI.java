@@ -7,10 +7,8 @@ import cc.ddev.feather.banking.BankingInventory;
 import cc.ddev.feather.configuration.ConfigManager;
 import cc.ddev.feather.utils.ChatUtils;
 import de.leonhard.storage.shaded.jetbrains.annotations.NotNull;
-import net.kyori.adventure.text.Component;
 import net.minestom.server.entity.Player;
 import net.minestom.server.inventory.Inventory;
-import net.minestom.server.inventory.InventoryType;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.tag.Tag;
@@ -105,7 +103,7 @@ public class BankingGUI {
 
     public ItemStack createItem(String path) {
 
-        Material material = Material.fromNamespaceId(ConfigManager.init().getBankingConfig().getString("items."+path+".item"));
+        Material material = Material.fromNamespaceId(ConfigManager.getInstance().getBankingConfig().getString("items."+path+".item"));
 
         if (material == null) {
             return ItemStack.of(Material.BARRIER)
@@ -133,6 +131,6 @@ public class BankingGUI {
     }
 
     public double getValue(String path) {
-        return ConfigManager.init().getBankingConfig().getDouble("items."+path+".value");
+        return ConfigManager.getInstance().getBankingConfig().getDouble("items."+path+".value");
     }
 }

@@ -1,8 +1,8 @@
 package cc.ddev.feather.api;
 
-import cc.ddev.feather.api.economy.Economy;
+import cc.ddev.feather.api.economy.EconomyManager;
 import cc.ddev.feather.configuration.ConfigManager;
-import cc.ddev.feather.sidebar.SidebarManager;
+import cc.ddev.feather.api.sidebar.SidebarManager;
 import cc.ddev.instanceguard.InstanceGuard;
 import lombok.Getter;
 import net.minestom.server.entity.Player;
@@ -10,10 +10,10 @@ import net.minestom.server.entity.Player;
 public class API {
 
     @Getter
-    public static ConfigManager configManager = ConfigManager.init();
+    public static ConfigManager configManager = ConfigManager.getInstance();
 
     @Getter
-    public static Economy economy = Economy.getInstance();
+    public static EconomyManager economy = EconomyManager.getInstance();
 
     @Getter
     public static InstanceGuard instanceGuard = new InstanceGuard();

@@ -7,7 +7,7 @@ import lombok.Getter;
 public class Messages {
 
     @Getter
-    private static final Toml messagesConfig = ConfigManager.init().getMessagesConfig();
+    private static final Toml messagesConfig = ConfigManager.getInstance().getMessagesConfig();
 
     @Getter
     public static String LANGUAGE = getMessagesConfig().getString("language");
