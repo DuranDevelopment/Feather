@@ -53,7 +53,7 @@ frozen = "<red>Dit account is bevroren, je kan geen geld meer opnemen of storten
     private = "<dark_aqua>Je hebt <aqua>€ <amount><dark_aqua>opgenomen van <aqua><account>'s <dark_aqua>rekening"
     savings = "<dark_aqua>Je hebt <aqua>€ <amount><dark_aqua>opgenomen van <aqua><account>'s <dark_aqua>spaarrekening"
     business = "<dark_aqua>Je hebt <aqua>€ <amount><dark_aqua>opgenomen van <aqua><account>'s <dark_aqua>zakelijke rekening"
-    government = "<dark_aqua>Je hebt <aqua>€ <amount><dark_aqua>opgenomen van <aqua><account>'s <dark_aqua>overheid rekening"
+    government = "<dark_aqua>Je hebt <aqua>€ <amount><dark_aqua>opgenomen van <aqua><account>'s <dark_aqua>overheid's rekening"
 
     [banking.money.deposit]
     private = "<dark_aqua>Je hebt <aqua>€ <amount><dark_aqua>overgemaakt naar <aqua><account>'s <dark_aqua>rekening"
