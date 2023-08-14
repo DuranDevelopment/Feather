@@ -66,11 +66,11 @@ frozen = "<red>Dit account is bevroren, je kan geen geld meer opnemen of storten
 
 [bankaccountcmd]
 id_does_not_exist = "<red>Er is geen bankrekening met dit ID."
-invalid_bankpermission = "<dark_red>ERROR: <red>Invalid bankpermission, valid permissions are <permissions>."
+invalid_bankpermission = "<dark_red>FOUT: <red>Ongeldige bankpermissie, geldige rechten zijn <permissions>."
 
   [bankaccountcmd.adduser]
-  success = "<dark_aqua>Successfully added player <aqua><player> <dark_aqua>to this bankaccount."
-  already_added = "<red>The player <dark_red><player> <red>has already been added to this bankaccount."
+  success = "<dark_aqua>Speler <aqua><player><dark_aqua>is succesvol toegevoegd aan deze bankrekening."
+  already_added = "<red>Speler <dark_red><player> <red>is al toegevoegd aan deze bankrekening."
 
 [atm]
-require_card = "<red>You need to hold <dark_red>a debit card <red>in your hand!"
+require_card = "<red>Je moet een <dark_red>bankpas <red>in je hand houden!"
