@@ -11,5 +11,8 @@ A lightweight Minestom implementation for Minetopia servers
 * The [contributors](https://github.com/DuranDevelopment/Feather/graphs/contributors) of the project
 * [LearnSpigot](https://learnspigot.com) for their infinite support and knowledge
 
+# Other projects
+* [InstanceGuard](https://github.com/DuranDevelopment/instanceguard) - A Minestom clone of WorldGuard
+
 # License
 This project is licensed under the [Apache License Version 2.0](LICENSE).
