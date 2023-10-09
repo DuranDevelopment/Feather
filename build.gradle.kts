@@ -3,7 +3,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 plugins {
     java
     id("com.github.johnrengelman.shadow") version ("7.1.0")
-    id("io.freefair.lombok") version "6.6.2"
+    id("io.freefair.lombok") version "8.4"
 }
 
 group = "cc.ddev"
