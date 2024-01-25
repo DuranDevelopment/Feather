@@ -5,7 +5,7 @@ max_players = 100
 description = "A Feather Server"
 host = "0.0.0.0"
 port = 25_565
-online-mode = true
+online_mode = true
 
 [database]
 type = "mysql"
@@ -24,11 +24,11 @@ y = -24
 z = "-3.5"
 
 [player.default]
-prefix = "Zwerver"
-prefix_color = "&7"
+prefix = "Wanderer"
+prefix_color = "<gray>"
 level = 1
-city_color = "&7"
-chat_color = "&7"
+city_color = "<gray>"
+chat_color = "<gray>"
 
 [chat]
 format = "<levelcolor><level> <prefixcolor><prefix> <namecolor><player>: <chatcolor><message>"
