@@ -20,7 +20,7 @@ public class SignHandler implements BlockHandler {
     @Override
     public void onPlace(@NotNull BlockHandler.Placement placement) {
         if (!(placement instanceof PlayerPlacement playerPlacement)) return;
-        OpenSignEditorPacket openSignEditorPacket = new OpenSignEditorPacket(placement.getBlockPosition());
+        OpenSignEditorPacket openSignEditorPacket = new OpenSignEditorPacket(placement.getBlockPosition(), true);
         playerPlacement.getPlayer().getPlayerConnection().sendPacket(openSignEditorPacket);
     }
 

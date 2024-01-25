@@ -19,33 +19,19 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.UUID;
 
+@Getter
 public class PlayerProfile {
 
-    private final @Getter Player player;
-    private final @Getter PlayerModel playerModel;
-    private final @Getter UUID uniqueId;
-    private final @Getter Component username;
+    private final Player player;
+    private final PlayerModel playerModel;
+    private final UUID uniqueId;
+    private final Component username;
 
     public PlayerProfile(@NotNull Player player, @NotNull PlayerModel playerModel) {
         this.player = player;
         this.uniqueId = player.getUuid();
         this.username = player.getName();
         this.playerModel = playerModel;
-    }
-
-    //Get UUID of player from username
-    public static UUID getMojangUniqueId(String name) {
-        String uniqueId;
-        try {
-            BufferedReader in = new BufferedReader(new InputStreamReader(new URL("https://api.mojang.com/users/profiles/minecraft/" + name).openStream()));
-            uniqueId = (((JsonObject) JsonParser.parseReader(in)).get("id")).toString().replaceAll("\"", "");
-            uniqueId = uniqueId.replaceAll("(\\w{8})(\\w{4})(\\w{4})(\\w{4})(\\w{12})", "$1-$2-$3-$4-$5");
-            in.close();
-        } catch (Exception e) {
-            Log.getLogger().error("Unable to get UUID of: " + name + "!");
-            uniqueId = "er";
-        }
-        return UUID.fromString(uniqueId);
     }
 
     public static String getInstanceName(Player player) {
