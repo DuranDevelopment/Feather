@@ -19,12 +19,12 @@ public class PlotSetDescriptionCommand extends Command {
 
         addSyntax((sender, context) -> {
             Player player = (Player) sender;
-            if (API.getInstanceGuard().getRegionManager().getRegion(player.getPosition()) == null) {
+            if (API.getInstanceGuard().getRegionManager().getRegion(player.getPosition(), player.getInstance()) == null) {
                 player.sendMessage(ChatUtils.translateMiniMessage("<red>You are currently not on a plot."));
                 return;
             }
             String description = context.get("description");
-            API.getInstanceGuard().getRegionManager().getRegion(player.getPosition()).setFlag("feather-description", new FlagValue<>(description));
+            API.getInstanceGuard().getRegionManager().getRegion(player.getPosition(), player.getInstance()).setFlag("feather-description", new FlagValue<>(description));
             player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>Set the description of the plot to <aqua>" + context.get("description") + "<dark_aqua>."));
         }, ArgumentType.String("description"));
     }

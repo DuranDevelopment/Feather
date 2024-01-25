@@ -28,6 +28,6 @@ public class PlayerModel extends StormModel {
     @Column(defaultValue = "0")
     private Integer level;
 
-    @Column(name = "operator")
+    @Column(name = "operator", defaultValue = "0")
     private Boolean isOperator;
 }

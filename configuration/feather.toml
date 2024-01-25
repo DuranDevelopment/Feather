@@ -3,6 +3,7 @@ max_players = 100
 description = "A Feather Server"
 host = '0.0.0.0'
 port = 25565
+online-mode = true
 
 [database]
 type = 'mysql'
@@ -30,6 +31,7 @@ z = -3.5
 
 [chat]
 format = '<levelcolor><level> <prefixcolor><prefix> <namecolor><player>: <chatcolor><message>'
+enabled = true
     [chat.radius]
     enabled = true
     radius = 100

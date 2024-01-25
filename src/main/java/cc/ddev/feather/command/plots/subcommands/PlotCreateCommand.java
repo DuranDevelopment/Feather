@@ -57,30 +57,28 @@ public class PlotCreateCommand extends Command {
 
             if (player.getInstance() == null) return;
 
-            String instanceName = WorldManager.getInstanceName(player.getInstance());
-
             if (!topToBottom) {
                 API.getInstanceGuard().getRegionManager().createRegion(
-                        plotName, instanceName,
+                        plotName, player.getInstance(),
                         new Pos(pos1), new Pos(pos2)
                 );
             } else {
                 API.getInstanceGuard().getRegionManager().createRegion(
-                        plotName, instanceName,
+                        plotName, player.getInstance(),
                         new Pos(pos2.withY(player.getInstance().getDimensionType().getMinY())),
                         new Pos(pos1.withY(player.getInstance().getDimensionType().getMaxY()))
                 );
             }
 
-            API.getInstanceGuard().getRegionManager().setFlag(plotName, instanceName, DefaultFlag.USE.getName(), DefaultFlagValue.ALLOW.getValue());
-            API.getInstanceGuard().getRegionManager().setFlag(plotName, instanceName, DefaultFlag.USE_GROUP.getName(), DefaultFlagValue.MEMBERS.getValue());
-            API.getInstanceGuard().getRegionManager().setFlag(plotName,instanceName, DefaultFlag.INTERACT.getName(), DefaultFlagValue.ALLOW.getValue());
-            API.getInstanceGuard().getRegionManager().setFlag(plotName,instanceName, DefaultFlag.INTERACT_GROUP.getName(), DefaultFlagValue.MEMBERS.getValue());
-            API.getInstanceGuard().getRegionManager().setFlag(plotName,instanceName, DefaultFlag.PVP.getName(), DefaultFlagValue.ALLOW.getValue());
-            API.getInstanceGuard().getRegionManager().setFlag(plotName,instanceName, DefaultFlag.CHEST_ACCESS.getName(), DefaultFlagValue.DENY.getValue());
-            API.getInstanceGuard().getRegionManager().setFlag(plotName,instanceName, DefaultFlag.CHEST_ACCESS_GROUP.getName(), DefaultFlagValue.NON_MEMBERS.getValue());
-            API.getInstanceGuard().getRegionManager().setFlag(plotName,instanceName, DefaultFlag.BUILD.getName(), DefaultFlagValue.ALLOW.getValue());
-            API.getInstanceGuard().getRegionManager().setFlag(plotName,instanceName, DefaultFlag.BUILD_GROUP.getName(), DefaultFlagValue.MEMBERS.getValue());
+            API.getInstanceGuard().getRegionManager().setFlag(plotName, player.getInstance(), DefaultFlag.USE.getName(), DefaultFlagValue.ALLOW.getValue());
+            API.getInstanceGuard().getRegionManager().setFlag(plotName, player.getInstance(), DefaultFlag.USE_GROUP.getName(), DefaultFlagValue.MEMBERS.getValue());
+            API.getInstanceGuard().getRegionManager().setFlag(plotName, player.getInstance(), DefaultFlag.INTERACT.getName(), DefaultFlagValue.ALLOW.getValue());
+            API.getInstanceGuard().getRegionManager().setFlag(plotName, player.getInstance(), DefaultFlag.INTERACT_GROUP.getName(), DefaultFlagValue.MEMBERS.getValue());
+            API.getInstanceGuard().getRegionManager().setFlag(plotName, player.getInstance(), DefaultFlag.PVP.getName(), DefaultFlagValue.ALLOW.getValue());
+            API.getInstanceGuard().getRegionManager().setFlag(plotName, player.getInstance(), DefaultFlag.CHEST_ACCESS.getName(), DefaultFlagValue.DENY.getValue());
+            API.getInstanceGuard().getRegionManager().setFlag(plotName, player.getInstance(), DefaultFlag.CHEST_ACCESS_GROUP.getName(), DefaultFlagValue.NON_MEMBERS.getValue());
+            API.getInstanceGuard().getRegionManager().setFlag(plotName, player.getInstance(), DefaultFlag.BUILD.getName(), DefaultFlagValue.ALLOW.getValue());
+            API.getInstanceGuard().getRegionManager().setFlag(plotName, player.getInstance(), DefaultFlag.BUILD_GROUP.getName(), DefaultFlagValue.MEMBERS.getValue());
 
             player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>Successfully created plot with the name <aqua>" + plotName + "<dark_aqua>."));
         }, plotNameArgument, topToBottomArgument.setDefaultValue(true));

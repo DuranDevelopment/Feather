@@ -34,6 +34,15 @@ public class Config {
         public static String NAME = getFeatherConfig().getString("database.database");
     }
 
+    public static class Chat {
+
+        @Getter
+        public static boolean FORMAT_ENABLED = getFeatherConfig().getBoolean("chat.enabled");
+
+        @Getter
+        public static String FORMAT = getFeatherConfig().getString("chat.format");
+    }
+
     public static class Spawn {
         @Getter
         @Setter
@@ -75,6 +84,9 @@ public class Config {
 
         @Getter
         public static String DESCRIPTION = getFeatherConfig().getString("server.description");
+
+        @Getter
+        public static boolean ONLINE_MODE = getFeatherConfig().getBoolean("server.online_mode");
     }
 
     public static class Plot {

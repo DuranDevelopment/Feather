@@ -45,7 +45,6 @@ public class Bankaccount {
     }
 
     public void setBalance(double newBalance) {
-        double balanceChange = newBalance - this.balance;
         try {
             Collection<BankAccountModel> bankAccountModels =
                     StormDatabase.getInstance().getStorm().buildQuery(BankAccountModel.class)

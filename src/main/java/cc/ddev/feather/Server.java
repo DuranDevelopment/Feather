@@ -22,20 +22,22 @@ import cc.ddev.feather.listener.player.*;
 import cc.ddev.feather.listener.server.ServerListPingListener;
 import cc.ddev.feather.logger.Log;
 import cc.ddev.feather.player.PlayerProfile;
-import cc.ddev.feather.task.SidebarRefreshTask;
 import cc.ddev.feather.task.SaveWorldTask;
 import cc.ddev.feather.task.ShutdownTask;
+import cc.ddev.feather.task.SidebarRefreshTask;
 import cc.ddev.feather.world.WorldManager;
 import cc.ddev.feather.world.blockhandlers.RegisterHandlers;
 import cc.ddev.instanceguard.flag.FlagValue;
 import lombok.Getter;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
+import net.minestom.server.extras.MojangAuth;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.block.Block;
 
 import java.io.File;
+import java.util.UUID;
 
 public class Server {
 
@@ -67,13 +69,20 @@ public class Server {
             instanceContainer = instanceManager.createInstanceContainer();
             // Set the ChunkGenerator
             instanceContainer.setGenerator(unit ->
-                unit.modifier().fillHeight(0, 40, Block.GRASS_BLOCK));
+                    unit.modifier().fillHeight(0, 40, Block.GRASS_BLOCK));
         }
-        // Set the UUID provider
-        MinecraftServer.getConnectionManager().setUuidProvider((playerConnection, username) -> {
-            // This method will be called at players connection to set their UUID
-            return PlayerProfile.getMojangUniqueId(username); /* Set here your custom UUID registration system */
-        });
+        // Sets online-mode
+        if (Config.Server.ONLINE_MODE) {
+            MojangAuth.init();
+            Log.getLogger().info("Using Mojang authentication system...");
+        } else {
+            // Set the UUID provider
+            MinecraftServer.getConnectionManager().setUuidProvider((playerConnection, username) -> {
+                // TODO: Make a custom non-Mojang UUID registration system
+                // This method will be called at players connection to set their UUID
+                return UUID.randomUUID(); /* Set here your custom UUID registration system */
+            });
+        }
 
         // Register server listeners
         new ServerListPingListener().register();
@@ -103,7 +112,7 @@ public class Server {
         for (Player player : MinecraftServer.getConnectionManager().getOnlinePlayers()) {
             StormDatabase.getInstance().loadPlayerModel(player.getUuid());
         }
-
+        API.getInstanceGuard().enable(MinecraftServer.getGlobalEventHandler());
         API.getInstanceGuard().getFlagManager().registerCustomFlag("feather-description", new FlagValue<>(""));
         WorldManager.loadWorld(WorldManager.getWorldsDirectory() + File.separator + Config.Spawn.WORLD);
         SidebarRefreshTask.registerTask();

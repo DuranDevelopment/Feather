@@ -16,25 +16,26 @@ repositories {
 }
 
 dependencies {
-    implementation("com.github.Minestom:Minestom:824ae0a25b")
-    implementation("com.github.DuranDevelopment:instanceguard:bf2ee4495f") {
+    implementation("dev.hollowcube:minestom-ce:5347c0b11f")
+    implementation("com.github.DuranDevelopment:instanceguard:19196b169d") {
         exclude(group = "com.github.Minestom", module = "Minestom")
     }
 
-    /* Used for local testing
-        implementation("cc.ddev:instanceguard:1.0-SNAPSHOT") {
-            exclude(group = "com.github.Minestom", module = "Minestom")
-        }
-    */
+    /* Local development
+    implementation("cc.ddev:instanceguard:1.0-SNAPSHOT") {
+        exclude(group = "com.github.Minestom", module = "Minestom")
+    }
+     */
+
     implementation("com.zaxxer:HikariCP:5.0.1")
-    implementation("com.github.simplix-softworks:simplixstorage:3.2.6")
+    implementation("com.github.simplix-softworks:simplixstorage:3.2.7")
     implementation("net.kyori:adventure-text-minimessage:4.14.0")
     implementation("com.github.Mindgamesnl:storm:prod125")
     implementation("mysql:mysql-connector-java:8.0.33") /* Adding drivers for MySQL and SQLite  */
-    implementation("org.xerial:sqlite-jdbc:3.42.0.0")
+    implementation("org.xerial:sqlite-jdbc:3.45.0.0")
     compileOnly("junit:junit:4.13.2")
-    implementation("org.slf4j:slf4j-api:2.0.7")
-    implementation("me.hsgamer:hscore-minestom-gui:4.3.11")
+    implementation("org.slf4j:slf4j-api:2.0.11")
+    implementation("me.hsgamer:hscore-minestom-gui:4.3.28")
 }
 
 tasks {

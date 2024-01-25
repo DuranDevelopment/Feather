@@ -14,7 +14,7 @@ import de.leonhard.storage.shaded.jetbrains.annotations.NotNull;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
-import net.minestom.server.event.player.PlayerLoginEvent;
+import net.minestom.server.event.player.AsyncPlayerPreLoginEvent;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.permission.Permission;
 import net.minestom.server.timer.TaskSchedule;
@@ -23,7 +23,7 @@ public class PlayerLoginListener implements Listener {
 
     // Handle the player login event
     @Listen
-    public void onPlayerLogin(PlayerLoginEvent event) {
+    public void onPlayerLogin(AsyncPlayerPreLoginEvent event) {
         final Player player = event.getPlayer();
 
         // Check if the server is full
@@ -35,12 +35,12 @@ public class PlayerLoginListener implements Listener {
         if (!WorldManager.worldsDirectoryIsEmpty()) {
             @NotNull Instance instance = WorldManager.getWorld(Config.Spawn.WORLD);
             if (instance == null) {
-                event.setSpawningInstance(Server.getInstanceContainer());
+                player.setInstance(Server.getInstanceContainer());
                 return;
             }
-            event.setSpawningInstance(instance);
+            player.setInstance(instance);
         } else {
-            event.setSpawningInstance(Server.getInstanceContainer());
+            player.setInstance(Server.getInstanceContainer());
         }
 
         StormDatabase.getInstance().loadPlayerModel(player.getUuid());
@@ -74,6 +74,7 @@ public class PlayerLoginListener implements Listener {
             player.setRespawnPoint(pos);
 
             Log.getLogger().info("UUID of player " + player.getUsername() + " is " + player.getUuid());
+
             // Remove on production
             player.setPermissionLevel(4);
             player.addPermission(new Permission("server.stop"));
