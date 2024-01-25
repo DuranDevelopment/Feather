@@ -14,7 +14,7 @@ import de.leonhard.storage.shaded.jetbrains.annotations.NotNull;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
-import net.minestom.server.event.player.AsyncPlayerPreLoginEvent;
+import net.minestom.server.event.player.AsyncPlayerConfigurationEvent;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.permission.Permission;
 import net.minestom.server.timer.TaskSchedule;
@@ -23,7 +23,7 @@ public class PlayerLoginListener implements Listener {
 
     // Handle the player login event
     @Listen
-    public void onPlayerLogin(AsyncPlayerPreLoginEvent event) {
+    public void onPlayerLogin(AsyncPlayerConfigurationEvent event) {
         final Player player = event.getPlayer();
 
         // Check if the server is full
@@ -35,12 +35,12 @@ public class PlayerLoginListener implements Listener {
         if (!WorldManager.worldsDirectoryIsEmpty()) {
             @NotNull Instance instance = WorldManager.getWorld(Config.Spawn.WORLD);
             if (instance == null) {
-                player.setInstance(Server.getInstanceContainer());
+                event.setSpawningInstance(Server.getInstanceContainer());
                 return;
             }
-            player.setInstance(instance);
+            event.setSpawningInstance(instance);
         } else {
-            player.setInstance(Server.getInstanceContainer());
+            event.setSpawningInstance(Server.getInstanceContainer());
         }
 
         StormDatabase.getInstance().loadPlayerModel(player.getUuid());
@@ -61,17 +61,27 @@ public class PlayerLoginListener implements Listener {
                 return;
             }
 
-            // Extract X, Y and Z from the position string
-            String[] rawPosition = playerModel.getLastLocation().split(",");
-            double x = Double.parseDouble(rawPosition[0].replace("Pos[x=", ""));
-            double y = Double.parseDouble(rawPosition[1].replace("y=", ""));
-            double z = Double.parseDouble(rawPosition[2].replace("z=", ""));
-            float yaw = Float.parseFloat(rawPosition[3].replace("yaw=", ""));
-            float pitch = Float.parseFloat(rawPosition[4].replace("pitch=", "").replace("]", ""));
-            Pos pos = new Pos(x, y, z, yaw, pitch);
-
             // Set the spawn position
-            player.setRespawnPoint(pos);
+            if (playerModel.getLastLocation() != null) {
+                // Extract X, Y and Z from the position string
+                String[] rawPosition = playerModel.getLastLocation().split(",");
+                double x = Double.parseDouble(rawPosition[0].replace("Pos[x=", ""));
+                double y = Double.parseDouble(rawPosition[1].replace("y=", ""));
+                double z = Double.parseDouble(rawPosition[2].replace("z=", ""));
+                float yaw = Float.parseFloat(rawPosition[3].replace("yaw=", ""));
+                float pitch = Float.parseFloat(rawPosition[4].replace("pitch=", "").replace("]", ""));
+                Pos pos = new Pos(x, y, z, yaw, pitch);
+
+                player.setRespawnPoint(pos);
+            } else {
+                player.setRespawnPoint(Config.Spawn.COORDS);
+            }
+
+            // Sets last known username
+            playerModel.setUsername(player.getUsername());
+
+            // Save player model
+            StormDatabase.getInstance().saveStormModel(playerModel);
 
             Log.getLogger().info("UUID of player " + player.getUsername() + " is " + player.getUuid());
 

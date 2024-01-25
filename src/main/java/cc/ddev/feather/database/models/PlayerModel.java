@@ -1,5 +1,6 @@
 package cc.ddev.feather.database.models;
 
+import cc.ddev.feather.api.config.Config;
 import com.craftmend.storm.api.StormModel;
 import com.craftmend.storm.api.markers.Column;
 import com.craftmend.storm.api.markers.Table;
@@ -24,6 +25,22 @@ public class PlayerModel extends StormModel {
 
     @Column(defaultValue = "0")
     private Double balance;
+
+    @Column(defaultValue = "Wanderer")
+    private String prefix;
+
+    @Column(defaultValue = "<gray>")
+    private String prefixcolor;
+
+    @Column(defaultValue = "<gray>")
+    private String levelcolor;
+
+    @Column(defaultValue = "<gray>")
+    private String chatcolor;
+
+    @Column(defaultValue = "<gray>")
+    private String namecolor;
+
 
     @Column(defaultValue = "0")
     private Integer level;

@@ -35,6 +35,7 @@ import net.minestom.server.extras.MojangAuth;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.block.Block;
+import net.minestom.vanilla.VanillaReimplementation;
 
 import java.io.File;
 import java.util.UUID;
@@ -48,19 +49,26 @@ public class Server {
         // Initialization
         MinecraftServer minecraftServer = MinecraftServer.init();
         InstanceManager instanceManager = MinecraftServer.getInstanceManager();
+
         // Set brand name
         MinecraftServer.setBrandName("Feather");
+
         // Load the configuration file
         ConfigManager configManager = ConfigManager.getInstance();
         configManager.createConfigDirectory();
+
         // Make the database connection
         new DataManager().initialize();
+
         // Register block handlers
         RegisterHandlers.initHandlers();
+
         // Pull database cache
         BankUtils.getInstance().pullCache();
+
         // Create the worlds directory
         WorldManager.createWorldsDirectory();
+
         // Check if worlds are present
         if (WorldManager.worldsDirectoryIsEmpty()) {
             Log.getLogger().error("No worlds found! Please create a world in the worlds directory!");
@@ -87,6 +95,7 @@ public class Server {
         // Register server listeners
         new ServerListPingListener().register();
         // Register player listeners
+        new PlayerChatListener().register();
         new PlayerLoginListener().register();
         new PlayerSpawnListener().register();
         new PlayerDisconnectListener().register();
@@ -95,8 +104,10 @@ public class Server {
         new PlayerBlockInteractListener().register();
         new PlayerBlockPlaceListener().register();
         new PlayerBlockBreakListener().register();
+
         // Start the server from config values
         minecraftServer.start(Config.Server.SERVER_HOST, Config.Server.SERVER_PORT);
+
         // Register commands
         MinecraftServer.getCommandManager().register(new TestCommand());
         MinecraftServer.getCommandManager().register(new OpCommand());
@@ -109,12 +120,16 @@ public class Server {
         MinecraftServer.getCommandManager().register(new PlotwandCommand());
         MinecraftServer.getCommandManager().register(new PlotCommand());
         MinecraftServer.getCommandManager().register(new PlotInfoCommand());
+
         for (Player player : MinecraftServer.getConnectionManager().getOnlinePlayers()) {
             StormDatabase.getInstance().loadPlayerModel(player.getUuid());
         }
+
         API.getInstanceGuard().enable(MinecraftServer.getGlobalEventHandler());
         API.getInstanceGuard().getFlagManager().registerCustomFlag("feather-description", new FlagValue<>(""));
+
         WorldManager.loadWorld(WorldManager.getWorldsDirectory() + File.separator + Config.Spawn.WORLD);
+
         SidebarRefreshTask.registerTask();
         SaveWorldTask.registerTask();
         ShutdownTask.registerTask();

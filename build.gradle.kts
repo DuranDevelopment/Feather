@@ -21,6 +21,8 @@ dependencies {
         exclude(group = "com.github.Minestom", module = "Minestom")
     }
 
+    implementation("com.github.Minestom.VanillaReimplementation:core:de143342b9")
+
     /* Local development
     implementation("cc.ddev:instanceguard:1.0-SNAPSHOT") {
         exclude(group = "com.github.Minestom", module = "Minestom")

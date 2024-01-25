@@ -1,6 +1,7 @@
 package cc.ddev.feather.placeholders;
 
 import cc.ddev.feather.player.PlayerProfile;
+import cc.ddev.feather.player.PlayerWrapper;
 import net.minestom.server.entity.Player;
 
 import java.util.HashMap;

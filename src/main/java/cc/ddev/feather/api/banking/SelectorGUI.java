@@ -31,7 +31,7 @@ public class SelectorGUI {
         ItemStack savingsAccountBlock = BankingConfig.Blocks.SAVINGS_ACCOUNT.withDisplayName(ChatUtils.translateMiniMessage(Messages.Banking.Selector.SAVINGS));
         ItemStack privateAccountBlock = BankingConfig.Blocks.PRIVATE_ACCOUNT.withDisplayName(ChatUtils.translateMiniMessage(Messages.Banking.Selector.PRIVATE));
         ItemStack businessAccountBlock = BankingConfig.Blocks.BUSINESS_ACCOUNT.withDisplayName(ChatUtils.translateMiniMessage(Messages.Banking.Selector.BUSINESS));
-        if (BankUtils.getInstance().getAccounts(target.getUuid(), BankAccountType.GOVERNMENT).size() > 0) {
+        if (!BankUtils.getInstance().getAccounts(target.getUuid(), BankAccountType.GOVERNMENT).isEmpty()) {
             inv.setItemStack(10, BankingConfig.Blocks.GOVERNMENT_ACCOUNT.withDisplayName(ChatUtils.translateMiniMessage(Messages.Banking.Selector.GOVERNMENT)));
             inv.setItemStack(12, savingsAccountBlock);
             inv.setItemStack(14, privateAccountBlock);
@@ -58,7 +58,8 @@ public class SelectorGUI {
                 mat = BankingConfig.Blocks.GOVERNMENT_ACCOUNT;
             }
             for (Bankaccount acc : BankUtils.getInstance().getAccounts(target.getUuid(), type)) {
-                ItemStack accItem = mat.withDisplayName(ChatUtils.translateMiniMessage(acc.getName()))
+                ItemStack accItem = mat
+                        .withDisplayName(ChatUtils.translateMiniMessage(acc.getName()))
                         .withLore(List.of(ChatUtils.translateMiniMessage(Messages.Banking.Selector.ACCOUNT_LORE.replace("<ID>", "" + acc.getId()))));
                 inv.addItemStack(accItem.withTag(Tag.Integer("accountId"), acc.getId()));
             }

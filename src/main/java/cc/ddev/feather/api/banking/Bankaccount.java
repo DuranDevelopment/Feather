@@ -7,15 +7,21 @@ import cc.ddev.feather.database.models.BankAccountModel;
 import cc.ddev.feather.database.models.BankAccountUserModel;
 import cc.ddev.feather.logger.Log;
 import com.craftmend.storm.api.enums.Where;
+import lombok.Getter;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 public class Bankaccount {
+    @Getter
     private final int id;
+    @Getter
     private String name;
+    @Getter
     private final BankAccountType type;
+    @Getter
     private double balance;
+    @Getter
     private boolean frozen;
     private final HashMap<UUID, BankPermission> users;
 
@@ -26,22 +32,6 @@ public class Bankaccount {
         this.balance = balance;
         this.frozen = frozen;
         this.users = users;
-    }
-
-    public int getId() {
-        return this.id;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public BankAccountType getType() {
-        return this.type;
-    }
-
-    public double getBalance() {
-        return this.balance;
     }
 
     public void setBalance(double newBalance) {
@@ -63,10 +53,6 @@ public class Bankaccount {
 
     public void setBalanceSilent(double newBalance) {
         this.balance = newBalance;
-    }
-
-    public boolean isFrozen() {
-        return this.frozen;
     }
 
     public void setFrozen(boolean frozen) {
