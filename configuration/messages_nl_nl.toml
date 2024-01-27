@@ -8,11 +8,11 @@ fly_off = "<red>Vliegmodus is uitgeschakeld!"
 
 [join]
 enabled = true
-message = "&7<player> heeft het spel toegetreden"
+message = "<dark_aqua><player> <aqua>joined the game"
 
 [leave]
 enabled = true
-message = "&7<player> heeft het spel verlaten"
+message = "<dark_aqua><player> <aqua>left the game"
 
 [join_title]
 title = "<worldcolor>Welkom bij"
