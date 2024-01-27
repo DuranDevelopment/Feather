@@ -1,0 +1,76 @@
+language = "nl"
+invalid_arguments = "<red>Je hebt ongeldige argumenten opgegeven voor dit commando."
+invalid_username = "<red>Deze gebruikersnaam is ongeldig."
+not_online = "<red>Deze speler is niet online."
+no_permission = "<red>Je hebt geen permissie om dit commando te gebruiken."
+fly_on = "<green>Vliegmodus is ingeschakeld!"
+fly_off = "<red>Vliegmodus is uitgeschakeld!"
+
+[join]
+enabled = true
+message = "&7<player> is de server binnengekomen"
+
+[leave]
+enabled = true
+message = "&7<player> heeft de server verlaten"
+
+[join_title]
+title = "<worldcolor>Welkom in"
+subtitle = "<worldcolor><loadingname>"
+
+[mtworldcmd.add]
+success = "<dark_aqua>Feather is succesvol <aqua>aangezet <dark_aqua>in deze wereld!"
+
+[banking]
+frozen = "<red>Deze rekening is bevroren, je kan geen geld meer opnemen of storten!"
+
+  [banking.selector]
+  title = "<dark_aqua>Selecteer het type rekening:"
+
+    [banking.selector.account]
+    title = "<dark_aqua>Selecteer de rekening:"
+    lore = "(ID: <ID>)"
+
+    [banking.selector.accounttype]
+    government = "<dark_green>Overheid"
+    savings = "<dark_red>Sparen"
+    private = "<gold>Privé"
+    business = "<dark_aqua>Bedrijf"
+    no_business_accounts = "<red>Je <dark_red>hebt geen <red>Bedrijfs<dark_red>rekeningen!"
+    no_savings_accounts = "<red>Je <dark_red>hebt geen <red>Spaar <dark_red>rekeningen!"
+
+  [banking.menu]
+  title = "<dark_aqua>Totale waarde: <aqua>€ <amount>"
+  item_lore = "<dark_aqua>Dit geldstuk heeft een %newline%<dark_aqua>waarde van <aqua>€ <amount><dark_aqua>."
+
+  [banking.money]
+  lore = "<red>Officieel Minetopia bankbiljet!"
+  insufficient_balance = "<red>Er staat niet genoeg geld op deze rekening"
+  is_fake_money = "<dark_red>Je hebt vervalste geld bij je! We kunnen op dit moment geen geld accepteren!"
+
+    [banking.money.withdraw]
+    inventory_full = "<red>Je kan geen geld opnemen wanneer je inventory vol is!"
+    private = "<dark_aqua>Je hebt <aqua>€ <amount><dark_aqua>opgenomen van <aqua><account>'s <dark_aqua>rekening"
+    savings = "<dark_aqua>Je hebt <aqua>€ <amount><dark_aqua>opgenomen van <aqua><account>'s <dark_aqua>spaarrekening"
+    business = "<dark_aqua>Je hebt <aqua>€ <amount><dark_aqua>opgenomen van <aqua><account>'s <dark_aqua>bedrijfsrekening"
+    government = "<dark_aqua>Je hebt <aqua>€ <amount><dark_aqua>opgenomen van <aqua><account>'s <dark_aqua>overheidsrekening"
+
+    [banking.money.deposit]
+    private = "<dark_aqua>Je hebt <aqua>€ <amount><dark_aqua>gestort op <aqua><account>'s <dark_aqua>rekening"
+    savings = "<dark_aqua>Je hebt <aqua>€ <amount><dark_aqua>gestort op <aqua><account>'s <dark_aqua>spaarrekening"
+    business = "<dark_aqua>Je hebt <aqua>€ <amount><dark_aqua>gestort op <aqua><account>'s <dark_aqua>bedrijfsrekening"
+    government = "<dark_aqua>Je hebt <aqua>€ <amount><dark_aqua>gestort op <aqua><account>'s <dark_aqua>overheidsrekening"
+
+  [banking.nobankingpermission]
+  deposit = "<dark_red>Je hebt alleen opnamerechten voor de rekening <account>! Je kunt helaas geen geld storten."
+
+[bankaccountcmd]
+id_does_not_exist = "<red>Er is geen bankrekening met dit ID."
+invalid_bankpermission = "<dark_red>FOUT: <red>Ongeldige bankpermissie, geldige rechten zijn <permissions>."
+
+  [bankaccountcmd.adduser]
+  success = "<dark_aqua>Speler <aqua><player><dark_aqua>is succesvol toegevoegd aan deze bankrekening."
+  already_added = "<red>Speler <dark_red><player> <red>is al toegevoegd aan deze bankrekening."
+
+[atm]
+require_card = "<red>Je moet een <dark_red>bankpas <red>in je hand houden!"
