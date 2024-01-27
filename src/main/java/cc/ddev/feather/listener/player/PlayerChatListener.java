@@ -17,6 +17,7 @@ public class PlayerChatListener implements Listener {
         PlayerProfile playerProfile = PlayerWrapper.getPlayerProfile(event.getPlayer());
         if (playerProfile == null) return;
         PlayerModel playerModel = playerProfile.getPlayerModel();
+        if (playerModel == null) return;
 
         Component chatFormatComponent = ChatUtils.translateMiniMessage(
                 Config.Chat.FORMAT

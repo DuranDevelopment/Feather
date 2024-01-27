@@ -16,12 +16,14 @@ repositories {
 }
 
 dependencies {
-    implementation("dev.hollowcube:minestom-ce:5347c0b11f")
+    implementation("dev.hollowcube:minestom-ce:cf4a2d134e")
     implementation("com.github.DuranDevelopment:instanceguard:19196b169d") {
         exclude(group = "com.github.Minestom", module = "Minestom")
     }
 
-    implementation("com.github.Minestom.VanillaReimplementation:core:de143342b9")
+    implementation("com.github.Minestom.VanillaReimplementation:core:de143342b9") {
+        exclude(group = "dev.hollowcube", module = "minestom-ce")
+    }
 
     /* Local development
     implementation("cc.ddev:instanceguard:1.0-SNAPSHOT") {

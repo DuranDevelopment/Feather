@@ -1,5 +1,6 @@
 package cc.ddev.feather.listener.player;
 
+import cc.ddev.feather.api.config.Config;
 import cc.ddev.feather.api.config.Messages;
 import cc.ddev.feather.database.StormDatabase;
 import cc.ddev.feather.database.models.PlayerModel;
@@ -35,24 +36,43 @@ public class PlayerSpawnListener implements Listener {
                 player.kick("Failed to load player profile!");
                 return;
             }
+
             PlayerModel playerModel = playerProfile.getPlayerModel();
+            if (playerModel == null) {
+                player.kick("Failed to load player model!");
+                return;
+            }
 
             // Update username if it has changed
-            if (!playerModel.getUsername().equals(player.getUsername()) || playerModel.getUsername() == null) playerModel.setUsername(player.getUsername());
-
-            // Extract X, Y and Z from the position string
-            String[] position = playerModel.getLastLocation().split(",");
-            double x = Double.parseDouble(position[0].replace("Pos[x=", ""));
-            double y = Double.parseDouble(position[1].replace("y=", ""));
-            double z = Double.parseDouble(position[2].replace("z=", ""));
-            float yaw = Float.parseFloat(position[3].replace("yaw=", ""));
-            float pitch = Float.parseFloat(position[4].replace("pitch=", "").replace("]", ""));
-
-            player.teleport(new Pos(x, y, z, yaw, pitch));
+            playerModel.setUsername(player.getUsername());
             StormDatabase.getInstance().saveStormModel(playerModel);
+
+            // Set the spawn position
+            if (playerModel.getLastLocation() != null) {
+                // Extract X, Y and Z from the position string
+                String[] rawPosition = playerModel.getLastLocation().split(",");
+                double x = Double.parseDouble(rawPosition[0].replace("Pos[x=", ""));
+                double y = Double.parseDouble(rawPosition[1].replace("y=", ""));
+                double z = Double.parseDouble(rawPosition[2].replace("z=", ""));
+                float yaw = Float.parseFloat(rawPosition[3].replace("yaw=", ""));
+                float pitch = Float.parseFloat(rawPosition[4].replace("pitch=", "").replace("]", ""));
+                Pos pos = new Pos(x, y, z, yaw, pitch);
+
+                player.setRespawnPoint(pos);
+                player.teleport(pos);
+            } else {
+                player.setRespawnPoint(Config.Spawn.COORDS);
+                player.teleport(Config.Spawn.COORDS);
+            }
+
 
             if (playerModel.getIsOperator()) {
                 player.setPermissionLevel(4);
+            }
+
+            // Check if join messages are enabled
+            if (Messages.Join.SEND_JOIN_MESSAGE) {
+            ChatUtils.broadcast(ChatUtils.translateMiniMessage(Messages.Join.JOIN_MESSAGE.replace("<player>", player.getUsername())));
             }
 
             // Build sidebar

@@ -20,7 +20,7 @@ public interface PacketListener {
                     // Get the class of the packet from the parameter type
                     Class<? extends ClientPacket> packetToStickTo = paramTypes[0].asSubclass(ClientPacket.class);
                     // Register the packet listener
-                    packetListenerManager.setListener(packetToStickTo, (packet, player) -> {
+                    packetListenerManager.setPlayListener(packetToStickTo, (packet, player) -> {
                         try {
                             method.invoke(this, packet);
                         } catch (IllegalAccessException | InvocationTargetException e) {

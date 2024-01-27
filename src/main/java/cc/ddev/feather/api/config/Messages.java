@@ -31,13 +31,26 @@ public class Messages {
     public static String FLY_OFF = getMessagesConfig().getString("fly_off");
 
     @Getter
-    public static String JOIN_MESSAGE = getMessagesConfig().getString("join.message");
-
-    @Getter
     public static String JOIN_TITLE = getMessagesConfig().getString("join_title.title");
 
     @Getter
     public static String JOIN_SUBTITLE = getMessagesConfig().getString("join_title.subtitle");
+
+    public static class Join {
+        @Getter
+        public static String JOIN_MESSAGE = getMessagesConfig().getString("join.message");
+
+        @Getter
+        public static boolean SEND_JOIN_MESSAGE = getMessagesConfig().getBoolean("join.enabled");
+    }
+
+    public static class Leave {
+        @Getter
+        public static String LEAVE_MESSAGE = getMessagesConfig().getString("leave.message");
+
+        @Getter
+        public static boolean SEND_LEAVE_MESSAGE = getMessagesConfig().getBoolean("leave.enabled");
+    }
 
     public static class MTWorldCMD {
         @Getter

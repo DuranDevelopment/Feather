@@ -9,11 +9,11 @@ fly_off = '<red>Fly mode has been disabled!'
 
 [join]
 enabled = true
-message = '&7<player> joined the game'
+message = '<dark_aqua><player> <aqua>joined the game'
 
 [leave]
 enabled = true
-message = '&7<player> left the game'
+message = '<dark_aqua><player> <aqua>left the game'
 
 [join_title]
 title = '<worldcolor>Welcome to'

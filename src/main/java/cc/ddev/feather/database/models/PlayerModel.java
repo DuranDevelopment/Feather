@@ -20,7 +20,7 @@ public class PlayerModel extends StormModel {
     @Column(name = "last_known_username")
     private String username;
 
-    @Column(defaultValue = "0")
+    @Column
     private String lastLocation;
 
     @Column(defaultValue = "0")
@@ -40,7 +40,6 @@ public class PlayerModel extends StormModel {
 
     @Column(defaultValue = "<gray>")
     private String namecolor;
-
 
     @Column(defaultValue = "0")
     private Integer level;

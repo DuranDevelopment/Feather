@@ -11,7 +11,6 @@ import cc.ddev.feather.banking.BankingHandler;
 import cc.ddev.feather.banking.BankingInventory;
 import cc.ddev.feather.listener.handler.Listen;
 import cc.ddev.feather.listener.handler.Listener;
-import cc.ddev.feather.logger.Log;
 import cc.ddev.feather.utils.ChatUtils;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.entity.Player;
@@ -19,7 +18,7 @@ import net.minestom.server.event.inventory.InventoryPreClickEvent;
 import net.minestom.server.inventory.click.ClickType;
 import net.minestom.server.tag.Tag;
 
-public class PlayerClickInventoryListener implements Listener {
+public class PlayerInventoryClickListener implements Listener {
 
     @Listen
     public void onPlayerPreClickInventory(InventoryPreClickEvent event) {

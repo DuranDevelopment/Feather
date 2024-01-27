@@ -21,7 +21,6 @@ import cc.ddev.feather.listener.client.ClientUpdateSignListener;
 import cc.ddev.feather.listener.player.*;
 import cc.ddev.feather.listener.server.ServerListPingListener;
 import cc.ddev.feather.logger.Log;
-import cc.ddev.feather.player.PlayerProfile;
 import cc.ddev.feather.task.SaveWorldTask;
 import cc.ddev.feather.task.ShutdownTask;
 import cc.ddev.feather.task.SidebarRefreshTask;
@@ -36,6 +35,7 @@ import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.instance.InstanceManager;
 import net.minestom.server.instance.block.Block;
 import net.minestom.vanilla.VanillaReimplementation;
+import net.minestom.vanilla.system.RayFastManager;
 
 import java.io.File;
 import java.util.UUID;
@@ -62,6 +62,14 @@ public class Server {
 
         // Register block handlers
         RegisterHandlers.initHandlers();
+
+        // Vanilla reimplementation
+        VanillaReimplementation vri = VanillaReimplementation.hook(MinecraftServer.process());
+
+        // Set up raycasting lib
+        RayFastManager.init();
+
+
 
         // Pull database cache
         BankUtils.getInstance().pullCache();
@@ -99,11 +107,13 @@ public class Server {
         new PlayerLoginListener().register();
         new PlayerSpawnListener().register();
         new PlayerDisconnectListener().register();
-        new PlayerClickInventoryListener().register();
+        new PlayerInventoryClickListener().register();
         new ClientUpdateSignListener().register();
         new PlayerBlockInteractListener().register();
         new PlayerBlockPlaceListener().register();
         new PlayerBlockBreakListener().register();
+        new PlayerItemDropListener().register();
+        new PlayerItemPickupListener().register();
 
         // Start the server from config values
         minecraftServer.start(Config.Server.SERVER_HOST, Config.Server.SERVER_PORT);
@@ -122,17 +132,19 @@ public class Server {
         MinecraftServer.getCommandManager().register(new PlotInfoCommand());
 
         for (Player player : MinecraftServer.getConnectionManager().getOnlinePlayers()) {
-            StormDatabase.getInstance().loadPlayerModel(player.getUuid());
+            API.getPlayerManager().getPlayerModel(player);
         }
 
+        // Hook InstanceGuard API to global event handler
         API.getInstanceGuard().enable(MinecraftServer.getGlobalEventHandler());
+        // Register custom InstanceGuard flag
         API.getInstanceGuard().getFlagManager().registerCustomFlag("feather-description", new FlagValue<>(""));
 
+        // Load the world
         WorldManager.loadWorld(WorldManager.getWorldsDirectory() + File.separator + Config.Spawn.WORLD);
 
         SidebarRefreshTask.registerTask();
         SaveWorldTask.registerTask();
         ShutdownTask.registerTask();
-        ShutdownTask.registerShutdownHook();
     }
 }

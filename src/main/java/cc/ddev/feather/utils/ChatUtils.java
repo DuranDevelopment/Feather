@@ -5,6 +5,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.Style;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.minestom.server.MinecraftServer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,5 +43,9 @@ public class ChatUtils {
         // Clear all styles from the compare component
         Component clearedCompareComponent = ChatUtils.translateMiniMessage(compare).style(Style.style());
         return clearedTitle.equals(clearedCompareComponent);
+    }
+
+    public static void broadcast(Component component) {
+        MinecraftServer.getConnectionManager().getOnlinePlayers().forEach(player -> player.sendMessage(component));
     }
 }

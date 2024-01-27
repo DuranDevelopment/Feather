@@ -56,8 +56,6 @@ public class Config {
         public static String WORLD = getFeatherConfig().getString("spawn.world");
 
         public static boolean SPAWN_ON_JOIN = getFeatherConfig().getBoolean("spawn.spawn_on_join");
-
-        public static boolean SEND_JOIN_MESSAGE = getFeatherConfig().getBoolean("spawn.send_join_message");
     }
 
     public static class Sidebar {
