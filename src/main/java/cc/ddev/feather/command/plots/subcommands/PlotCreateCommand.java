@@ -37,8 +37,8 @@ public class PlotCreateCommand extends Command {
         addSyntax((sender, context) -> {
             Player player = (Player) sender;
             UUID uuid = player.getUuid();
-            Point pos1 = PlayerManager.getPlotWandPos1(uuid);
-            Point pos2 = PlayerManager.getPlotWandPos2(uuid);
+            Point pos1 = API.getPlayerManager().getPlotWandPos1(uuid);
+            Point pos2 = API.getPlayerManager().getPlotWandPos2(uuid);
             PlayerProfile playerProfile = PlayerWrapper.getPlayerProfile(player);
             String plotName = context.get(plotNameArgument);
             boolean topToBottom = context.get(topToBottomArgument);

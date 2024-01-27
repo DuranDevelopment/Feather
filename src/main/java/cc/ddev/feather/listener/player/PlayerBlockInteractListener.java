@@ -53,11 +53,11 @@ public class PlayerBlockInteractListener implements Listener {
         if (player.getInstance() == null) return;
 
         if (player.getItemInMainHand().equals(Config.Plot.PLOTWAND)) {
-            PlayerManager.setPlotWandPos2(uuid, event.getBlockPosition());
+            API.getPlayerManager().setPlotWandPos2(uuid, event.getBlockPosition());
             player.sendMessage(ChatUtils.translateMiniMessage("<green>Position 2 set to <dark_green>"
-                    + PlayerManager.getPlotWandPos2(uuid).blockX()
-                    + ", " + PlayerManager.getPlotWandPos2(uuid).blockY()
-                    + ", " + PlayerManager.getPlotWandPos2(uuid).blockZ()));
+                    + API.getPlayerManager().getPlotWandPos2(uuid).blockX()
+                    + ", " + API.getPlayerManager().getPlotWandPos2(uuid).blockY()
+                    + ", " + API.getPlayerManager().getPlotWandPos2(uuid).blockZ()));
             event.setCancelled(true);
         }
     }

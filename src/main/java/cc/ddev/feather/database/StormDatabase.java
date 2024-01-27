@@ -14,6 +14,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import net.minestom.server.MinecraftServer;
+import net.minestom.server.coordinate.Pos;
 import net.minestom.server.timer.Scheduler;
 import org.jetbrains.annotations.NotNull;
 
@@ -98,6 +99,7 @@ public class StormDatabase {
                 createdModel.setBalance(Config.Economy.STARTING_BALANCE);
                 createdModel.setLevel(0);
                 createdModel.setIsOperator(false);
+                createdModel.setLastLocation(new Pos(Config.Spawn.COORDS).toString());
                 PlayerWrapper.playerModels.put(uuid, createdModel);
                 completableFuture.complete(createdModel);
 

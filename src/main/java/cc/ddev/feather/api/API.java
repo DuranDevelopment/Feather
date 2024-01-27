@@ -1,6 +1,7 @@
 package cc.ddev.feather.api;
 
 import cc.ddev.feather.api.economy.EconomyManager;
+import cc.ddev.feather.api.playerdata.PlayerManager;
 import cc.ddev.feather.configuration.ConfigManager;
 import cc.ddev.feather.api.sidebar.SidebarManager;
 import cc.ddev.instanceguard.InstanceGuard;
@@ -14,6 +15,9 @@ public class API {
 
     @Getter
     public static EconomyManager economy = EconomyManager.getInstance();
+
+    @Getter
+    public static PlayerManager playerManager = PlayerManager.getInstance();
 
     @Getter
     public static InstanceGuard instanceGuard = new InstanceGuard();
