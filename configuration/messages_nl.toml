@@ -74,3 +74,7 @@ invalid_bankpermission = "<dark_red>FOUT: <red>Ongeldige bankmachtiging, geldige
 
 [atm]
 require_card = "<red>Je moet een <dark_red>bankpas <red>in je hand houden!"
+
+[plotwand.item]
+title = "<dark_aqua>Plot<aqua>Wand"
+lore = "<aqua>Left click <dark_aqua>to select the first corner%newline%<aqua>Right click <dark_aqua>to select the second corner"
