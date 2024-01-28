@@ -1,5 +1,3 @@
-messages = { }
-
 [server]
 max_players = 100
 description = "A Feather Server"
@@ -17,7 +15,6 @@ port = 3_306
 
 [spawn]
 spawn_on_join = true
-send_join_message = true
 world = "demo"
 x = "7.5"
 y = -24
@@ -45,3 +42,18 @@ title = "<world>"
 
 [economy]
 starting_balance = 1_000
+
+[plots.create]
+commands = [
+  "rg flag <plot> -w <world> interact -g NON_MEMBERS DENY",
+  "rg flag <plot> -w <world> chest-access -g NON_MEMBERS DENY",
+  "rg flag <plot> -w <world> USE -g MEMBERS ALLOW",
+  "rg flag <plot> -w <world> INTERACT -g MEMBERS ALLOW",
+  "rg flag <plot> -w <world> PVP -g MEMBERS ALLOW"
+]
+
+[plots.inactive]
+days = 30
+
+[plots.calculate]
+price_formula = "<length * <width> * 32"
