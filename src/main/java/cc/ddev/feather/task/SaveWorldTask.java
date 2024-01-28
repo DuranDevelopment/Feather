@@ -22,7 +22,7 @@ public class SaveWorldTask {
 
     private static void saveWorlds() {
         for (@NotNull Instance instance : MinecraftServer.getInstanceManager().getInstances()) {
-            Log.getLogger().info("Saving world \"" + WorldManager.getInstanceName(instance) + "\" (UUID: " + instance.getUniqueId() + ")" + "...");
+            Log.getLogger().info("Saving world " + WorldManager.getInstance().getInstanceName(instance) + " (UUID: " + instance.getUniqueId() + ")...");
             instance.saveChunksToStorage();
         }
     }

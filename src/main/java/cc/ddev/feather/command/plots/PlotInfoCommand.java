@@ -27,6 +27,7 @@ public class PlotInfoCommand extends Command {
         setDefaultExecutor((sender, context) -> {
             Player player = (Player) sender;
 
+            // TODO: Add to Messages.toml
             if (instanceGuard.getRegionManager().getRegions().isEmpty()) {
                 player.sendMessage(ChatUtils.translateMiniMessage("<red>You are currently not on a plot."));
                 return;
@@ -56,11 +57,11 @@ public class PlotInfoCommand extends Command {
     }
 
     private void sendMessageWithFlag(Player player, Region region) {
-        FlagValue<?> flagValue = instanceGuard.getRegionManager().getRegion(region).getFlagValue("feather-description");
+        FlagValue<?> flagValue = region.getFlagValue("feather-description");
         if (flagValue == null) {
-            player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>" + "Description" + ": <aqua>None"));
+            player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>Description: <aqua>None"));
         } else {
-            player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>" + "Description" + ": <aqua>" + flagValue.getValue()));
+            player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>Description: <aqua>" + flagValue.getValue()));
         }
     }
 

@@ -30,7 +30,7 @@ public class PlayerSpawnListener implements Listener {
         }
 
         // Check if player is in an MTWorld
-        if (WorldManager.isMTWorld(WorldManager.getInstanceName(player.getInstance()))) {
+        if (WorldManager.getInstance().isMTWorld(WorldManager.getInstance().getInstanceName(player.getInstance()))) {
             PlayerProfile playerProfile = PlayerWrapper.getPlayerProfile(player);
             if (playerProfile == null) {
                 player.kick("Failed to load player profile!");

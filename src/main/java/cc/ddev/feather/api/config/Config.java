@@ -82,9 +82,10 @@ public class Config {
 
     public static class Plot {
         public static ItemStack PLOTWAND = ItemStack.builder(Material.STICK)
-                .displayName(ChatUtils.translateMiniMessage("<dark_aqua>Plot<aqua>Wand"))
-                .lore(ChatUtils.splitStringByNewLineToComponent("<aqua>Right click <dark_aqua>to select the first position\n\n" +
-                        "<aqua>Left click <dark_aqua>to select the second position"))
+                .displayName(ChatUtils.translateMiniMessage(Messages.Plotwand.TITLE))
+                .lore(ChatUtils.splitStringByNewLineToComponent(Messages.Plotwand.LORE.replace("%newline%", "\n")))
                 .build();
+
+        public static String CALCULATE_PRICEFORMULA = getFeatherConfig().getString("plot.calculate.price_formula");
     }
 }

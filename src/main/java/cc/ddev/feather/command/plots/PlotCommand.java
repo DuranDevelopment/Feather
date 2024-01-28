@@ -14,6 +14,8 @@ public class PlotCommand extends Command {
         addSubcommand(new PlotAddMemberCommand());
         addSubcommand(new PlotRemoveMemberCommand());
         addSubcommand(new PlotSetDescriptionCommand());
+        addSubcommand(new PlotCalculateCommand());
+
         setDefaultExecutor((sender, context) -> sender.sendMessage("Usage: /plot <create|addowner|addmember|setdescription>"));
     }
 }

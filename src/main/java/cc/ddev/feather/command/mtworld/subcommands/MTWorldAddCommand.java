@@ -26,7 +26,7 @@ public class MTWorldAddCommand extends Command {
 
         //Command Syntax for /mtworld add <world>
         addSyntax((sender, context) -> {
-            Instance instance = WorldManager.getWorld(context.get(worldArgument));
+            Instance instance = WorldManager.getInstance().getWorld(context.get(worldArgument));
 
             //Check permission for players only
             //This allows the console to use this syntax too
@@ -42,8 +42,8 @@ public class MTWorldAddCommand extends Command {
                 }
                 WorldModel worldModel = new WorldModel();
                 worldModel.setColor("<gray>");
-                worldModel.setTitle(WorldManager.getInstanceName(instance));
-                worldModel.setLoadingName(WorldManager.getInstanceName(instance));
+                worldModel.setTitle(WorldManager.getInstance().getInstanceName(instance));
+                worldModel.setLoadingName(WorldManager.getInstance().getInstanceName(instance));
                 worldModel.setTemperature(21.64);
                 worldModel.setWorldName(context.get(worldArgument));
                 StormDatabase.getInstance().saveStormModel(worldModel);

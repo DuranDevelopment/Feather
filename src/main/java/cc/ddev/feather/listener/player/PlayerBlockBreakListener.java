@@ -23,6 +23,7 @@ public class PlayerBlockBreakListener implements Listener {
         if (player.getItemInMainHand().material() == Config.Plot.PLOTWAND.material()
         && player.getItemInMainHand().getDisplayName() == Config.Plot.PLOTWAND.getDisplayName()) {
             API.getPlayerManager().setPlotWandPos1(player.getUuid(), event.getBlockPosition());
+            // TODO: Add to Messages.toml
             player.sendMessage(ChatUtils.translateMiniMessage("<green>Position 1 set to <dark_green>"
                     + API.getPlayerManager().getPlotWandPos1(uuid).blockX()
                     + ", " + API.getPlayerManager().getPlotWandPos1(uuid).blockY()

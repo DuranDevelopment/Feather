@@ -8,6 +8,7 @@ import cc.ddev.feather.database.models.PlayerModel;
 import cc.ddev.feather.logger.Log;
 import cc.ddev.feather.player.PlayerProfile;
 import cc.ddev.feather.player.PlayerWrapper;
+import cc.ddev.feather.world.WorldManager;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
@@ -106,5 +107,20 @@ public class PlayerManager {
             return pos;
         }
         return null;
+    }
+
+    public static String getInstanceName(Player player) {
+        if (player == null || player.getInstance() == null) {
+            return null;
+        }
+        return WorldManager.getInstance().getInstanceName(player.getInstance());
+    }
+
+    public static String getInstanceLoadingName(Player player) {
+        return WorldManager.getInstance().getLoadingName(getInstanceName(player));
+    }
+
+    public static String getInstanceColor(Player player) {
+        return WorldManager.getInstance().getColor(getInstanceName(player));
     }
 }

@@ -38,7 +38,7 @@ public class PlayerInventoryClickListener implements Listener {
             }
             if (event.getClickedItem().material() == BankingConfig.Blocks.SAVINGS_ACCOUNT.material()) {
                 event.setCancelled(true);
-                if (BankUtils.getInstance().getAccounts(player.getUuid(), BankAccountType.SAVINGS).size() == 0) {
+                if (BankUtils.getInstance().getAccounts(player.getUuid(), BankAccountType.SAVINGS).isEmpty()) {
                     player.sendMessage(ChatUtils.translateMiniMessage(Messages.Banking.NO_SAVINGS_ACCOUNT));
                     return;
                 }
@@ -50,7 +50,7 @@ public class PlayerInventoryClickListener implements Listener {
             }
             if (event.getClickedItem().material() == BankingConfig.Blocks.BUSINESS_ACCOUNT.material()) {
                 event.setCancelled(true);
-                if (BankUtils.getInstance().getAccounts(player.getUuid(), BankAccountType.BUSINESS).size() == 0) {
+                if (BankUtils.getInstance().getAccounts(player.getUuid(), BankAccountType.BUSINESS).isEmpty()) {
                     player.sendMessage(ChatUtils.translateMiniMessage(Messages.Banking.NO_BUSINESS_ACCOUNT));
                     return;
                 }

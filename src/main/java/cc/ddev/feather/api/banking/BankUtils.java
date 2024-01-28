@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class BankUtils {
     private static BankUtils instance;
-    private static final HashMap<Integer, Bankaccount> cachedAccounts;
+    private static final HashMap<Integer, Bankaccount> cachedAccounts = new HashMap<>();
     private final DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
     private final DecimalFormat decimalFormatNoComma = new DecimalFormat("#,###");
 
@@ -150,9 +150,5 @@ public class BankUtils {
             return 36;
         }
         return 27;
-    }
-
-    static {
-        cachedAccounts = new HashMap<>();
     }
 }

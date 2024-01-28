@@ -46,7 +46,7 @@ public class SidebarManager {
 
     public static void refreshSidebar(Player player) {
         if (player.getInstance() == null) return;
-        if (WorldManager.isMTWorld(WorldManager.getInstanceName(player.getInstance()))) {
+        if (WorldManager.getInstance().isMTWorld(WorldManager.getInstance().getInstanceName(player.getInstance()))) {
             SidebarManager.buildSidebar(player);
         }
     }
@@ -56,7 +56,7 @@ public class SidebarManager {
             if (player.getInstance() == null) return;
             if (SidebarManager.getSidebarEnabled().containsKey(player)) {
                 SidebarManager.removeSidebar(player);
-                if (WorldManager.isMTWorld(WorldManager.getInstanceName(player.getInstance()))) {
+                if (WorldManager.getInstance().isMTWorld(WorldManager.getInstance().getInstanceName(player.getInstance()))) {
                     SidebarManager.buildSidebar(player);
                 }
             }

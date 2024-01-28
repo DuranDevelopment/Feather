@@ -1,3 +1,4 @@
+# Feather Configuration File
 [server]
 max_players = 100
 description = "A Feather Server"
@@ -42,3 +43,17 @@ title = '<world>'
 
 [economy]
 starting_balance = 1000
+
+[plots]
+    [plots.create]
+    commands = [
+        'rg flag <plot> -w <world> interact -g NON_MEMBERS DENY',
+        'rg flag <plot> -w <world> chest-access -g NON_MEMBERS DENY',
+        'rg flag <plot> -w <world> USE -g MEMBERS ALLOW',
+        'rg flag <plot> -w <world> INTERACT -g MEMBERS ALLOW',
+        'rg flag <plot> -w <world> PVP -g MEMBERS ALLOW'
+    ]
+    [plots.inactive]
+    days = 30
+    [plots.calculate]
+    price_formula = '<length * <width> * 32'

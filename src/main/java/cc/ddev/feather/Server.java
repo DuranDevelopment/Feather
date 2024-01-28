@@ -14,6 +14,7 @@ import cc.ddev.feather.command.mtworld.MTWorldCommand;
 import cc.ddev.feather.command.plots.PlotCommand;
 import cc.ddev.feather.command.plots.PlotInfoCommand;
 import cc.ddev.feather.command.plots.PlotwandCommand;
+import cc.ddev.feather.command.plots.subcommands.PlotCalculateCommand;
 import cc.ddev.feather.configuration.ConfigManager;
 import cc.ddev.feather.database.DataManager;
 import cc.ddev.feather.database.StormDatabase;
@@ -69,16 +70,14 @@ public class Server {
         // Set up raycasting lib
         RayFastManager.init();
 
-
-
         // Pull database cache
         BankUtils.getInstance().pullCache();
 
         // Create the worlds directory
-        WorldManager.createWorldsDirectory();
+        WorldManager.getInstance().createWorldsDirectory();
 
         // Check if worlds are present
-        if (WorldManager.worldsDirectoryIsEmpty()) {
+        if (WorldManager.getInstance().worldsDirectoryIsEmpty()) {
             Log.getLogger().error("No worlds found! Please create a world in the worlds directory!");
             Log.getLogger().error("Resorting to default world...");
             // Create the instance
@@ -139,9 +138,10 @@ public class Server {
         API.getInstanceGuard().enable(MinecraftServer.getGlobalEventHandler());
         // Register custom InstanceGuard flag
         API.getInstanceGuard().getFlagManager().registerCustomFlag("feather-description", new FlagValue<>(""));
+        API.getInstanceGuard().getFlagManager().registerCustomFlag("feather-plotlevels", new FlagValue<>(""));
 
         // Load the world
-        WorldManager.loadWorld(WorldManager.getWorldsDirectory() + File.separator + Config.Spawn.WORLD);
+        WorldManager.getInstance().loadWorld(WorldManager.getInstance().getWorldsDirectory() + File.separator + Config.Spawn.WORLD);
 
         SidebarRefreshTask.registerTask();
         SaveWorldTask.registerTask();

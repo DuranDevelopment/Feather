@@ -1,5 +1,6 @@
 package cc.ddev.feather.placeholders;
 
+import cc.ddev.feather.api.playerdata.PlayerManager;
 import cc.ddev.feather.player.PlayerProfile;
 import cc.ddev.feather.player.PlayerWrapper;
 import net.minestom.server.entity.Player;
@@ -19,9 +20,9 @@ public class Placeholders {
 
     static {
         addPlaceholder("player", Player::getUsername);
-        addPlaceholder("world", PlayerProfile::getInstanceName);
-        addPlaceholder("loadingname", PlayerProfile::getInstanceLoadingName);
-        addPlaceholder("worldcolor", PlayerProfile::getInstanceColor);
+        addPlaceholder("world", PlayerManager::getInstanceName);
+        addPlaceholder("loadingname", PlayerManager::getInstanceLoadingName);
+        addPlaceholder("worldcolor", PlayerManager::getInstanceColor);
     }
 
     /**

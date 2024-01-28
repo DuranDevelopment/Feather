@@ -17,8 +17,8 @@ repositories {
 
 dependencies {
     implementation("dev.hollowcube:minestom-ce:cf4a2d134e")
-    implementation("com.github.DuranDevelopment:instanceguard:19196b169d") {
-        exclude(group = "com.github.Minestom", module = "Minestom")
+    implementation("com.github.DuranDevelopment:instanceguard:1c50091bc9") {
+        exclude(group = "dev.hollowcube", module = "minestom-ce")
     }
 
     implementation("com.github.Minestom.VanillaReimplementation:core:de143342b9") {
@@ -40,6 +40,8 @@ dependencies {
     compileOnly("junit:junit:4.13.2")
     implementation("org.slf4j:slf4j-api:2.0.11")
     implementation("me.hsgamer:hscore-minestom-gui:4.3.28")
+    implementation("net.objecthunter:exp4j:0.4.8")
+    implementation("com.google.guava:guava:33.0.0-jre")
 }
 
 tasks {

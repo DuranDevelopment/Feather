@@ -24,6 +24,9 @@ public class ConfigManager {
     @Getter
     private final Toml bankingConfig = new Toml("banking", configDirectory);
 
+    @Getter
+    private final Toml calculateConfig = new Toml("calculate", configDirectory);
+
     public void createConfigDirectory() {
         File f = new File(configDirectory);
         if (!f.exists()) {

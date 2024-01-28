@@ -34,6 +34,7 @@ public class MTWorldRemoveCommand extends Command {
                 int count = 0;
                 for (WorldModel worldModel : worldModels) {
                     if (worldModel.getWorldName().equals(world)) {
+                        // TODO: Add to Messages.toml
                         player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>World <aqua>" + world + " <dark_aqua>removed."));
                         StormDatabase.getInstance().getStorm().delete(worldModel);
                         SidebarManager.refreshSidebar();
@@ -42,6 +43,7 @@ public class MTWorldRemoveCommand extends Command {
                     count++;
                 }
                 if (count == worldModels.size()) {
+                    // TODO: Add to Messages.toml
                     player.sendMessage(ChatUtils.translateMiniMessage("<dark_red>World <red>" + world + " <dark_red>not found."));
                 }
             } catch (Exception e) {

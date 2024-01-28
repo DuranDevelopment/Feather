@@ -54,6 +54,8 @@ public class PlayerBlockInteractListener implements Listener {
 
         if (player.getItemInMainHand().equals(Config.Plot.PLOTWAND)) {
             API.getPlayerManager().setPlotWandPos2(uuid, event.getBlockPosition());
+
+            // TODO: Add to Messages.toml
             player.sendMessage(ChatUtils.translateMiniMessage("<green>Position 2 set to <dark_green>"
                     + API.getPlayerManager().getPlotWandPos2(uuid).blockX()
                     + ", " + API.getPlayerManager().getPlotWandPos2(uuid).blockY()

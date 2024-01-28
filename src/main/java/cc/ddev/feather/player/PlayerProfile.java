@@ -33,19 +33,4 @@ public class PlayerProfile {
         this.username = player.getName();
         this.playerModel = playerModel;
     }
-
-    public static String getInstanceName(Player player) {
-        if (player == null || player.getInstance() == null) {
-            return null;
-        }
-        return WorldManager.getInstanceName(player.getInstance());
-    }
-
-    public static String getInstanceLoadingName(Player player) {
-        return WorldManager.getLoadingName(getInstanceName(player));
-    }
-
-    public static String getInstanceColor(Player player) {
-        return WorldManager.getColor(getInstanceName(player));
-    }
 }

@@ -10,7 +10,7 @@ public class TestCommand extends Command {
         super("test", "testcommand");
         setDefaultExecutor((sender, context) -> {
             Player player = (Player) sender;
-            WorldManager.saveWorlds();
+            WorldManager.getInstance().saveWorlds();
             ChatUtils.broadcast(ChatUtils.translateMiniMessage("<red>Saved worlds!"));
         });
     }

@@ -35,8 +35,8 @@ public class PlayerLoginListener implements Listener {
         }
 
         // Set the player's instance
-        if (!WorldManager.worldsDirectoryIsEmpty()) {
-            @NotNull Instance instance = WorldManager.getWorld(Config.Spawn.WORLD);
+        if (!WorldManager.getInstance().worldsDirectoryIsEmpty()) {
+            @NotNull Instance instance = WorldManager.getInstance().getWorld(Config.Spawn.WORLD);
             if (instance == null) {
                 event.setSpawningInstance(Server.getInstanceContainer());
                 return;
@@ -58,7 +58,6 @@ public class PlayerLoginListener implements Listener {
 
         // Save player model
         StormDatabase.getInstance().saveStormModel(playerModel);
-
 
         Log.getLogger().info("UUID of player " + player.getUsername() + " is " + player.getUuid());
 

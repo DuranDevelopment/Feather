@@ -18,24 +18,34 @@ import java.util.Collection;
 
 public class WorldManager {
 
-    private static final String currentDirectory = System.getProperty("user.dir");
+
+    private static WorldManager worldManager;
+    public static WorldManager getInstance() {
+        if (worldManager == null) {
+            worldManager = new WorldManager();
+        }
+        return worldManager;
+    }
+
+
+    private final String currentDirectory = System.getProperty("user.dir");
 
     @Getter
-    public static final String worldsDirectory = currentDirectory + File.separator + "worlds";
+    public final String worldsDirectory = currentDirectory + File.separator + "worlds";
 
-    public static void saveWorld(InstanceContainer instanceContainer) {
-        Log.getLogger().info("Saving world \"" + WorldManager.getInstanceName(instanceContainer) + "\" (UUID: " + instanceContainer.getUniqueId() + ")" + "...");
+    public void saveWorld(InstanceContainer instanceContainer) {
+        Log.getLogger().info("Saving world \"" + getInstanceName(instanceContainer) + "\" (UUID: " + instanceContainer.getUniqueId() + ")" + "...");
         instanceContainer.saveChunksToStorage();
     }
 
-    public static void saveWorlds() {
+    public void saveWorlds() {
         for (@NotNull Instance instance : MinecraftServer.getInstanceManager().getInstances()) {
-            Log.getLogger().info("Saving world \"" + WorldManager.getInstanceName(instance) + "\" (UUID: " + instance.getUniqueId() + ")" + "...");
+            Log.getLogger().info("Saving world \"" + getInstanceName(instance) + "\" (UUID: " + instance.getUniqueId() + ")" + "...");
             instance.saveChunksToStorage();
         }
     }
 
-    public static InstanceContainer loadWorld(String loadPath) {
+    public InstanceContainer loadWorld(String loadPath) {
         InstanceContainer instanceContainer = MinecraftServer.getInstanceManager().createInstanceContainer();
         instanceContainer.setChunkLoader(new AnvilLoader(loadPath));
         String worldName = new File(loadPath).getName();
@@ -45,7 +55,7 @@ public class WorldManager {
         return instanceContainer;
     }
 
-    public static InstanceContainer getWorld(String worldName) {
+    public InstanceContainer getWorld(String worldName) {
         for (Instance instance : MinecraftServer.getInstanceManager().getInstances()) {
             if (instance.getTag(Tag.String("name")).equalsIgnoreCase(worldName)) {
                 return (InstanceContainer) instance;
@@ -54,7 +64,7 @@ public class WorldManager {
         return null;
     }
 
-    public static void createWorldsDirectory() {
+    public void createWorldsDirectory() {
         File f = new File(worldsDirectory);
         if (!f.exists()) {
             Log.getLogger().info("Creating worlds directory...");
@@ -64,11 +74,11 @@ public class WorldManager {
         }
     }
 
-    public static void setInstanceName(Instance instance, String name) {
+    public void setInstanceName(Instance instance, String name) {
         instance.setTag(Tag.String("name"), name);
     }
 
-    public static String getInstanceName(Instance instance) {
+    public String getInstanceName(Instance instance) {
         String name = instance.getTag(Tag.String("name"));
         if (name == null) {
             name = instance.getUniqueId().toString();
@@ -76,28 +86,30 @@ public class WorldManager {
         return name;
     }
 
-    public static String getInstanceUniqueId(Instance instance) {
+    public String getInstanceUniqueId(Instance instance) {
         if (instance.getUniqueId().toString() == null) {
             return null;
         }
         return instance.getUniqueId().toString();
     }
 
-    public static boolean worldExists(String worldName) {
+    public boolean worldExists(String worldName) {
         File f = new File(worldsDirectory + File.separator + worldName);
         return f.exists();
     }
 
-    public static boolean worldsDirectoryIsEmpty() {
+    public boolean worldsDirectoryIsEmpty() {
         File f = new File(worldsDirectory);
-        if (f.list() == null) {
-            return true;
+        String[] fileList = f.list();
+        if (fileList == null) {
+            return true;  // Directory is empty or doesn't exist
         }
-        return f.list().length == 0;
+        return fileList.length == 0;
     }
 
+
     @Nullable
-    public static Collection<WorldModel> findWorldModel(String worldName) {
+    public Collection<WorldModel> findWorldModel(String worldName) {
         try {
             Collection<WorldModel> worldModel;
             worldModel = StormDatabase.getInstance().getStorm().buildQuery(WorldModel.class)
@@ -111,15 +123,26 @@ public class WorldManager {
         }
     }
 
-    public static boolean isMTWorld(String worldName) {
-        return !findWorldModel(worldName).isEmpty();
+    public boolean isMTWorld(String worldName) {
+        Collection<WorldModel> worldModel = findWorldModel(worldName);
+        return worldModel != null && !worldModel.isEmpty();
     }
 
-    public static String getLoadingName(String worldName) {
-        return findWorldModel(worldName).iterator().next().getLoadingName();
+    public String getLoadingName(String worldName) {
+        Collection<WorldModel> worldModels = findWorldModel(worldName);
+
+        if (worldModels != null && !worldModels.isEmpty()) {
+            return worldModels.iterator().next().getLoadingName();
+        }
+        return null;
     }
 
-    public static String getColor(String worldName) {
-        return findWorldModel(worldName).iterator().next().getColor();
+    public String getColor(String worldName) {
+        Collection<WorldModel> worldModels = findWorldModel(worldName);
+
+        if (worldModels != null && !worldModels.isEmpty()) {
+            return worldModels.iterator().next().getColor();
+        }
+        return null;
     }
 }

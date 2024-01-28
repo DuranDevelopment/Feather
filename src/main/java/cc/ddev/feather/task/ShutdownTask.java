@@ -11,7 +11,7 @@ public class ShutdownTask {
         SchedulerManager schedulerManager = MinecraftServer.getSchedulerManager();
         schedulerManager.buildShutdownTask(() -> {
             Log.getLogger().info("Saving worlds...");
-            WorldManager.saveWorlds();
+            WorldManager.getInstance().saveWorlds();
             for (Player player : MinecraftServer.getConnectionManager().getOnlinePlayers()) {
                 player.kick("Server is closing.");
             }

@@ -45,6 +45,7 @@ public class PlotCreateCommand extends Command {
 
             if (playerProfile == null) return;
             if (pos1 == null || pos2 == null) {
+                // TODO: Add to Messages.toml
                 player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>You must select two positions with the <aqua>plot wand <dark_aqua>first."));
                 return;
             }

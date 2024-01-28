@@ -65,3 +65,7 @@ invalid_bankpermission = "<dark_red>ERROR: <red>Invalid bankpermission, valid pe
     already_added = "<red>The player <dark_red><player> <red>has already been added to this bankaccount."
 [atm]
 require_card = "<red>You need to hold <dark_red>a debit card <red>in your hand!"
+[plotwand]
+    [plotwand.item]
+    title = '<dark_aqua>Plot<aqua>Wand'
+    lore = '<aqua>Left click <dark_aqua>to select the first corner%newline%<aqua>Right click <dark_aqua>to select the second corner'
