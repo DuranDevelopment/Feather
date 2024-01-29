@@ -1,5 +1,6 @@
 package cc.ddev.feather.api.sidebar;
 
+import cc.ddev.feather.api.API;
 import cc.ddev.feather.api.config.Config;
 import cc.ddev.feather.database.models.PlayerModel;
 import cc.ddev.feather.placeholders.Placeholders;
@@ -22,9 +23,7 @@ public class SidebarManager {
         Component titleComponent = Component.text(Placeholders.parse(player, Config.Sidebar.TITLE).toUpperCase());
         Sidebar sidebar = new Sidebar(titleComponent);
 
-        PlayerProfile playerProfile = PlayerWrapper.getPlayerProfile(player);
-        if (playerProfile == null) return;
-        PlayerModel playerModel = playerProfile.getPlayerModel();
+        PlayerModel playerModel = API.getPlayerManager().getPlayerModel(player);
         Double balance = playerModel.getBalance();
 
         Component balanceComponent = balance == 0 ? Component.text("0") : Component.text(balance);

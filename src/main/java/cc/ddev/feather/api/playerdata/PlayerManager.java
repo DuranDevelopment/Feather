@@ -1,15 +1,11 @@
 package cc.ddev.feather.api.playerdata;
 
-import cc.ddev.feather.api.API;
-import cc.ddev.feather.api.config.Config;
-import cc.ddev.feather.api.economy.EconomyManager;
 import cc.ddev.feather.database.StormDatabase;
 import cc.ddev.feather.database.models.PlayerModel;
 import cc.ddev.feather.logger.Log;
 import cc.ddev.feather.player.PlayerProfile;
 import cc.ddev.feather.player.PlayerWrapper;
 import cc.ddev.feather.world.WorldManager;
-import net.minestom.server.MinecraftServer;
 import net.minestom.server.coordinate.Point;
 import net.minestom.server.coordinate.Pos;
 import net.minestom.server.entity.Player;
@@ -102,9 +98,8 @@ public class PlayerManager {
             double z = Double.parseDouble(rawPosition[2].replace("z=", ""));
             float yaw = Float.parseFloat(rawPosition[3].replace("yaw=", ""));
             float pitch = Float.parseFloat(rawPosition[4].replace("pitch=", "").replace("]", ""));
-            Pos pos = new Pos(x, y, z, yaw, pitch);
 
-            return pos;
+            return new Pos(x, y, z, yaw, pitch);
         }
         return null;
     }

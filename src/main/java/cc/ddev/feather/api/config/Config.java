@@ -9,6 +9,8 @@ import net.minestom.server.coordinate.Pos;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 
+import java.util.List;
+
 @Getter
 public class Config {
 
@@ -87,5 +89,13 @@ public class Config {
                 .build();
 
         public static String CALCULATE_PRICEFORMULA = getFeatherConfig().getString("plot.calculate.price_formula");
+    }
+
+    public static class Phone {
+        public static double DEFAULT_CREDIT = getFeatherConfig().getDouble("phone.default_credit");
+
+        public static double MESSAGE_COSTS = getFeatherConfig().getDouble("phone.message_costs");
+
+        public static List<String> ITEMS = getFeatherConfig().getStringList("phone.items");
     }
 }
