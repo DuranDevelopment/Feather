@@ -1,5 +1,6 @@
 package cc.ddev.feather.listener.player;
 
+import cc.ddev.feather.api.API;
 import cc.ddev.feather.api.config.Config;
 import cc.ddev.feather.api.config.Messages;
 import cc.ddev.feather.database.StormDatabase;
@@ -31,17 +32,8 @@ public class PlayerSpawnListener implements Listener {
 
         // Check if player is in an MTWorld
         if (WorldManager.getInstance().isMTWorld(WorldManager.getInstance().getInstanceName(player.getInstance()))) {
-            PlayerProfile playerProfile = PlayerWrapper.getPlayerProfile(player);
-            if (playerProfile == null) {
-                player.kick("Failed to load player profile!");
-                return;
-            }
 
-            PlayerModel playerModel = playerProfile.getPlayerModel();
-            if (playerModel == null) {
-                player.kick("Failed to load player model!");
-                return;
-            }
+            PlayerModel playerModel = API.getPlayerManager().getPlayerProfile(player).getPlayerModel();
 
             // Update username if it has changed
             playerModel.setUsername(player.getUsername());

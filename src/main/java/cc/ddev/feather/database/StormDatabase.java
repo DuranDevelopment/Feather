@@ -62,6 +62,9 @@ public class StormDatabase {
         storm.registerModel(new PlayerModel());
         storm.registerModel(new BankAccountUserModel());
         storm.registerModel(new BankAccountModel());
+        storm.registerModel(new PhoneModel());
+        storm.registerModel(new PhoneContactsModel());
+        storm.registerModel(new PhoneMessagesModel());
         storm.runMigrations();
 
         Log.getLogger().info("Successfully connected to the database.");

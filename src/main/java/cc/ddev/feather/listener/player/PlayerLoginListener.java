@@ -3,6 +3,7 @@ package cc.ddev.feather.listener.player;
 import cc.ddev.feather.Server;
 import cc.ddev.feather.api.API;
 import cc.ddev.feather.api.config.Config;
+import cc.ddev.feather.api.playerdata.PlayerManager;
 import cc.ddev.feather.database.StormDatabase;
 import cc.ddev.feather.database.models.PlayerModel;
 import cc.ddev.feather.listener.handler.Listen;
@@ -21,6 +22,7 @@ import net.minestom.server.permission.Permission;
 import net.minestom.server.timer.TaskSchedule;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 public class PlayerLoginListener implements Listener {
 
@@ -46,7 +48,12 @@ public class PlayerLoginListener implements Listener {
             event.setSpawningInstance(Server.getInstanceContainer());
         }
 
+        // Load player model
+        PlayerManager.getInstance().loadPlayerModel(player);
+
+        // Get player model
         PlayerModel playerModel = API.getPlayerManager().getPlayerModel(player);
+
         if (API.getPlayerManager().getLastLocation(player) == null) {
             player.setRespawnPoint(Config.Spawn.COORDS);
         } else {

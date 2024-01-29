@@ -60,19 +60,22 @@ public class PlayerManager {
         return playerProfile;
     }
 
+    public void loadPlayerModel(Player player) {
+        try {
+            // Prevent not loading the player model in time
+            CompletableFuture<PlayerModel> future = StormDatabase.getInstance().loadPlayerModel(player.getUuid());
+            future.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public PlayerModel getPlayerModel(Player player) {
-        CompletableFuture<PlayerModel> future = StormDatabase.getInstance().loadPlayerModel(player.getUuid());
         PlayerModel playerModel;
 
         try {
-            // Prevent not loading the player model in time
-            future.get();
-
-            // Load player profile
-            PlayerProfile playerProfile = getPlayerProfile(player);
-
             // Load player model
-            playerModel = playerProfile.getPlayerModel();
+            playerModel = getPlayerProfile(player).getPlayerModel();
             if (playerModel == null) {
                 player.kick("Failed to load player model!");
                 return null;
@@ -102,9 +105,8 @@ public class PlayerManager {
             double z = Double.parseDouble(rawPosition[2].replace("z=", ""));
             float yaw = Float.parseFloat(rawPosition[3].replace("yaw=", ""));
             float pitch = Float.parseFloat(rawPosition[4].replace("pitch=", "").replace("]", ""));
-            Pos pos = new Pos(x, y, z, yaw, pitch);
 
-            return pos;
+            return new Pos(x, y, z, yaw, pitch);
         }
         return null;
     }

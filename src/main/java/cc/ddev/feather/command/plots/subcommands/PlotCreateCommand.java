@@ -39,11 +39,9 @@ public class PlotCreateCommand extends Command {
             UUID uuid = player.getUuid();
             Point pos1 = API.getPlayerManager().getPlotWandPos1(uuid);
             Point pos2 = API.getPlayerManager().getPlotWandPos2(uuid);
-            PlayerProfile playerProfile = PlayerWrapper.getPlayerProfile(player);
             String plotName = context.get(plotNameArgument);
             boolean topToBottom = context.get(topToBottomArgument);
 
-            if (playerProfile == null) return;
             if (pos1 == null || pos2 == null) {
                 // TODO: Add to Messages.toml
                 player.sendMessage(ChatUtils.translateMiniMessage("<dark_aqua>You must select two positions with the <aqua>plot wand <dark_aqua>first."));

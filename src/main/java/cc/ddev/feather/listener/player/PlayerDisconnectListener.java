@@ -1,5 +1,6 @@
 package cc.ddev.feather.listener.player;
 
+import cc.ddev.feather.api.API;
 import cc.ddev.feather.api.config.Messages;
 import cc.ddev.feather.database.StormDatabase;
 import cc.ddev.feather.database.models.PlayerModel;
@@ -18,14 +19,9 @@ public class PlayerDisconnectListener implements Listener {
     @Listen
     public void onPlayerDisconnect(PlayerDisconnectEvent event) {
         final Player player = event.getPlayer();
-        PlayerProfile playerProfile = PlayerWrapper.getPlayerProfile(player);
-        if (playerProfile == null) {
-            Log.getLogger().warn("Player " + player.getUsername() + " with UUID " + player.getUuid() + " has no player profile!");
-            return;
-        }
 
         // Save player model
-        PlayerModel playerModel = playerProfile.getPlayerModel();
+        PlayerModel playerModel = API.getPlayerManager().getPlayerModel(player);
         playerModel.setLastLocation(player.getPosition().toString());
         playerModel.setUsername(player.getUsername());
         player.setRespawnPoint(player.getPosition());

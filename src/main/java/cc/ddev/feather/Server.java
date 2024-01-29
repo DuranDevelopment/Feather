@@ -113,6 +113,7 @@ public class Server {
         new PlayerBlockBreakListener().register();
         new PlayerItemDropListener().register();
         new PlayerItemPickupListener().register();
+        new PlayerInteractListener().register();
 
         // Start the server from config values
         minecraftServer.start(Config.Server.SERVER_HOST, Config.Server.SERVER_PORT);

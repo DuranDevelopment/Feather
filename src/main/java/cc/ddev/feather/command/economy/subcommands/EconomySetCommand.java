@@ -1,5 +1,6 @@
 package cc.ddev.feather.command.economy.subcommands;
 
+import cc.ddev.feather.api.API;
 import cc.ddev.feather.database.StormDatabase;
 import cc.ddev.feather.database.models.PlayerModel;
 import cc.ddev.feather.player.PlayerProfile;
@@ -32,12 +33,11 @@ public class EconomySetCommand extends Command {
                 return;
             }
 
-            PlayerProfile playerProfile = PlayerWrapper.getPlayerProfile(target);
-            PlayerModel playerModel = playerProfile.getPlayerModel();
+            PlayerModel playerModel = API.getPlayerManager().getPlayerModel(player);
             playerModel.setBalance(context.get("amount"));
             StormDatabase.getInstance().saveStormModel(playerModel);
             SidebarManager.refreshSidebar(player);
-            sender.sendMessage(Component.text("Set ").append(playerProfile.getUsername()).append(Component.text("'s balance to ").append(Component.text(playerModel.getBalance()))));
+            sender.sendMessage(Component.text("Set ").append(Component.text(target.getUsername())).append(Component.text("'s balance to ").append(Component.text(playerModel.getBalance()))));
         }, playerArgument, amountArgument);
     }
 }

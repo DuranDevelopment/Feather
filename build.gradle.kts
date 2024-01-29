@@ -16,7 +16,7 @@ repositories {
 }
 
 dependencies {
-    implementation("dev.hollowcube:minestom-ce:cf4a2d134e")
+    implementation("dev.hollowcube:minestom-ce:9d6752c86f")
     implementation("com.github.DuranDevelopment:instanceguard:1c50091bc9") {
         exclude(group = "dev.hollowcube", module = "minestom-ce")
     }
@@ -31,10 +31,10 @@ dependencies {
     }
      */
 
-    implementation("com.zaxxer:HikariCP:5.0.1")
+    implementation("com.zaxxer:HikariCP:5.1.0")
     implementation("com.github.simplix-softworks:simplixstorage:3.2.7")
-    implementation("net.kyori:adventure-text-minimessage:4.14.0")
-    implementation("com.github.Mindgamesnl:storm:prod125")
+    implementation("net.kyori:adventure-text-minimessage:4.15.0")
+    implementation("com.github.Mindgamesnl:storm:e1f961b480")
     implementation("mysql:mysql-connector-java:8.0.33") /* Adding drivers for MySQL and SQLite  */
     implementation("org.xerial:sqlite-jdbc:3.45.0.0")
     compileOnly("junit:junit:4.13.2")

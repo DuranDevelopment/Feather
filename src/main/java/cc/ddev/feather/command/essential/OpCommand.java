@@ -1,5 +1,6 @@
 package cc.ddev.feather.command.essential;
 
+import cc.ddev.feather.api.API;
 import cc.ddev.feather.database.StormDatabase;
 import cc.ddev.feather.database.models.PlayerModel;
 import cc.ddev.feather.player.PlayerProfile;
@@ -52,7 +53,7 @@ public class OpCommand extends Command {
      * notifies them (and the sender) in the chat.
      */
     private void executeOthers(CommandSender sender, List<Entity> entities) {
-        if (entities.size() == 0) {
+        if (entities.isEmpty()) {
             //If there are no players that could be modified, display an error message
             if (sender instanceof Player)
                 sender.sendMessage(Component.translatable("argument.entity.notfound.player", NamedTextColor.RED));
@@ -64,9 +65,7 @@ public class OpCommand extends Command {
                     //executeSelf to display one message instead of two
                     executeSelf((Player) sender);
                 } else {
-
-                    PlayerProfile playerProfile = PlayerWrapper.getPlayerProfile(player);
-                    PlayerModel playerModel = playerProfile.getPlayerModel();
+                    PlayerModel playerModel = API.getPlayerManager().getPlayerModel(player);
                     playerModel.setIsOperator(true);
                     StormDatabase.getInstance().saveStormModel(playerModel);
                     player.setPermissionLevel(4);
@@ -92,14 +91,13 @@ public class OpCommand extends Command {
      * Sets the gamemode for the executing Player, and
      * notifies them in the chat.
      */
-    private void executeSelf(Player sender) {
-        PlayerProfile playerProfile = PlayerWrapper.getPlayerProfile(sender);
-        PlayerModel playerModel = playerProfile.getPlayerModel();
+    private void executeSelf(Player player) {
+        PlayerModel playerModel = API.getPlayerManager().getPlayerModel(player);
         playerModel.setIsOperator(true);
         StormDatabase.getInstance().saveStormModel(playerModel);
-        sender.setPermissionLevel(4);
+        player.setPermissionLevel(4);
 
         //Send the translated message to the player.
-        sender.sendMessage(Component.text("You are now op!", NamedTextColor.GREEN));
+        player.sendMessage(Component.text("You are now op!", NamedTextColor.GREEN));
     }
 }
