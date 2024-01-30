@@ -8,11 +8,11 @@ fly_off = "<red>Fly mode has been disabled!"
 
 [join]
 enabled = true
-message = "<dark_aqua><player> <aqua>joined the game"
+message = "<dark_aqua><player> <aqua>a rejoint la partie"
 
 [leave]
 enabled = true
-message = "<dark_aqua><player> <aqua>left the game"
+message = "<dark_aqua><player> <aqua>a quitté la partie"
 
 [join_title]
 title = "<worldcolor>Welcome to"
@@ -74,3 +74,7 @@ invalid_bankpermission = "<dark_red>ERROR: <red>Invalid bankpermission, valid pe
 
 [atm]
 require_card = "<red>You need to hold <dark_red>a debit card <red>in your hand!"
+
+[plotwand.item]
+title = "<dark_aqua>Plot<aqua>Wand"
+lore = "<aqua>Left click <dark_aqua>to select the first corner%newline%<aqua>Right click <dark_aqua>to select the second corner"
