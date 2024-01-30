@@ -16,7 +16,7 @@ repositories {
 }
 
 dependencies {
-    implementation("dev.hollowcube:minestom-ce:9d6752c86f")
+    implementation("dev.hollowcube:minestom-ce:666bb98957")
     implementation("com.github.DuranDevelopment:instanceguard:1c50091bc9") {
         exclude(group = "dev.hollowcube", module = "minestom-ce")
     }
