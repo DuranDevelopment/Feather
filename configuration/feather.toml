@@ -16,10 +16,10 @@ port = 3306
 
 [spawn]
 spawn_on_join = true
-world = 'demo1'
-x = 7.5
-y = -24
-z = -3.5
+world = 'demo'
+x = -5.5
+y = -37
+z = -4.5
 
 [player]
     [player.default]
