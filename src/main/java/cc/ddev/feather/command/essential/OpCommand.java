@@ -1,6 +1,5 @@
 package cc.ddev.feather.command.essential;
 
-import cc.ddev.feather.api.API;
 import cc.ddev.feather.database.StormDatabase;
 import cc.ddev.feather.database.models.PlayerModel;
 import cc.ddev.feather.player.PlayerProfile;
@@ -53,7 +52,7 @@ public class OpCommand extends Command {
      * notifies them (and the sender) in the chat.
      */
     private void executeOthers(CommandSender sender, List<Entity> entities) {
-        if (entities.isEmpty()) {
+        if (entities.size() == 0) {
             //If there are no players that could be modified, display an error message
             if (sender instanceof Player)
                 sender.sendMessage(Component.translatable("argument.entity.notfound.player", NamedTextColor.RED));
@@ -65,11 +64,11 @@ public class OpCommand extends Command {
                     //executeSelf to display one message instead of two
                     executeSelf((Player) sender);
                 } else {
-                    PlayerModel playerModel = API.getPlayerManager().getPlayerModel(player);
+
+                    PlayerProfile playerProfile = PlayerWrapper.getPlayerProfile(player);
+                    PlayerModel playerModel = playerProfile.getPlayerModel();
                     playerModel.setIsOperator(true);
-
                     StormDatabase.getInstance().saveStormModel(playerModel);
-
                     player.setPermissionLevel(4);
 
                     Component playerName = player.getDisplayName() == null ? player.getName() : player.getDisplayName();
@@ -94,7 +93,8 @@ public class OpCommand extends Command {
      * notifies them in the chat.
      */
     private void executeSelf(Player sender) {
-        PlayerModel playerModel = API.getPlayerManager().getPlayerModel(sender);
+        PlayerProfile playerProfile = PlayerWrapper.getPlayerProfile(sender);
+        PlayerModel playerModel = playerProfile.getPlayerModel();
         playerModel.setIsOperator(true);
         StormDatabase.getInstance().saveStormModel(playerModel);
         sender.setPermissionLevel(4);

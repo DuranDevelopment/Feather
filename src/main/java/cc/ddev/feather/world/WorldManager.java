@@ -10,14 +10,11 @@ import net.minestom.server.instance.AnvilLoader;
 import net.minestom.server.instance.Instance;
 import net.minestom.server.instance.InstanceContainer;
 import net.minestom.server.tag.Tag;
-import net.minestom.server.timer.TaskSchedule;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
-import java.time.Duration;
 import java.util.Collection;
-import java.util.concurrent.TimeUnit;
 
 public class WorldManager {
 
@@ -48,13 +45,11 @@ public class WorldManager {
         }
     }
 
-    public static InstanceContainer loadWorld(String loadPath) {
+    public InstanceContainer loadWorld(String loadPath) {
         InstanceContainer instanceContainer = MinecraftServer.getInstanceManager().createInstanceContainer();
         instanceContainer.setChunkLoader(new AnvilLoader(loadPath));
-
         String worldName = new File(loadPath).getName();
-        getInstance().setInstanceName(instanceContainer, worldName);
-
+        setInstanceName(instanceContainer, worldName);
         Log.getLogger().info("Loaded world \"" + worldName + "\" (UUID: " + instanceContainer.getUniqueId() + ")" + "!");
 
         return instanceContainer;
