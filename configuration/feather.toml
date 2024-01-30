@@ -57,3 +57,10 @@ starting_balance = 1000
     days = 30
     [plots.calculate]
     price_formula = '<length * <width> * 32'
+
+[phone]
+    default_credit = 0.0
+    message_costs = 2.0
+    items = [
+        'minecraft:blaze_powder'
+    ]

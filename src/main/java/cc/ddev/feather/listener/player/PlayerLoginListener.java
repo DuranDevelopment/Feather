@@ -46,6 +46,7 @@ public class PlayerLoginListener implements Listener {
             event.setSpawningInstance(Server.getInstanceContainer());
         }
 
+        // Set the player's respawn point
         PlayerModel playerModel = API.getPlayerManager().getPlayerModel(player);
         if (API.getPlayerManager().getLastLocation(player) == null) {
             player.setRespawnPoint(Config.Spawn.COORDS);
