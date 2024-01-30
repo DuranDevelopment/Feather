@@ -89,7 +89,7 @@ public class BankUtils {
             bankAccountModel.setName(bank.getName());
             bankAccountModel.setFrozen(bank.isFrozen());
             bankAccountModel.setType(bank.getType().name());
-            StormDatabase.getInstance().saveStormModel(bankAccountModel);
+            StormDatabase.getInstance().getStorm().save(bankAccountModel);
         }
     }
 

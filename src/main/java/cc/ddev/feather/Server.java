@@ -29,7 +29,6 @@ import cc.ddev.feather.world.WorldManager;
 import cc.ddev.feather.world.blockhandlers.RegisterHandlers;
 import cc.ddev.instanceguard.flag.FlagValue;
 import lombok.Getter;
-import net.kyori.adventure.text.Component;
 import net.minestom.server.MinecraftServer;
 import net.minestom.server.entity.Player;
 import net.minestom.server.extras.MojangAuth;
@@ -86,11 +85,7 @@ public class Server {
             // Set the ChunkGenerator
             instanceContainer.setGenerator(unit ->
                     unit.modifier().fillHeight(0, 40, Block.GRASS_BLOCK));
-        } else {
-            // Load the world
-            instanceContainer = WorldManager.loadWorld(WorldManager.getInstance().getWorldsDirectory() + File.separator + Config.Spawn.WORLD);
         }
-
         // Sets online-mode
         if (Config.Server.ONLINE_MODE) {
             MojangAuth.init();
@@ -118,7 +113,9 @@ public class Server {
         new PlayerBlockBreakListener().register();
         new PlayerItemDropListener().register();
         new PlayerItemPickupListener().register();
-        new PlayerInteractListener().register();
+
+        // Start the server from config values
+        minecraftServer.start(Config.Server.SERVER_HOST, Config.Server.SERVER_PORT);
 
         // Register commands
         MinecraftServer.getCommandManager().register(new TestCommand());
@@ -133,9 +130,6 @@ public class Server {
         MinecraftServer.getCommandManager().register(new PlotCommand());
         MinecraftServer.getCommandManager().register(new PlotInfoCommand());
 
-        // Start the server from config values
-        minecraftServer.start(Config.Server.SERVER_HOST, Config.Server.SERVER_PORT);
-
         for (Player player : MinecraftServer.getConnectionManager().getOnlinePlayers()) {
             API.getPlayerManager().getPlayerModel(player);
         }
@@ -145,6 +139,9 @@ public class Server {
         // Register custom InstanceGuard flag
         API.getInstanceGuard().getFlagManager().registerCustomFlag("feather-description", new FlagValue<>(""));
         API.getInstanceGuard().getFlagManager().registerCustomFlag("feather-plotlevels", new FlagValue<>(""));
+
+        // Load the world
+        WorldManager.getInstance().loadWorld(WorldManager.getInstance().getWorldsDirectory() + File.separator + Config.Spawn.WORLD);
 
         SidebarRefreshTask.registerTask();
         SaveWorldTask.registerTask();
