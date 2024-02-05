@@ -36,7 +36,7 @@ dependencies {
     implementation("net.kyori:adventure-text-minimessage:4.15.0")
     implementation("com.github.Mindgamesnl:storm:e1f961b480")
     implementation("mysql:mysql-connector-java:8.0.33") /* Adding drivers for MySQL and SQLite  */
-    implementation("org.xerial:sqlite-jdbc:3.45.0.0")
+    implementation("org.xerial:sqlite-jdbc:3.45.1.0")
     compileOnly("junit:junit:4.13.2")
     implementation("org.slf4j:slf4j-api:2.0.11")
     implementation("me.hsgamer:hscore-minestom-gui:4.3.28")
