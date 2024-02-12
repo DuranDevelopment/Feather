@@ -38,7 +38,7 @@ dependencies {
     implementation("mysql:mysql-connector-java:8.0.33") /* Adding drivers for MySQL and SQLite  */
     implementation("org.xerial:sqlite-jdbc:3.45.0.0")
     compileOnly("junit:junit:4.13.2")
-    implementation("org.slf4j:slf4j-api:2.0.11")
+    implementation("org.slf4j:slf4j-api:2.0.12")
     implementation("me.hsgamer:hscore-minestom-gui:4.3.28")
     implementation("net.objecthunter:exp4j:0.4.8")
     implementation("com.google.guava:guava:33.0.0-jre")
