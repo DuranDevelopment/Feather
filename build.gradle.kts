@@ -33,7 +33,7 @@ dependencies {
 
     implementation("com.zaxxer:HikariCP:5.1.0")
     implementation("com.github.simplix-softworks:simplixstorage:3.2.7")
-    implementation("net.kyori:adventure-text-minimessage:4.15.0")
+    implementation("net.kyori:adventure-text-minimessage:4.16.0")
     implementation("com.github.Mindgamesnl:storm:e1f961b480")
     implementation("mysql:mysql-connector-java:8.0.33") /* Adding drivers for MySQL and SQLite  */
     implementation("org.xerial:sqlite-jdbc:3.45.0.0")
